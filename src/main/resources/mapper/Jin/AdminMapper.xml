@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jincomp.jintest.web.jin.mapper.AdminMapper">
+
+	<!-- 책목록  -->
+	<select id="getBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO">
+	    SELECT GOODS_ID,
+		       GOODS_NAME,
+		       GOODS_PRICE
+		FROM   BOOKS
+    </select>
+
+	<!--책등록  -->
+	<insert id="insert" parameterType="com.jincomp.jintest.web.jin.dro.AdminAddBookDTO">
+
+		INSERT INTO BOOKS(GOODS_ID, GOODS_NAME, GOODS_PRICE)
+		VALUES (#{goodsId}, #{goodsName}, #{goodsPrice})
+		
+	</insert>
+	<insert id="insertEventInfo" parameterType="com.jincomp.jintest.web.jin.dro.AdminAddBookDTO">
+		INSERT INTO BOOKS_EVENT_INFO(GOODS_ID,EVENT_ID)
+		VALUES (#{goodsId}, #{eventId})
+	</insert>
+	
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserLogin" id="UserLogin">
+		<result column="USER_NO" property="userName" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_ID" property="userId" />
+		<result column="USER_PASSWORD" property="userPassword" />
+		<result column="USER_ADDRESS" property="userAddress" />
+	</resultMap>
+	<resultMap type="com.jincomp.jintest.web.jin.vo.EventVO" id="EventVO">
+		<result column="EVENT_ID" property="eventId"/>
+		<result column="FIX_DISCOUNT" property="fixDiscount"/>
+		<result column="RATE_STR_DAY" property="rateStrDay"/>
+		<result column="RATE_END_DAY" property="rateEndDay"/>
+		<result column="RATE" property="rate"/>
+	</resultMap>
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.RentVO" id="RentVO">
+		<result column="USER_NO" property="userNo"/>
+		<result column="GOODS_ID" property="goodsId"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+	</resultMap>
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.BookVO" id="BookVO">
+		<result column="GOODS_ID" property="goodsId" />
+		<result column="GOODS_NAME" property="goodsName" />
+		<result column="GOODS_PRICE" property="goodsPrice" />
+		<result column="EVENT_ID" property="eventId" />
+		<collection property="rentVo" resultMap="RentVO" />
+		<collection property="userLogin" resultMap="UserLogin" />
+	</resultMap>
+
+
+  <!-- 대여현황 목록  -->
+	<select id="getUserList" resultMap="BookVO">
+		SELECT UL.USER_NAME,B.GOODS_NAME , BCO.START_DATE ,BCO.END_DATE
+		FROM USER_LOGIN UL 															
+		INNER JOIN BOOKS_CHECK_OUT BCO ON BCO.USER_NO = UL.USER_NO
+		INNER JOIN BOOKS B ON B.GOODS_ID =BCO.GOODS_ID;
+	</select>
+	
+	
+	<!--도서전체 검색창  -->
+	<select id="searchList" resultType="com.jincomp.jintest.web.jin.vo.BookVO">
+		SELECT * FROM BOOKS 
+		WHERE GOODS_NAME LIKE concat ('%',#{keyword},'%') or GOODS_ID LIKE concat ('%',#{keyword},'%')
+			or GOODS_PRICE LIKE concat ('%',#{keyword},'%')
+		
+	</select>
+	
+	<!--책 상세보기  -->
+	<select id="getUpBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO" parameterType="String">
+		SELECT * FROM BOOKS WHERE GOODS_ID = #{goodsId}
+	</select>
+
+	<!--책 수정  -->
+	<update id="update" parameterType="com.jincomp.jintest.web.jin.vo.BookVO">
+		update BOOKS 
+		SET GOODS_NAME = #{goodsName}
+			, GOODS_PRICE = #{goodsPrice}
+			, EVENT_ID = #{eventId}
+		WHERE GOODS_ID = #{goodsId} 
+	</update>
+	
+
+</mapper>

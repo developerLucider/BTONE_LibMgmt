@@ -119,6 +119,7 @@
 	<!-- Template Javascript -->
 	<script src="/js/admin/main.js"></script>
 
+>>>>>>> refs/remotes/origin/master
 </body>
 
 </html>

@@ -74,7 +74,7 @@
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
 					</div>
 					<div class="ms-3">
-						<h6 class="mb-0">박상훈</h6>
+						<h6 class="mb-0">모현진</h6>
 						<span>관리자</span>
 					</div>
 				</div>
@@ -91,7 +91,7 @@
 							<a href="/admin/add/book" class="dropdown-item">도서등록</a> <a
 								href="/admin/list/books" class="dropdown-item">도서전체조회</a> <a
 								href="/admin/edit/book" class="dropdown-item">도서수정</a> <a
-								href="/admin/rent/books" class="dropdown-item">대여현황</a>
+								href="/admin/books/rent" class="dropdown-item">대여현황</a>
 						</div>
 					</div>
 					<!-- 이벤트 관리 -->
@@ -113,6 +113,8 @@
 							<!--  <a href="/admin/user/rent/" class="dropdown-item">이벤트정책조회</a> -->
 						</div>
 					</div>
+					<!-- <a href="/admin/chart.html" class="nav-item nav-link"><i
+						class="fa fa-chart-bar me-2"></i>통계</a> -->
 				</div>
 				<!-- 카테고리 end -->
 			</nav>
@@ -303,4 +305,5 @@
 		<!-- Template Javascript -->
 		<script src="/js/admin/main.js"></script>
 </body>
+
 </html>

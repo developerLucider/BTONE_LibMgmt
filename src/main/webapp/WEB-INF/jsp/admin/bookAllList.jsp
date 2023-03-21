@@ -6,14 +6,63 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<<<<<<< HEAD
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<script>
+//검색
+function fn_search(){
+	   
+	   $.ajax({
+			url : "/admin/getAdminSearch.do", //액션역할.
+			type : "post", // 보내는 타입 형식
+			/* dataType : "json", //데이터 타임 */
+			data : {     // 받을 데이터 : 폼데이터
+					"keyword" : $("#keyword").val(), //input 검색
+					
+			}, 
+			success : function(data) {  //아레와 같은 데이터 형식으로 가져올거임!
+				
+		  		if (data.length > 0) {
+                 var result = "";
+                 
+                 $("#tableBody").empty(); //기존 리스트 비우기
+
+                 for ( var i in data) { // 검색결과 리스트 순서대로 출력
+                    result += "<tr>"
+                    result += "<th>" + (i) + "</th>"
+                    result += "<th>" + "이미지 X-" + "</th>"
+                    result += "<th id='goodsId'>"
+                          + data[i].goodsId + "</th>"
+                    result += "<th id='goodsName'>"
+                          + data[i].goodsName + "</th>"
+                    result += "<th id='goodsPrice'>"
+                          + data[i].goodsPrice + "</th>"
+                    result += "<th id='goodsPrice'>" + "<a href='/admin/edit/book'>"
+                             +"<button class='btn btn-success'>" + "수정" +"</button>" +"</a>" +"</th>"
+                    result += "</tr>"
+                 }
+                 
+                 $("#tableBody").append(result); // 검색 결과 table에 적용
+                 click_event(); //검색이 끝난후에 생성된 테이블에도 적용이 되어야 하기 때문에  
+                   
+
+              } else {
+                 alert("검색 결과가 없습니다.");
+              }
+			},
+			error : function(xhr, status, error) {
+				alert("에러발생");
+			}
+	   });
+	}
+
+
+</script>
 <title>ADMIN BOOKLIST</title>
 </head>
-
 <body>
 	<!-- 전체 레이아웃 -->
     <div class="container-fluid position-relative d-flex p-0">
@@ -31,9 +80,9 @@
                                 <div class="mx-quto input-group-mt-5">
                                 	 <div class="mx-quto input-group mt-5">
 										<mx-auto>
-											<input name="query" type="text" class="form-control" placeholder="검색어 입력" aria-label="search" aria-describedby="button-addon2">
+											<input id="keyword" name="keyword" type="text" class="form-control" placeholder="검색어 입력" aria-label="search" aria-describedby="button-addon2">
 										</mx-auto>
-										<button class="btn btn-success" type="submit" id="button-search">검색</button>
+										<button class="btn btn-success" type="submit" id="button-search" onclick="fn_search();">검색</button>
 									</div>
                                 </div>
                             <div class="table-responsive">
@@ -41,22 +90,25 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">번호</th>
-                                            <th scope="col">도서 이미지</th>
-                                            <th scope="col">도서 ID</th>
-                                            <th scope="col">도서 제목</th>
-                                            <th scope="col">도서 가격</th>                     
+                                            <th scope="col">도서이미지</th>
+                                            <th scope="col">도서ID</th>
+                                            <th scope="col">도서제목</th>
+                                            <th scope="col">도서가격</th>                                     
                                             <th scope="col">버튼</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="table" id="tableBody">
+                                        <c:forEach var="item" items="${bookList}" varStatus="status">
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>이미지</td>
-                                            <td>A1</td>
-                                            <td>자바의정석</td>
-                                            <td>27,000</td>
-                                            <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                          
+                                            <th scope="row">${status.count}</th>
+                                            <td>이미지 X</td>
+											<th>${item.goodsId}</th>
+											<th>${item.goodsName}</th>
+											<th>${item.goodsPrice}</th>
+                                            <td><a href="/admin/edit/book/${item.goodsId }"><button class="btn btn-success">수정</button></a></td>                                          
                                         </tr>
+                                        </c:forEach>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

@@ -36,33 +36,20 @@
                                             <th scope="col">유저이름</th>
                                             <th scope="col">도서제목</th>
                                             <th scope="col">대여시작일</th>
-                                            <th scope="col">대여반납일</th> 
+                                            <th scope="col">대여반납일</th>                                     
+                                        </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="userList" items="${userList}" varStatus="status">
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>박상훈</td>
-                                            <td>책1</td>
-                                            <td>2023-03-10</td>
-                                            <td>2023-01-17</td>
-                                            <td>1</td>                                          
+                                            <th scope="row">${status.count}</th>
+                                            <td>${userList.userName }</td>
+                                            <td>${userList.goodsName}</td>
+                                            <td>${userList.startDate}</td>
+                                            <td>${userList.endDate}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>신승현</td>
-                                            <td>책2</td>
-                                            <td>2023-03-10</td>
-                                            <td>2023-01-17</td>
-                                            <td>2</td>                                            
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>천소진</td>
-                                            <td>책3</td>
-                                            <td>2023-03-10</td>
-                                            <td>2023-03-10</td>
-                                            <td>1</td>                                         
-                                        </tr>
+                                     </c:forEach>   
+
                                     </tbody>
                                 </table>
                             </div>

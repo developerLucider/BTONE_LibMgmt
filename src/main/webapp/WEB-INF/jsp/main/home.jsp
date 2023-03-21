@@ -17,6 +17,7 @@
 <script src="<c:url value='/js/jquery-ui.js'/>"></script>
 
 <script>
+
 	$(() => {
 		$("#tabs").tabs();
 		/* new daum.Postcode({
@@ -132,6 +133,7 @@ function user_auth(){
 }
 </script>
 
+
 <script>
 function rentBook() {    
 	var rentBookList = [];
@@ -238,6 +240,7 @@ function rentBook() {
 					</div>
 				</div>
 			</div>
+
                   
          <!-- tab2 -->
          
