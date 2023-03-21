@@ -33,18 +33,6 @@ public class BookRestController2 {
 	private final BookService bookService;
 
 	
-	@RequestMapping(value = "/getSearch.do")
-	   public List<BookVO> tableList(@RequestParam ("search") String search, @RequestParam("searchType") String searchType, 
-			   HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		logger.debug("{}" ,"검색창 진입");
-
-		List<BookVO> bookList = bookService.searchList(search,searchType);
-		logger.debug("bookList : {}" ,bookList); //{}를 꼭 넣어줘야함.
- 
-       return bookList;
-	}
-	
 	@RequestMapping(value = "/getjoin.do")
 	public int join(UserLogin user, Model model,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {

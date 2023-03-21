@@ -26,16 +26,10 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	
 	//책목록 가져오기
 	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
 	public String getBookList(HttpServletRequest request,
 		HttpServletResponse response, ModelMap model) throws Exception {
-		List<BookVO> bookList = bookService.getBookList();
-		
-		log.debug("bookList : {}", bookList);
-		
-		model.addAttribute("bookList", bookList);
 		
 		return "/main/home";  //home.jsp 로 구성
 	}
@@ -43,11 +37,6 @@ public class BookController {
 	//대여가능 목록 가져오기
 	public String getOklist(HttpServletRequest request,
 		HttpServletResponse response, ModelMap model) throws Exception {
-		List<BookVO> okList = bookService.getBookList();
-		
-		log.debug("okList : {}", okList);
-		
-		model.addAttribute("okList", okList);
 		
 		return "/main/home";  //home.jsp 로 구성
 	}

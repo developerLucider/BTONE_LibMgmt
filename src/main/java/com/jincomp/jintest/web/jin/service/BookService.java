@@ -1,8 +1,5 @@
 package com.jincomp.jintest.web.jin.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,9 +9,7 @@ import org.springframework.stereotype.Service;
 import com.common.Base64Utils;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
-import com.jincomp.jintest.web.jin.vo.EventVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
-import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,21 +25,6 @@ public class BookService {
 	
 	private final BookMapper bookMapper;
 
-	public List<BookVO> getBookList() {
-		logger.debug("BookVO 리스트 진입");
-		
-		List<BookVO> mapper = bookMapper.getBookList();
-		
-		return mapper;
-	}
-
-	//검색
-	public List<BookVO> searchList(String search, String searchType) {
-		List<BookVO> mapper = bookMapper.searchList(search, searchType);
-		logger.debug(" 검색 진입");
-		
-		return mapper;
-	}
 
 	//회원가입
 	public int join(UserLogin user) {

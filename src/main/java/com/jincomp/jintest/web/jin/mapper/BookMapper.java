@@ -11,10 +11,6 @@ import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Mapper
 public interface BookMapper {
-	
-	List<BookVO> getBookList();
-
-	List<BookVO> searchList(@Param ("search") String search, @Param ("searchType") String searchType);
 
 	int idChk(UserLogin user);
 
