@@ -2,16 +2,13 @@ package com.jincomp.jintest.web.jin.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Getter
-@Setter
-public class SearchVO {
-	private String searchType;
-	private String keyword;
+public class UserAuthVO {
+	
+	private int userNo;
+	private String userAuth;
 }

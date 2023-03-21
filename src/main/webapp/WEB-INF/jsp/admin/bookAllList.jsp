@@ -57,7 +57,6 @@
                                             <td>27,000</td>
                                             <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                          
                                         </tr>
-                               
                                 </table>
                             </div>
                         </div>

@@ -25,24 +25,7 @@
 <body>
 	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
 	<div class="container">
-		<!-- tabs는 이전 프로젝트 참고해서 해당 탭들 여기에 추가하면 해당 페이지 탭 나눌수 있을겁니다. -->
-	<!-- 	<div id="tabs"> -->
-<!-- 			<table width="100%">
-					<tbody>
-						<tr>
-							<th style="width: 200px; text-align: left;">LOGIN</th>
-							<td>
-								<ul>
-									<li><a href="#tabs1">탭1</a></li>
-									<li><a href="#tabs2">탭2</a></li>
-									<li><a href="#tabs3">탭3</a></li>
-									<li><a href="#tabs4">탭4</a></li>
-								</ul>
-							</td>
-						</tr>
-					</tbody>
-			</table> -->
-			<!-- tabs1 -->
+
 			<div class="" id="tabs1">
 					<div class="content">						 
 						<div class="login">
@@ -59,7 +42,7 @@
 						</div>	
 					</div> <!-- content -->
 			</div> <!-- tab1 -->
-		<!-- </div> -->
+		
 	</div> <!-- contabiner -->
 	
 	<%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
