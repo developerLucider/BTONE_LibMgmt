@@ -23,10 +23,11 @@
 
 </head>
 <body>
-	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
+	<%-- <%@include file = "/WEB-INF/jsp/include/header.jsp" %> --%>
 	<div class="container">
+		<%@include file="/WEB-INF/jsp/admin/adminhome.jsp" %>
 		<div id="tabs">
-			<table width="100%">
+			 <table width="100%">
 					<tbody>
 						<tr>
 							<th style="width: 200px; text-align: left;">ADMIN</th>
@@ -45,8 +46,6 @@
 			<div class="" id="tabs1">
 				<form id="tabs1-frm" name="tabs1-frm" method="post" onSubmit="return false;">
 					<div class="content">
-						<!-- 해당 페이지 기능별로 탭 나눠쓰시면됩니다.
-						 header footer가 content 기준으로 사이즈가 잡혀있기때문에 구현할 기능들은 content내에서 구현해주세요-->
 						
 						
 					</div>

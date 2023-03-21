@@ -4,93 +4,161 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.jincomp.jintest.web.jin.mapper.UserMapper;
-import com.jincomp.jintest.web.jin.vo.UserVO;
+import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
+import com.jincomp.jintest.web.jin.mapper.BookMapper;
+import com.jincomp.jintest.web.jin.vo.BookVO;
+import com.jincomp.jintest.web.jin.vo.RentVO;
 
 import lombok.RequiredArgsConstructor;
 
 /**
  *
- * @author kyj
+ * @author mskim
  */
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
-	private final UserMapper userMapper;
-	
-	public List<UserVO> getSearchUserList(String condition, String input){
-		logger.debug("getSearchUserList 진입");
-		logger.debug("진입후 condition : {}", condition);
-		logger.debug("진입후 input : {}", input);
+
+	private final BookMapper bookMapper;
+
+	public List<MainBookListDTO> getMainBookList() {
+		logger.debug("-------------------userService bookList 진입");
+		List<MainBookListDTO> mainList = new ArrayList<>();
 		
-		if(input.length() > 0) {
-			return userMapper.getSearchUserList(condition, input);
-		} else {
-			return userMapper.getUserList();
+		List<BookVO> bookList = bookMapper.getBookList();
+		for(BookVO tmp : bookList) {
+			// 가져온 리스트에서 책별로 필요한 정보만 가져와 DTO에담아서 리스트로 생성
+			MainBookListDTO mainbook = new MainBookListDTO();
+			
+			mainbook.setGoodsId(tmp.getGoodsId());
+			mainbook.setGoodsName(tmp.getGoodsName());
+			mainbook.setGoodsPrice(tmp.getGoodsPrice());
+			if(!Objects.isNull(tmp.getEventId())) {
+				mainbook.setEventStrDate(tmp.getEventVo().getRateStrDay());
+				mainbook.setEventEndDate(tmp.getEventVo().getRateEndDay());
+			}
+			mainbook.setUserId(tmp.getRentVo().getUserNo());
+			
+			// 이벤트 유무에 따라 할인가를 계산해준다.
+			logger.debug("{}의 이벤트 : {}", tmp.getGoodsName() , tmp.getEventId());
+			logger.debug("해당 책의 이벤트시작일 : {} 이벤트 종료일 : {}",
+					tmp.getEventVo().getRateStrDay(), tmp.getEventVo().getRateEndDay());
+	
+			
+			if(Objects.isNull(tmp.getEventId())) {	// 해당 이벤트가 없으면 할인가에 정가를 삽입
+				mainbook.setGoodsDiscountPrice(tmp.getGoodsPrice());
+			} else {
+				//logger.debug("이벤트 고정할인가 = {}\n 이벤트 할인율 = {}",tmp.getEventVo().getFixDiscount(),tmp.getEventVo().getFixDiscount());
+				int bookPrice = Integer.parseInt(tmp.getGoodsPrice());	// string 타입인 원가를 int형으로 변환 (계산을 위해)
+				
+				int rateTmp = tmp.getEventVo().getRate();
+				
+				double rateDouble = rateTmp;
+				
+				if(tmp.getEventVo().getFixDiscount() != 0) {	// 고정 할인가가 존재하는 경우
+					bookPrice -= tmp.getEventVo().getFixDiscount();	 // 고정 할인가 만큼 감소
+					mainbook.setGoodsDiscountPrice(String.valueOf(bookPrice));
+				}
+				
+				if(tmp.getEventVo().getRate() != 0) {
+					
+					double dcPrice = bookPrice * (rateDouble / (double)100);
+					logger.debug("할인비율가 = {}", dcPrice);
+					bookPrice -= dcPrice;
+					mainbook.setGoodsDiscountPrice(String.valueOf(bookPrice));
+				}
+			}
+			mainList.add(mainbook);
 		}
+		logger.debug("booklist : {}", mainList);
+		
+		return mainList;
 	}
 	
-	public void deleteUser(List<String> empNo){
-		logger.debug("delUser 진입");
-		List<Integer> tmp = new ArrayList<>();
-		for(String num : empNo) {
-			tmp.add(Integer.parseInt(num));		// 스트링형을 int형으로 변환하여 리스트를 생성
+	public List<MainBookListDTO> getMainBookList(String searchType, String keyword) {
+		logger.debug("-------------------userService bookList 진입");
+		List<MainBookListDTO> mainList = new ArrayList<>();
+		
+		List<BookVO> bookList = bookMapper.searchBookList(searchType, keyword);
+		for(BookVO tmp : bookList) {
+			// 가져온 리스트에서 책별로 필요한 정보만 가져와 DTO에담아서 리스트로 생성
+			MainBookListDTO mainbook = new MainBookListDTO();
+			
+			mainbook.setGoodsId(tmp.getGoodsId());
+			mainbook.setGoodsName(tmp.getGoodsName());
+			mainbook.setGoodsPrice(tmp.getGoodsPrice());
+			if(!Objects.isNull(tmp.getEventId())) {
+				mainbook.setEventStrDate(tmp.getEventVo().getRateStrDay());
+				mainbook.setEventEndDate(tmp.getEventVo().getRateEndDay());
+			}
+			mainbook.setUserId(tmp.getRentVo().getUserNo());
+			
+			// 이벤트 유무에 따라 할인가를 계산해준다.
+			//logger.debug("{}의 이벤트 : {}", tmp.getGoodsName() , tmp.getEventId());
+			if(Objects.isNull(tmp.getEventId())) {	// 해당 이벤트가 없으면 할인가에 정가를 삽입
+				mainbook.setGoodsDiscountPrice(tmp.getGoodsPrice());
+			} else {
+				//logger.debug("이벤트 고정할인가 = {}\n 이벤트 할인율 = {}",tmp.getEventVo().getFixDiscount(),tmp.getEventVo().getFixDiscount());
+				int bookPrice = Integer.parseInt(tmp.getGoodsPrice());	// string 타입인 원가를 int형으로 변환 (계산을 위해)
+				
+				int rateTmp = tmp.getEventVo().getRate();
+				
+				double rateDouble = rateTmp;
+				
+				if(tmp.getEventVo().getFixDiscount() != 0) {	// 고정 할인가가 존재하는 경우
+					bookPrice -= tmp.getEventVo().getFixDiscount();	 // 고정 할인가 만큼 감소
+					mainbook.setGoodsDiscountPrice(String.valueOf(bookPrice));
+				}
+				
+				if(tmp.getEventVo().getRate() != 0) {
+					
+					double dcPrice = bookPrice * (rateDouble / (double)100);
+					bookPrice -= dcPrice;
+					mainbook.setGoodsDiscountPrice(String.valueOf(bookPrice));
+				}
+			}
+			mainList.add(mainbook);
 		}
-		logger.debug("intList", tmp);
- 		userMapper.deleteUser(tmp);
+		logger.debug("booklist : {}", mainList);
+		
+		return mainList;
 	}
 	
-	public void addUser(UserVO emp) {
-		int startIndex = 10001;			// 사원번호의 시작 인덱스
-		int tmp;
-		
-		logger.debug("addUser 진입");
-		List<Integer> empNoList = new ArrayList<>();		// 사원번호의 리스트
-		List<UserVO> empList = userMapper.getUserList();	
-		for(UserVO user : empList) {						// 사원의 리스트를 가져와 iterating해 사원번호의 리스트를 만듬
-			empNoList.add(Integer.parseInt(user.getEmpNo()));
-		}
-		
-		// 사원번호 빈 값 찾기
-		if(empNoList.contains(startIndex)) {	// 사원리스트의 사원번호가 시작번호(10001)가 있을 경우
-			for(int empNo : empNoList) {
-				tmp = empNo + 1;
-				if(!empNoList.contains(tmp)) {	// 리스트 순회하며 해당 요소의 숫자+1이 있다면 넘어가고 없으면 그 숫자+1를 empNo에 추가한다.
-					logger.debug("리스트에 중간에 빠진 번호 {}",tmp);
-					emp.setEmpNo(String.valueOf(tmp));
+	public List<Integer> rentBooks(List<String> rentList, int userNo) {
+		List<Integer> result = new ArrayList<>();
+		logger.debug("rentBooks 진입");
+		// 대여할 책 ID 리스트를 iterating
+		for(String goodsId : rentList) {
+			// rentVo 객체 생성후 정보 setting
+			List<RentVO> rentBookList = bookMapper.getRentList();
+			for(RentVO rentBook : rentBookList) {
+				if(rentBook.getGoodsId() == goodsId) {
 					break;
 				}
 			}
-		} else {	// 10001번이 없는경우(시작 기준번호부터 없을 경우)
-			logger.debug("리스트 시작번호가 없을때 {}", startIndex);
-			emp.setEmpNo(String.valueOf(startIndex)); 		// 시작 기준번호를 사원번호로
+			
+			RentVO rentVo = new RentVO();
+			rentVo.setGoodsId(goodsId);
+			rentVo.setUserNo(userNo);
+			
+			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+			
+			rentVo.setStartDate(startDate);
+			rentVo.setEndDate(endDate);
+			
+			result.add(bookMapper.addRentBook(rentVo));
+			
+			logger.debug("{} 대여 리스트 추가 완료", rentVo);
 		}
-		String hireDate = (LocalDate.now()).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-		logger.debug("입사일자 {}", hireDate);
-		emp.setHireDate(hireDate);	// 숫자 8자리로만 이루어진 날짜 스트링 형태로 추가
-		
-		logger.debug("비지니스 로직 후 emp {}",emp);
-		userMapper.addUser(emp);
-	}
-	
-	public int updateUser(UserVO updateEmp) {
-		logger.debug("updateUser 진입");
-		List<UserVO> targetEmp = userMapper.getSearchUserList("emp_no", updateEmp.getEmpNo());
-		if(targetEmp.get(0).equals(updateEmp)) {
-			logger.debug("--------업데이트정보가 기존 정보와 차이없는 경우");
-			return 0;
-		}
-		else {
-			logger.debug("--------업데이트정보가 기존 정보와 다를 경우");
-			return userMapper.updateUser(updateEmp);
-		}
+		return result;
 	}
 }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.service.UserService;
-import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
 public class UserController {
 	@Autowired
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -26,9 +26,11 @@ public class UserController {
 	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
 	public String showFirstHome(HttpServletRequest request,
 		HttpServletResponse response, ModelMap model) throws Exception {
-		List<UserVO> list = userService.getSearchUserList("","");
+		logger.debug("showFirstHome 진입");
 		
-		log.debug("list : {}", list);
+		List<MainBookListDTO> list = userService.getMainBookList();
+		
+		logger.debug("list : {}", list);
 		
 		model.addAttribute("list", list);
 		
@@ -39,7 +41,7 @@ public class UserController {
 	public String showAdmin(HttpServletRequest request,
 	HttpServletResponse response, ModelMap model) throws Exception {
 		
-		return "/admin/admin";
+		return "/admin/adminhome";
 	}
 	
 	@GetMapping("/regist")

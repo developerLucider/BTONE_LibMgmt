@@ -11,7 +11,15 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class SearchVO {
-	private String searchType;
-	private String keyword;
+public class BookVO {
+
+	private String goodsId;
+	private String goodsName;
+	private String goodsPrice;
+	private String eventId;
+	
+	private EventVO eventVo;
+	private RentVO rentVo;
+
+	
 }

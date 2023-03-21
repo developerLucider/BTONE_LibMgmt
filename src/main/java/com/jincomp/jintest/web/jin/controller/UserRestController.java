@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.service.UserService;
-import com.jincomp.jintest.web.jin.vo.UserVO;
+import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.SearchVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,48 +25,26 @@ import lombok.RequiredArgsConstructor;
 public class UserRestController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
-
 	
 	private final UserService userService;
 
-   @RequestMapping(value = "/getUser.do")
-   public List<UserVO> tableList(@RequestParam("condition") String condition, @RequestParam("input") String input,
-		   HttpServletRequest request, HttpServletResponse response) throws Exception {
-	   List<UserVO> list;
-	   list = userService.getSearchUserList(condition, input);
+   @RequestMapping(value = "/getBooks.do")
+   public List<MainBookListDTO> searchBookList(@RequestBody SearchVO searchVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	   logger.debug("{} {}",searchVO.getSearchType(), searchVO.getKeyword());
+	   List<MainBookListDTO> list = userService.getMainBookList(searchVO.getSearchType(), searchVO.getKeyword());
 	   
-	   logger.debug("input : {}", input);
-	   logger.debug("condition : {}", condition);
-       logger.debug("list : {}",list);
-
+       logger.debug("검색타입 : {} 키워드 : {}", searchVO.getSearchType(), searchVO.getKeyword());
+       
        return list;
    }
    
-   @RequestMapping(value = "/addUser.do")
-   public void addUser(@RequestBody UserVO emp, HttpServletRequest request, HttpServletResponse response) {
-	    logger.debug("empName : {} empBirthDate : {} empGender : {}",
-	    		emp.getName(), emp.getBirthDate(), emp.getGender());
-	    
-	    userService.addUser(emp);
-   }
-   
-   @RequestMapping(value = "/updateUser.do")
-   public int updateUser(@RequestBody UserVO updateEmp, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	   
-	   logger.debug("updateEmp : {}", updateEmp);
-	   
-	   return userService.updateUser(updateEmp);
-	    
-   }
-   
-   @RequestMapping(value = "/delUser.do")
-   public void delUser(@RequestParam("empNoList[]") List<String> empNoList,
+   @RequestMapping(value = "/rentBooks.do")
+   public List<Integer> rentBooks(@RequestParam("rentBookList[]")List<String> rentBookList,
+		   				@RequestParam("userNo") int userNo,
 		   HttpServletRequest request, HttpServletResponse response) throws Exception {
-	   
-	  logger.debug("empNoList : {}", empNoList);
-	  
-	  userService.deleteUser(empNoList);  
+	   	logger.debug("대여 책 목록 : {} 대여 유저 정보 : {}", rentBookList, userNo);
+	   	
+	   	return userService.rentBooks(rentBookList, userNo);
    }
-   
-   
 }
+

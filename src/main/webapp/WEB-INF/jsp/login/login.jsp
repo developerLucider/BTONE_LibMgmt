@@ -43,24 +43,19 @@
 					</tbody>
 			</table>
 			<!-- tabs1 -->
-			<div class="" id="tabs1">
+			<div class="content" id="tabs1">
 				<form id="tabs1-frm" name="tabs1-frm" method="post" onSubmit="return false;">
-					<div class="content">
-						<!-- 해당 페이지 기능별로 탭 나눠쓰시면됩니다.
-						 header footer가 content 기준으로 사이즈가 잡혀있기때문에 구현할 기능들은 content내에서 구현해주세요-->
-						
-						
-					</div>
+					
 				</form>
 			</div>
 			<!-- tab2 -->
-			<div class="" id="tabs2">
+			<div class="content" id="tabs2">
 			</div>
 			<!-- tabs3 -->
-			<div class="" id="tabs3">
+			<div class="content" id="tabs3">
 			</div>
 			<!-- tab4 -->
-			<div class="" id="tabs4">
+			<div class="content" id="tabs4">
 			</div>
 		</div>
 	</div>
