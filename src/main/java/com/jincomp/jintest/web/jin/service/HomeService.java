@@ -23,9 +23,9 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class HomeService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
 
 	private final BookMapper bookMapper;
 

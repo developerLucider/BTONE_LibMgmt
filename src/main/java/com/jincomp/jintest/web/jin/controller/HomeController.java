@@ -13,15 +13,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
-import com.jincomp.jintest.web.jin.service.UserService;
+import com.jincomp.jintest.web.jin.service.HomeService;
 
 @Controller
-public class UserController {
+public class HomeController {
 	@Autowired
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private UserService userService;
+	private HomeService userService;
 	
 	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
 	public String showFirstHome(HttpServletRequest request,
