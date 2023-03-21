@@ -41,11 +41,10 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">번호</th>
-                                            <th scope="col">도서이미지</th>
-                                            <th scope="col">도서ID</th>
-                                            <th scope="col">도서제목</th>
-                                            <th scope="col">도서가격</th>                                     
-                                            <th scope="col">수량</th>
+                                            <th scope="col">도서 이미지</th>
+                                            <th scope="col">도서 ID</th>
+                                            <th scope="col">도서 제목</th>
+                                            <th scope="col">도서 가격</th>                     
                                             <th scope="col">버튼</th>
                                         </tr>
                                     </thead>
@@ -56,28 +55,8 @@
                                             <td>A1</td>
                                             <td>자바의정석</td>
                                             <td>27,000</td>
-                                            <td>100</td>
                                             <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                          
                                         </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>이미지</td>
-                                            <td>A2</td>
-                                            <td>토비의스프링</td>
-                                            <td>33,000</td>
-                                            <td>200</td>
-                                            <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                                  
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>이미지</td>
-                                            <td>A3</td>
-                                            <td>real mysql</td>
-                                            <td>18,000</td>
-                                            <td>300</td>
-                                            <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                                
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
