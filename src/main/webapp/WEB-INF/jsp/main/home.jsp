@@ -128,18 +128,7 @@
                                  </tr>
                               </thead>
                               <tbody class="table" id="tableBody">
-                                 <c:forEach var="item" items="${bookList}" varStatus="status">
-                                    <tr>
-                                       <!-- 도서목록 -->                                       
-                                       <th width='30px'>${status.count}</th>
-                                       <th width='30px'>${item.goodsId}</th>
-                                       <th width='50px'>${item.goodsName}</th>
-                                       <th width='70px' id="checkbtn">${item.goodsPrice}</th>
-                                       <th width='60px' id="rateStrDay">${event.rateStrDate}</th>
-                                       <th width='60px' id="rateEndDay">${event.rateEndDate}</th>
 
-                                    </tr>
-                                 </c:forEach>
                               </tbody>
                            </table>
                            <div id="button"></div>
