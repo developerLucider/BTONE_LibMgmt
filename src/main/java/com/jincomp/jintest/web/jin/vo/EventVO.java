@@ -1,5 +1,7 @@
 package com.jincomp.jintest.web.jin.vo;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -11,12 +13,12 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class UserVO {
-
-	private String userNo;
-	private String userName;
-	private String userId;
-	private String userPassword;
-	private String userAddress;
+public class EventVO {
 	
+	private String eventId;
+	private int fixDiscount;
+	private LocalDate rateStrDay;
+	private LocalDate rateEndDay;
+	private int rate;
+
 }

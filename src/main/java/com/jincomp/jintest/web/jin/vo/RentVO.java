@@ -11,12 +11,12 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class UserVO {
+public class RentVO {
 
 	private String userNo;
-	private String userName;
-	private String userId;
-	private String userPassword;
-	private String userAddress;
+	private String goodsId;
+	private String startDate;
+	private String endDate;
 	
+
 }
