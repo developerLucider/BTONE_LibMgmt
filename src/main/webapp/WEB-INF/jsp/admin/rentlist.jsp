@@ -37,7 +37,10 @@
                                             <th scope="col">도서제목</th>
                                             <th scope="col">대여시작일</th>
                                             <th scope="col">대여반납일</th>                                     
+<<<<<<< HEAD
                                             <th scope="col">수량</th>
+=======
+>>>>>>> branch '천소진' of https://github.com/developerLucider/BTONE_LibMgmt
                                         </tr>
                                     </thead>
                                     <tbody>

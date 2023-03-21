@@ -34,8 +34,14 @@ dependencies {
     implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.apache.commons:commons-collections4:4.4'
+<<<<<<< HEAD
 	// Swagger
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+=======
+    //스웨거 설정
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+>>>>>>> branch '천소진' of https://github.com/developerLucider/BTONE_LibMgmt
 }
 
 tasks.named('test') {

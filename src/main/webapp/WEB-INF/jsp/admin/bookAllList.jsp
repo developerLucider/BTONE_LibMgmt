@@ -41,6 +41,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">번호</th>
+<<<<<<< HEAD
                                             <th scope="col">도서이미지</th>
                                             <th scope="col">도서ID</th>
                                             <th scope="col">도서제목</th>
@@ -78,6 +79,25 @@
                                             <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                                
                                         </tr>
                                     </tbody>
+=======
+                                            <th scope="col">도서 이미지</th>
+                                            <th scope="col">도서 ID</th>
+                                            <th scope="col">도서 제목</th>
+                                            <th scope="col">도서 가격</th>                     
+                                            <th scope="col">버튼</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>이미지</td>
+                                            <td>A1</td>
+                                            <td>자바의정석</td>
+                                            <td>27,000</td>
+                                            <td><a href="/admin/edit/book"><button class="btn btn-success">수정</button></a></td>                                          
+                                        </tr>
+                               
+>>>>>>> branch '천소진' of https://github.com/developerLucider/BTONE_LibMgmt
                                 </table>
                             </div>
                         </div>
