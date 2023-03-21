@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.jincomp.jintest.web.jin.dro.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.dro.UserLentalDTO;
 import com.jincomp.jintest.web.jin.mapper.AdminMapper;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
-import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.BooksEventInfo;
 import com.jincomp.jintest.web.jin.vo.EventVO;
@@ -49,19 +49,14 @@ public class adminService {
 	
 
 //	책등록
-	public void insert(BookVO vo) {
+	public void insert(AdminAddBookDTO vo) {
 		
-		adminMapper.insert(vo);
+	
 		logger.debug("vo : {}",vo);
+//		info.setEventId(vo.getEventId());
+		adminMapper.insert(vo);
+		adminMapper.insertEventInfo(vo);
 	}
-	
-	public void insertEventInfo(BooksEventInfo info) {
-		
-		adminMapper.insertEventInfo(info);
-		logger.debug("vo : {}",info);
-	}
-	
-	
 
 	//대여현황 목록
 	public List<UserLentalDTO> getUserList() {

@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jincomp.jintest.web.jin.dro.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.BooksEventInfo;
@@ -30,15 +32,15 @@ public class AdminRestController {
 	private final adminService adminService;
 
 	
-	@RequestMapping(value = "add/book.do", method = RequestMethod.POST)	
-	public void insert(BookVO vo, BooksEventInfo info) throws Exception {
+	@RequestMapping(value = "/add/book.do")	
+	public void insert(@RequestBody AdminAddBookDTO vo) throws Exception {
 
 		logger.debug("{}" ,"게시글쓰기 진입");
-
-		adminService.insert(vo);
-		adminService.insertEventInfo(info);
-		 
-		logger.debug("vo : {}",vo);
+		
+		logger.debug("eventId : {}" , vo);
+		
+		adminService.insert(vo);		 
+		
 	}
 	
 	//검색

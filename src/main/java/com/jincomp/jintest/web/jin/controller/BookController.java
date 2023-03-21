@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jincomp.jintest.web.jin.service.BookService;
-import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
@@ -53,7 +52,26 @@ public class BookController {
 		return "/main/home";  //home.jsp 로 구성
 	}
 	
-
+	@GetMapping("/admin")
+	public String showAdmin(HttpServletRequest request,
+	HttpServletResponse response, ModelMap model) throws Exception {
+		
+		return "/admin/admin";
+	}
+	
+	@GetMapping("/regist")
+	public String showRegist(HttpServletRequest request,
+	HttpServletResponse response, ModelMap model) throws Exception {
+		
+		return "/regist/regist";
+	}
+	
+	@GetMapping("/login")
+	public String showLogin(HttpServletRequest request,
+	HttpServletResponse response, ModelMap model) throws Exception {
+		
+		return "/login/login";
+	}
 
 	
 	

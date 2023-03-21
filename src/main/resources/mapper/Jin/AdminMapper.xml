@@ -11,13 +11,16 @@
     </select>
 
 	<!--책등록  -->
-	<insert id="insert" parameterType="com.jincomp.jintest.web.jin.vo.BookVO">
+	<insert id="insert" parameterType="com.jincomp.jintest.web.jin.dro.AdminAddBookDTO">
 
 		INSERT INTO BOOKS(GOODS_ID, GOODS_NAME, GOODS_PRICE)
 		VALUES (#{goodsId}, #{goodsName}, #{goodsPrice})
 		
 	</insert>
-	
+	<insert id="insertEventInfo" parameterType="com.jincomp.jintest.web.jin.dro.AdminAddBookDTO">
+		INSERT INTO BOOKS_EVENT_INFO(GOODS_ID,EVENT_ID)
+		VALUES (#{goodsId}, #{eventId})
+	</insert>
 	
 	
 	<resultMap type="com.jincomp.jintest.web.jin.vo.UserLogin" id="UserLogin">

@@ -23,7 +23,7 @@ public class BookVO implements Serializable {
     private String goodsId;
 	private String goodsName;
 	private String goodsPrice;
-	private String eventId;
+//	private String eventId;
 //	private String keyword;
 	
 	private EventVO eventVo;

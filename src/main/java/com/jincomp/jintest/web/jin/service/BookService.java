@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.common.Base64Utils;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
-import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.EventVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
