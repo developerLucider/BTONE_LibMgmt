@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-			
+         
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -102,6 +102,35 @@
 	      }
 	   }
 </script>
+<script>
+function user_auth(){
+		
+		const userNo = '${sessionScope.loginUser.userNo}'
+		const userAuth = '${sessionScope.loginUser.authVO.userAuth}'
+	
+		alert("userAuth : " + userAuth);
+		
+	
+		if(userAuth === 'admin'){
+			alert("이미 관리자 이십니다.");
+			return;
+		}
+		  else {
+			 $.ajax({	
+				url : "/auth/edit/" + userNo,
+				type : "post",
+				success : function(data){
+					if(data >= 1){
+						alert("권한 변경 완료")
+					} 		
+					location.reload();
+				}, error:  function (request, status, error){
+					alert("권한 비어 있음. 관리자 문의")
+				}
+			});
+		}
+}
+</script>
 
 <script>
 function rentBook() {    
@@ -139,13 +168,14 @@ function rentBook() {
 		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
 	}
 }
+  
 </script>
 </head>
 <body>
-	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
-	<div class="container">
-		<div id="tabs">
-			<table width="100%">
+   <%@include file = "/WEB-INF/jsp/include/header.jsp" %>
+   <div class="container">
+      <div id="tabs">
+         <table width="100%">
 				<tbody>
 					<tr>
 						<th style="width: 200px; text-align: left;">HOME</th>
@@ -153,13 +183,15 @@ function rentBook() {
 							<ul>
 								<li><a id="allList" href="#tabs1" onclick="AllBookListEvent();">전체조회</a></li>
 								<li><a id="rentList" href="#tabs1" onclick="AvailableBookEvent();">대여가능</a></li>
+								<li><button type= "button" onclick = 'user_auth();'>관리자 등급 up </button></li>
 							</ul>
 						</td>
 					</tr>
 				</tbody>
-			</table>
-			<!-- tabs1 -->
-			<div class="content" id="tabs1">
+		</table>
+         
+         <!-- home tab -->
+         <div class="content" id="tabs1">
 				<div class="search_select">
                      <select id="searchType" name="searchType">
                         <option value="">--선택--</option>
@@ -204,18 +236,22 @@ function rentBook() {
 							</tbody>
 						</table>
 					</div>
-
 				</div>
 			</div>
-			<!-- tab2 -->
+                  
+         <!-- tab2 -->
+         
+         <!-- tabs3 -->
+         
+         <!-- tab4 -->
+         
+      </div>
+   </div>
+   
+   <%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
 
-		</div>
-	</div>
-	
-	<%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
-
-	<!-- popup  -->
-	<div id="popupBox" title="테이블"></div>
-
+   <!-- popup  -->
+   <div id="popupBox" title="테이블"></div>
+  
 </body>
 </html>

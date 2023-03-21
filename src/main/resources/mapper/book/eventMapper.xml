@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.jincomp.jintest.web.jin.mapper.EventMapper">
+
+	<select id="getEventList"
+		resultType="com.jincomp.jintest.web.jin.vo.EventVO">
+		SELECT event_id,
+		fix_discount,
+		rate_str_day,
+		rate_end_day,
+		rate
+		FROM event;
+	</select>
+	<select id="getEventVO"
+		resultType="com.jincomp.jintest.web.jin.vo.EventVO">
+		SELECT event_id,
+		fix_discount,
+		rate_str_day,
+		rate_end_day,
+		rate
+		FROM event
+		WHERE EVENT_ID = #{eventId};
+	</select>
+	<insert id="addEvent"
+		parameterType="com.jincomp.jintest.web.jin.vo.EventVO">
+		INSERT INTO
+		EVENT(
+		EVENT_ID, FIX_DISCOUNT, RATE_STR_DAY, RATE_END_DAY, RATE
+		) VALUES(
+		#{eventId}, #{fixDiscount}, #{rateStrDay}, #{rateEndDay}, #{rate})
+
+	</insert>
+	<update id="updateEvent" parameterType="com.jincomp.jintest.web.jin.vo.EventVO">
+		UPDATE EVENT
+		SET
+		FIX_DISCOUNT = #{fixDiscount},
+		RATE_STR_DAY = #{rateStrDay},
+		RATE_END_DAY = #{rateEndDay},
+		RATE = #{rate}
+		WHERE EVENT_ID = #{eventId}
+
+	</update>
+	<delete id="deleteEvent">
+		DELETE
+		FROM EVENT
+		WHERE EVENT_ID IN
+		<foreach collection="list" item="list" open="(" separator=","
+			close=")">
+			<!-- collection : 전달받은 변수 이름(mapper에서 정의한 변수), item : <c:foreach>문 안에서 
+				사용한 매개변수 이름 -->
+			#{list}
+		</foreach>
+
+	</delete>
+</mapper>

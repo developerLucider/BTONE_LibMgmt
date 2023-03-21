@@ -44,7 +44,7 @@
                                 <!-- 할인 정책 적용 -->
                                 <label for="eventSelect" class="form-label">할인적용</label>
 		                            <select class="form-select mb-3" aria-label="Default select example">
-		                                <option value=""selected>적용안함</option>
+		                                <option selected>적용안함</option>
 		                                <option value="">A정책</option>
 		                                <option value="">B정책</option>
 		                                <option value="">C정책</option>
