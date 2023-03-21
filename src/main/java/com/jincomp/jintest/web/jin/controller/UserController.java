@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.jincomp.jintest.web.jin.service.UserService;
+import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
@@ -23,7 +24,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
+	@GetMapping("//")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
 	public String showFirstHome(HttpServletRequest request,
 		HttpServletResponse response, ModelMap model) throws Exception {
 		List<UserVO> list = userService.getSearchUserList("","");
@@ -32,7 +33,7 @@ public class UserController {
 		
 		model.addAttribute("list", list);
 		
-		return "/main/home";  //home.jsp 로 구성
+		return "/main/home/";  //home.jsp 로 구성
 	}
 	
 	@GetMapping("/admin")
@@ -55,4 +56,6 @@ public class UserController {
 		
 		return "/login/login";
 	}
+	
+
 }
