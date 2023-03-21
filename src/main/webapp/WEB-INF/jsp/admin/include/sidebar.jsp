@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -93,8 +94,8 @@
 						<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 						<i class="fa fa-laptop me-2"></i>이벤트관리</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="/admin/add/event" class="dropdown-item">이벤트등록</a> 
-							<a href="/admin/list/event" class="dropdown-item">이벤트정책조회</a>
+							<a href="/admin/event/add" class="dropdown-item">이벤트등록</a> 
+							<a href="/admin/event/list" class="dropdown-item">이벤트조회</a>
 						</div>
 					</div>
 
@@ -127,4 +128,5 @@
 	<!-- Template Javascript -->
 	<script src="/js/admin/main.js"></script>
 </body>
+
 </html>

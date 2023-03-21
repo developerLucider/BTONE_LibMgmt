@@ -1,30 +1,25 @@
+
 package com.jincomp.jintest.web.jin.vo;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@NoArgsConstructor
+
+@NoArgsConstructor   //Controller에서 RequestBody사용할때 필요함 어떤 파라미터구성이 들어올지 모르므로 있어야함.
 @AllArgsConstructor
 @Data
-@Setter
 @Getter
-@JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class EventVO implements Serializable {
-
-   public static final long serialVersionUID = 1L;
-
-    private String eventId;
+@Setter
+public class EventVO {
+	
+	private String eventId;
 	private int fixDiscount;
-	private String rateStrDay;
-	private String rateEndDay;
+	private LocalDate rateStrDay;
+	private LocalDate rateEndDay;
 	private int rate;
 
 }

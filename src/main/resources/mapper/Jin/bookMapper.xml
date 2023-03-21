@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jincomp.jintest.web.jin.mapper.BookMapper">
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.EventVO" id="EventVO">
+		<result column="EVENT_ID" property="eventId"/>
+		<result column="FIX_DISCOUNT" property="fixDiscount"/>
+		<result column="RATE_STR_DAY" property="rateStrDay"/>
+		<result column="RATE_END_DAY" property="rateEndDay"/>
+		<result column="RATE" property="rate"/>			
+	</resultMap>
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.RentVO" id="RentVO">
+		<result column="USER_NO" property="userNo"/>
+		<result column="GOODS_ID" property="goodsId"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>			
+	</resultMap>	
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.BookVO" id="BookVO">
+		<result column="GOODS_ID" property="goodsId" />
+		<result column="GOODS_NAME" property="goodsName"/>
+		<result column="GOODS_PRICE" property="goodsPrice"/>
+		<result column="EVENT_ID" property="eventId"/>
+		<collection property="eventVo" resultMap="EventVO"/>
+		<collection property="rentVo" resultMap="RentVO"/>
+	</resultMap>
+	 
+	<select id="getBookList" resultMap="BookVO">
+		select b.goods_id, b.goods_name, b.goods_price,
+		bco.USER_NO, bco.GOODS_ID, 
+		ifnull(bco.START_DATE, "9999-09-09") as START_DATE , ifnull(bco.END_DATE, "9999-09-09") as END_DATE,
+		e.EVENT_ID,	e.FIX_DISCOUNT,
+		ifnull(e.RATE_STR_DAY, "9999-09-09") as RATE_STR_DAY, ifnull(e.RATE_END_DAY, "9999-09-09") as RATE_END_DAY,	e.RATE
+		from books b
+		LEFT OUTER JOIN BOOKS_CHECK_OUT bco
+		ON b.GOODS_ID = bco.GOODS_ID
+		left outer join books_event_info ein
+		on b.goods_id = ein.goods_id
+		LEFT OUTER JOIN EVENT e
+		ON ein.EVENT_ID= e.EVENT_ID;
+	</select>
+	
+	<select id="getRentList" resultMap="RentVO">
+		SELECT USER_NO, GOODS_ID, START_DATE, END_DATE	
+		FROM BOOKS_CHECK_OUT;
+	</select>
+	
+	<select id="searchBookList" resultMap="BookVO">
+		select b.goods_id, b.goods_name, b.goods_price,
+		bco.USER_NO, bco.GOODS_ID, 
+		ifnull(bco.START_DATE, "9999-09-09") as START_DATE , ifnull(bco.END_DATE, "9999-09-09") as END_DATE,
+		e.EVENT_ID,	e.FIX_DISCOUNT,
+		ifnull(e.RATE_STR_DAY, "9999-09-09") as RATE_STR_DAY, ifnull(e.RATE_END_DAY, "9999-09-09") as RATE_END_DAY,	e.RATE
+		from books b
+		LEFT OUTER JOIN BOOKS_CHECK_OUT bco
+		ON b.GOODS_ID = bco.GOODS_ID
+		left outer join books_event_info ein
+		on b.goods_id = ein.goods_id
+		LEFT OUTER JOIN EVENT e
+		ON ein.EVENT_ID= e.EVENT_ID
+		where b.${searchType} like concat('%', #{keyword}, '%')
+	</select>
+	
+	<insert id="addRentBook" parameterType="com.jincomp.jintest.web.jin.vo.RentVO">
+		insert into BOOKS_CHECK_OUT(user_no, goods_id, start_date, end_date)
+		values(#{userNo}, #{goodsId}, #{startDate}, #{endDate})
+	</insert>
+	
+	<!--  책목록   -->
+		<select id="getBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO"> SELECT GOODS_ID, GOODS_NAME, GOODS_PRICE FROM BOOKS </select>
+		<!-- 검색   -->
+		<select id="searchList" resultType="com.jincomp.jintest.web.jin.vo.BookVO"> SELECT GOODS_ID, GOODS_NAME, GOODS_PRICE FROM BOOKS WHERE ${searchType} = #{search} </select>
+		<!--  아이디 중복검사  -->
+		<select id="idChk" resultType="int"> SELECT COUNT(*) FROM USER_LOGIN WHERE USER_ID = #{userId} </select>
+		<!--  회원가입  -->
+		<insert id="join" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin"> INSERT INTO USER_LOGIN (USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS ) VALUES(edu.nextval("next_seq"), #{userId}, #{userPassword}, #{userName}, #{userAddress}) </insert>
+		<!--  <select id="getOklist" >
+				SELECT *
+				FROM books
+				  LEFT OUTER JOIN books_check_out
+				    ON books.goods_id = books_check_out.goods_id
+				     where books_check_out.goods_id is null
+			
+		</select>  -->
+	
+	
+</mapper>

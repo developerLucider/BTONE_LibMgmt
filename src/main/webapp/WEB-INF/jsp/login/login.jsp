@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>BTONE_LIBRARY_MANAGEMENT</title>
+<title>LOGIN</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/jquery-ui.css'/>" />
 
@@ -25,50 +25,48 @@
 <body>
 	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
 	<div class="container">
-		<!-- tabs는 이전 프로젝트 참고해서 해당 탭들 여기에 추가하면 해당 페이지 탭 나눌수 있을겁니다. -->
-		<div id="tabs">
-			<table width="100%">
-					<tbody>
-						<tr>
-							<th style="width: 200px; text-align: left;">LOGIN</th>
-							<td>
-								<ul>
-									<li><a href="#tabs1">탭1</a></li>
-									<li><a href="#tabs2">탭2</a></li>
-									<li><a href="#tabs3">탭3</a></li>
-									<li><a href="#tabs4">탭4</a></li>
-								</ul>
-							</td>
-						</tr>
-					</tbody>
-			</table>
-			<!-- tabs1 -->
+
 			<div class="" id="tabs1">
-				<form id="tabs1-frm" name="tabs1-frm" method="post" onSubmit="return false;">
-					<div class="content">
-						<!-- 해당 페이지 기능별로 탭 나눠쓰시면됩니다.
-						 header footer가 content 기준으로 사이즈가 잡혀있기때문에 구현할 기능들은 content내에서 구현해주세요-->
-						
-						
-					</div>
-				</form>
-			</div>
-			<!-- tab2 -->
-			<div class="" id="tabs2">
-			</div>
-			<!-- tabs3 -->
-			<div class="" id="tabs3">
-			</div>
-			<!-- tab4 -->
-			<div class="" id="tabs4">
-			</div>
-		</div>
-	</div>
+					<div class="content">						 
+						<div class="login">
+							<h3>로그인</h3>	
+							<form action ="/login" method="post">				
+								아이디: <input type="text" id="userId" name="userId"><br>
+								비밀번호:<input type="password" id="userPassword" name="userPassword"><br>
+								${msg}
+							<button type="submit">로그인</button>
+							
+							</form>
+							<input type="button" value="취소"> 
+							
+						</div>	
+					</div> <!-- content -->
+			</div> <!-- tab1 -->
+		
+	</div> <!-- contabiner -->
 	
 	<%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
 
-	<!-- popup  -->
-	<div id="popupBox" title="테이블"></div>
+<script>
 
+/* function fn_login(){
+	
+	let userId = $("#userId").val();
+	let userPassword = $("#userPassword").val();
+	
+	$.ajax(){
+		url : "/login",
+		type : "post",
+		data : {
+			"userId" : userId,
+			"userPassword" : userPassword
+		},
+		succeess : function(data){
+			console.log("로그이 성공");
+		}
+	}
+}
+ */
+</script>
 </body>
 </html>

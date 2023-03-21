@@ -7,14 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jincomp.jintest.web.jin.dro.UserLentalDTO;
+import com.jincomp.jintest.web.jin.service.EventService;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
+import com.jincomp.jintest.web.jin.vo.EventVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,9 @@ public class AdminController {
 	
 	@Autowired
 	private adminService adminService;
+	@Autowired
+	private EventService EventService;
+	
 	
 	@GetMapping("/")
 	public String adminMain() {
@@ -83,14 +89,19 @@ public class AdminController {
 		return "/admin/rentlist";
 	}
 	
-	@GetMapping("/add/event")
+	@GetMapping("/event/add")
 	public String adminAddEvent() {
-		
+
 		return "/admin/eventadd";
 	}
-	
-	@GetMapping("/list/event")
-	public String adminListEvent() {
+
+	@GetMapping("/event/list")
+	public String adminListEvent(Model model) {
+
+		List<EventVO> list = EventService.getEventList();
+		log.debug("list : {}", list);
+
+		model.addAttribute("list", list);
 		
 		return "/admin/eventlist";
 	}

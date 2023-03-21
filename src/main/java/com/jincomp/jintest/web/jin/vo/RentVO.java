@@ -1,26 +1,19 @@
 package com.jincomp.jintest.web.jin.vo;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@NoArgsConstructor
+
+@NoArgsConstructor   //Controller에서 RequestBody사용할때 필요함 어떤 파라미터구성이 들어올지 모르므로 있어야함.
 @AllArgsConstructor
 @Data
-@Setter
 @Getter
-@JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class RentVO implements Serializable {
+@Setter
+public class RentVO {
 
-   public static final long serialVersionUID = 1L;
-
-    private int userNo;
+	private int userNo;
 	private String goodsId;
 	private String startDate;
 	private String endDate;

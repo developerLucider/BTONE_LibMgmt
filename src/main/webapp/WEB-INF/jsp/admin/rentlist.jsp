@@ -49,6 +49,7 @@
                                             <td>${userList.endDate}</td>
                                         </tr>
                                      </c:forEach>   
+
                                     </tbody>
                                 </table>
                             </div>

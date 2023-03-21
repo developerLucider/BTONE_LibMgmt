@@ -9,6 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <script>
 	function update(){
 		$.ajax({
@@ -90,6 +91,7 @@
 		                                                      		                                                      
                                 <button type="button" class="btn btn-primary" onclick="update();">수정</button>
                                <a href="/admin/list/books"><button type="button" class="btn btn-primary">목록</button></a>                            
+
                             </form>
                         </div>
                     </div>
