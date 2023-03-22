@@ -12,3 +12,5 @@ public class UserAuthVO {
 	private int userNo;
 	private String userAuth;
 }
+
+

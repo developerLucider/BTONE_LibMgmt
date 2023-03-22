@@ -1,8 +1,5 @@
-
 package com.jincomp.jintest.web.jin.vo;
-
 import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

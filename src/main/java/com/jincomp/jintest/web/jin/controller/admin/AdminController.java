@@ -1,5 +1,6 @@
 package com.jincomp.jintest.web.jin.controller.admin;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.jincomp.jintest.web.jin.vo.EventVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -104,10 +106,6 @@ public class AdminController {
 		model.addAttribute("list", list);
 		
 		return "/admin/eventlist";
-	}
-
-	
-	
-	
+	}	
 }
 
