@@ -144,28 +144,38 @@ function rentBook() {
 		}
 	});
 	
-	console.log(rentBookList.length);
 	
 	// 체크된 값이 없을때
 	if (rentBookList.length > 0) {
-		$.ajax({
-			url : "main/rentBooks.do",
-			type : "post",
-			data : {
-				"rentBookList" : rentBookList,
-				"userNo" : 2
-			},
-			success : function(data) {
-				if(!data) {
-					alert("해당 책은 이미 빌려갔습니다.");
+		var userNo = '${sessionScope.loginUser.userNo}';
+		
+		
+		if(userNo === "") {
+			alert("로그인 후 이용 가능 합니다.");
+			location.href = "/login";
+		} else {
+			
+			$.ajax({
+				url : "main/rentBooks.do",
+				type : "post",
+				data : {
+					"rentBookList" : rentBookList,
+					"userNo" : userNo
+				},
+				success : function(data) {
+					
+					if(!data) {
+						alert("해당 책은 이미 빌려갔습니다.");
+					} else {
+						alert("대여 완료");
+						location.reload();	
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("에러발생");
 				}
-				alert("대여 완료");
-				location.reload();
-			},
-			error : function(xhr, status, error) {
-				alert("에러발생");
-			}
-		});
+			});
+		}
 	} else {
 		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
 	}
