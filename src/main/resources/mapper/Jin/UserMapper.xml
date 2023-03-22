@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jincomp.jintest.web.jin.mapper.UserMapper">
+
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserAuthVO" id="auth">		
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_AUTH" property="userAuth"/>
+	</resultMap>
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserVO" id="user">
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PASSWORD" property="userPassword"/>
+		<collection property="authVO" resultMap="auth"/>
+	</resultMap>
+	
+	   	    
+   <!--유저 로그인 -->
+   <select id="loginUser" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap ="user">      
+      SELECT ul.USER_NO, 
+      	     ul.USER_ID, 
+      	     ul.USER_NAME, 
+      	     ul.USER_PASSWORD,
+      	     ul.USER_ADDRESS, 
+      	     ua.user_no, 
+      	     ua.user_auth 
+	  FROM USER_LOGIN ul
+	  	left outer join user_auth ua 
+       	 on ul.user_no = ua.user_no 
+	  WHERE USER_ID = #{userId}
+   </select>
+   
+   <!-- 유저 번호로 정보 찾기 -->
+   <select id="findUserByUserNo" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="String">   	  
+   	  SELECT *
+   	  FROM USER_LOGIN
+   	  WHERE USER_ID = #{userId}   	  
+   </select>
+   
+    <!-- 권한만 조회 -->
+    <select id="findUserAuth" resultType="com.jincomp.jintest.web.jin.vo.UserAuthVO" parameterType="String">
+    	SELECT USER_NO, USER_AUTH
+    	FROM USER_AUTH
+    	WHERE USER_NO = #{userNo}
+    </select>
+    
+    <!-- 권한 업데이트 -->
+    <update id="authUpdate" parameterType="String">
+    	UPDATE USER_AUTH
+    	SET USER_AUTH = "admin"
+    	WHERE USER_NO = #{userNo}
+    </update>
+     
+   <!-- 권한 저장(회원가입 할 시, 디폴트로 user 넣으면됨. -->
+   <insert id ="insertAuth">
+	   	INSERT INTO USER_AUTH 
+	   	(
+	   		USER_NO, 
+	   		USER_AUTH
+	   	)
+	   	VALUES 
+	   	(
+	   		#{userNo},
+	   		#{userAuth}
+	   	)
+   </insert>
+   
+</mapper>
