@@ -20,47 +20,47 @@ import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
 public class BookController {
-	@Autowired
-	private static final Logger log = LoggerFactory.getLogger(BookController.class);
-	
-	@Autowired
-	private BookService bookService;
-	
-	//책목록 가져오기
-	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
-	public String getBookList(HttpServletRequest request,
-		HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/main/home";  //home.jsp 로 구성
-	}
-	
-	//대여가능 목록 가져오기
-	public String getOklist(HttpServletRequest request,
-		HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/main/home";  //home.jsp 로 구성
-	}
-	
-	@GetMapping("/admin")
-	public String showAdmin(HttpServletRequest request,
-	HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/admin/admin";
-	}
-	
-	@GetMapping("/regist")
-	public String showRegist(HttpServletRequest request,
-	HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/regist/regist";
-	}
-	
-	@GetMapping("/login")
-	public String showLogin(HttpServletRequest request,
-	HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/login/login";
-	}
+//	@Autowired
+//	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+//	
+//	@Autowired
+//	private BookService bookService;
+//	
+//	//책목록 가져오기
+//	@GetMapping("/")  // 처음 DOMAIN 주소로 접근시 jsp 호출용.
+//	public String getBookList(HttpServletRequest request,
+//		HttpServletResponse response, ModelMap model) throws Exception {
+//		
+//		return "/main/home";  //home.jsp 로 구성
+//	}
+//	
+//	//대여가능 목록 가져오기
+//	public String getOklist(HttpServletRequest request,
+//		HttpServletResponse response, ModelMap model) throws Exception {
+//		
+//		return "/main/home";  //home.jsp 로 구성
+//	}
+//	
+//	@GetMapping("/admin")
+//	public String showAdmin(HttpServletRequest request,
+//	HttpServletResponse response, ModelMap model) throws Exception {
+//		
+//		return "/admin/admin";
+//	}
+//	
+//	@GetMapping("/regist")
+//	public String showRegist(HttpServletRequest request,
+//	HttpServletResponse response, ModelMap model) throws Exception {
+//		
+//		return "/regist/regist";
+//	}
+//	
+//	@GetMapping("/login")
+//	public String showLogin(HttpServletRequest request,
+//	HttpServletResponse response, ModelMap model) throws Exception {
+//		
+//		return "/login/login";
+//	}
 
 	
 	

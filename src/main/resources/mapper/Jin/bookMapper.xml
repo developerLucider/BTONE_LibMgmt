@@ -67,22 +67,18 @@
 		values(#{userNo}, #{goodsId}, #{startDate}, #{endDate})
 	</insert>
 	
-	<!--  책목록   -->
-		<select id="getBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO"> SELECT GOODS_ID, GOODS_NAME, GOODS_PRICE FROM BOOKS </select>
-		<!-- 검색   -->
-		<select id="searchList" resultType="com.jincomp.jintest.web.jin.vo.BookVO"> SELECT GOODS_ID, GOODS_NAME, GOODS_PRICE FROM BOOKS WHERE ${searchType} = #{search} </select>
-		<!--  아이디 중복검사  -->
-		<select id="idChk" resultType="int"> SELECT COUNT(*) FROM USER_LOGIN WHERE USER_ID = #{userId} </select>
-		<!--  회원가입  -->
-		<insert id="join" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin"> INSERT INTO USER_LOGIN (USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS ) VALUES(edu.nextval("next_seq"), #{userId}, #{userPassword}, #{userName}, #{userAddress}) </insert>
-		<!--  <select id="getOklist" >
-				SELECT *
-				FROM books
-				  LEFT OUTER JOIN books_check_out
-				    ON books.goods_id = books_check_out.goods_id
-				     where books_check_out.goods_id is null
-			
-		</select>  -->
+	
+	<!--  아이디 중복검사  -->
+	<select id="idChk" resultType="int"> 
+		SELECT COUNT(*) FROM USER_LOGIN WHERE USER_ID = #{userId} 
+	</select>
+	
+	<!--  회원가입  -->
+	<insert id="join" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin"> 
+		INSERT INTO USER_LOGIN (USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS ) VALUES(edu.nextval("next_seq"), #{userId}, #{userPassword}, #{userName}, #{userAddress}) 
+	
+	</insert>
+
 	
 	
 </mapper>
