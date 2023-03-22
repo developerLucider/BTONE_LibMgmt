@@ -36,6 +36,7 @@
 							<c:when test = "${loginUser != null}">
 								<button class="button color_header"  onclick="location.href='/logout'">로그아웃</button>
 								<button class="button color_header" onclick="location.href='/'">장바구니</button>
+								<button class="button color_header" onclick="location.href='/mypage/${loginUser.userNo}'"style="width:80px">마이페이지</button>
 								<c:if test ="${sessionScope.loginUser.authVO.userAuth eq 'admin'}">
 									<button class="button color_header" onclick="location.href='/admin'">관리자</button>
 								</c:if>

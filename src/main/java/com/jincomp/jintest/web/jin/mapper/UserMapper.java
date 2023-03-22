@@ -1,7 +1,9 @@
 package com.jincomp.jintest.web.jin.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
@@ -19,5 +21,7 @@ public interface UserMapper {
 	
 	//권한업데이트
 	public int authUpdate(String userNo);
+
+	public List<OrderVO> orderList(int userNo);
 	
 }
