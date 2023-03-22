@@ -155,5 +155,4 @@
 		<!-- Template Javascript -->
 		<script src="/js/admin/main.js"></script>
 </body>
->>>>>>> refs/remotes/origin/master
 </html>
