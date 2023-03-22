@@ -28,14 +28,19 @@
 					<td></td>
 					<td>
 						<button class="button color_header"  onclick="location.href='/'">HOME</button>
-						<button class="button color_header"  onclick="location.href='/regist'">회원가입</button>
-						<c:if test ="${sessionScope.loginUser.authVO.userAuth eq 'admin'}">
-							<button class="button color_header" onclick="location.href='/admin'">관리자</button>
-						</c:if>
-						<button class="button color_header"  onclick="location.href='/login'">로그인</button>
-						<c:if test = "${loginUser != null}">
-							<button class="button color_header"  onclick="location.href='/logout'">로그아웃</button>		
-						</c:if>	
+						<c:choose>
+							<c:when test="${loginUser == null}">
+								<button class="button color_header"  onclick="location.href='/regist'">회원가입</button>
+								<button class="button color_header"  onclick="location.href='/login'">로그인</button>
+							</c:when>
+							<c:when test = "${loginUser != null}">
+								<button class="button color_header"  onclick="location.href='/logout'">로그아웃</button>
+								<button class="button color_header" onclick="location.href='/'">장바구니</button>
+								<c:if test ="${sessionScope.loginUser.authVO.userAuth eq 'admin'}">
+									<button class="button color_header" onclick="location.href='/admin'">관리자</button>
+								</c:if>
+							 </c:when>
+						</c:choose>
 						<!--<ul>
 							<li><a href="" onclick="">회원가입</a></li>
 							<li><a href="" onclick="">관리자</a></li>
