@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jincomp.jintest.web.jin.dro.UserLentalDTO;
+import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.service.EventService;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;

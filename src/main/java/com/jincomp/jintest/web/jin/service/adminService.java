@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.jincomp.jintest.web.jin.dro.AdminAddBookDTO;
-import com.jincomp.jintest.web.jin.dro.UserLentalDTO;
+import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
+import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.mapper.AdminMapper;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;

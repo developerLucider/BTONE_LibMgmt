@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jincomp.jintest.web.jin.dro.AdminAddBookDTO;
+import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.BooksEventInfo;

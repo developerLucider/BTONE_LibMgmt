@@ -1,4 +1,4 @@
-package com.jincomp.jintest.web.jin.dro;
+package com.jincomp.jintest.web.jin.dto;
 
 
 import lombok.AllArgsConstructor;

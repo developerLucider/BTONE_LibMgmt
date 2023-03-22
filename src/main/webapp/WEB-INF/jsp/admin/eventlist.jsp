@@ -209,7 +209,6 @@
 		src="/lib/admin/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 	<!-- Template Javascript -->
 	<script src="/js/admin/main.js"></script>
->>>>>>> refs/remotes/origin/master
 </body>
 
 </html>
