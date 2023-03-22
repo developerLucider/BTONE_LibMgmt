@@ -3,7 +3,9 @@ package com.jincomp.jintest.web.jin.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -91,20 +93,26 @@ public class HomeService {
 		return addEventPrice(bookList);
 	}
 	
-	public List<Integer> rentBooks(List<String> rentList, int userNo) {
-		List<Integer> result = new ArrayList<>();
+	public Map<String, List<String>> rentBooks(List<String> rentList, int userNo) {
+		Map<String, List<String>> result = new HashMap<>();
+		
+		List<String> failResult = new ArrayList<>();	// 대여 실패한 책 이름의 리스트
+		List<String> successResult = new ArrayList<>(); // 대여 성공한 책 이름의 리스트
 		logger.debug("rentBooks 진입");
 		// 대여할 책 ID 리스트를 iterating
+		rentList:
 		for(String goodsId : rentList) {
 			// rentVo 객체 생성후 정보 setting
 			List<RentVO> rentBookList = bookMapper.getRentList();
 			
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
-			// 해당 책이 이미 빌려가졌다면
+			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음
+			
 			for(RentVO rentBook : rentBookList) {
 				if(rentBook.getGoodsId().equals(goodsId)) {
-					return null;
+					failResult.add(rentBook.getGoodsId());
+					continue rentList;
 				}
 			}
 			
@@ -118,10 +126,17 @@ public class HomeService {
 			rentVo.setStartDate(startDate);
 			rentVo.setEndDate(endDate);
 			
-			result.add(bookMapper.addRentBook(rentVo));
+			// insert의 결과가 0 이상(성공했다면) -> 해당 아이디로 값을 찾아 해당 ID를 리턴
+			if(bookMapper.addRentBook(rentVo) > 0) {
+				List<MainBookListDTO> tmp = this.getMainBookList("goods_id", rentVo.getGoodsId());
+				successResult.add(tmp.get(0).getGoodsName());
+			}
 			
 			logger.debug("{} 대여 리스트 추가 완료", rentVo);
 		}
+		result.put("fail", failResult);
+		result.put("success", successResult);
+		
 		return result;
 	}
 }

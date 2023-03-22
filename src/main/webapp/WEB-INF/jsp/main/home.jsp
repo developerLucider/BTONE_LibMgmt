@@ -163,13 +163,7 @@ function rentBook() {
 					"userNo" : userNo
 				},
 				success : function(data) {
-					
-					if(!data) {
-						alert("해당 책은 이미 빌려갔습니다.");
-					} else {
-						alert("대여 완료");
-						location.reload();	
-					}
+					console.log(data);
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
@@ -177,7 +171,7 @@ function rentBook() {
 			});
 		}
 	} else {
-		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
+		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
 	}
 }
   

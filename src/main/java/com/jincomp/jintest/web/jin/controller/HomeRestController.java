@@ -1,6 +1,7 @@
 package com.jincomp.jintest.web.jin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +40,7 @@ public class HomeRestController {
    }
    
    @RequestMapping(value = "/rentBooks.do")
-   public List<Integer> rentBooks(@RequestParam("rentBookList[]")List<String> rentBookList,
+   public Map<String, List<String>> rentBooks(@RequestParam("rentBookList[]")List<String> rentBookList,
 		   				@RequestParam("userNo") int userNo,
 		   HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   	logger.debug("대여 책 목록 : {} 대여 유저 정보 : {}", rentBookList, userNo);
