@@ -1,15 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-         
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css'/>" />
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/jquery-ui.css'/>" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/css/common.css'/>" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/css/jquery-ui.css'/>" />
 
 <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
 <script src="<c:url value='/js/jquery-1.12.4.min.js'/>"></script>
@@ -41,8 +44,8 @@
 			}
 		});
 	}
-</script>	
-	
+</script>
+
 <script>
 	function searchBook() {    
 
@@ -178,37 +181,40 @@ function rentBook() {
 </script>
 </head>
 <body>
-   <%@include file = "/WEB-INF/jsp/include/header.jsp" %>
-   <div class="container">
-      <div id="tabs">
-         <table width="100%">
+	<%@include file="/WEB-INF/jsp/include/header.jsp"%>
+	<div class="container">
+		<div id="tabs">
+			<table width="100%">
 				<tbody>
 					<tr>
 						<th style="width: 200px; text-align: left;">HOME</th>
 						<td>
 							<ul>
-								<li><a id="allList" href="#tabs1" onclick="AllBookListEvent();">전체조회</a></li>
-								<li><a id="rentList" href="#tabs1" onclick="AvailableBookEvent();">대여가능</a></li>
-								<li><button type= "button" onclick = 'user_auth();'>관리자 등급 up </button></li>
+								<li><a id="allList" href="#tabs1"
+									onclick="AllBookListEvent();">전체조회</a></li>
+								<li><a id="rentList" href="#tabs1"
+									onclick="AvailableBookEvent();">대여가능</a></li>
+								<li><button type="button" onclick='user_auth();'>관리자
+										등급 up</button></li>
 							</ul>
 						</td>
 					</tr>
 				</tbody>
-		</table>
-         
-         <!-- home tab -->
-         <div class="content" id="tabs1">
+			</table>
+
+			<!-- home tab -->
+			<div class="content" id="tabs1">
 				<div class="search_select">
-                     <select id="searchType" name="searchType">
-                        <option value="">--선택--</option>
-                        <option value="GOODS_ID">아이디</option>
-                        <option value="GOODS_NAME">이름</option>
-                        <option value="GOODS_PRICE">가격</option>
-                     </select> <input type="text" name="keyword" value="" id="search"
-                        placeholder="검색어를 입력하세요.">
-                     <button class="button color_sub" onclick="searchBook();">검색</button>
-                     <button class="button color_sub4" onclick="rentBook();">대여</button>
-           		</div>
+					<select id="searchType" name="searchType">
+						<option value="">--선택--</option>
+						<option value="GOODS_ID">아이디</option>
+						<option value="GOODS_NAME">이름</option>
+						<option value="GOODS_PRICE">가격</option>
+					</select> <input type="text" name="keyword" value="" id="search"
+						placeholder="검색어를 입력하세요.">
+					<button class="button color_sub" onclick="searchBook();">검색</button>
+					<button class="button color_sub4" onclick="rentBook();">대여</button>
+				</div>
 				<div class="fixedTable">
 					<div class="fixedBox">
 						<table>
@@ -236,7 +242,7 @@ function rentBook() {
 										<th width='100px'>${list.goodsDiscountPrice}</th>
 										<th width='100px'>${list.eventStrDate}</th>
 										<th width='100px'>${list.eventEndDate}</th>
-										<th width='100px' style="display:none">${list.userId}</th>
+										<th width='100px' style="display: none">${list.userId}</th>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -244,21 +250,17 @@ function rentBook() {
 					</div>
 				</div>
 			</div>
+			<!-- tab2 -->
+			<!--  orders tab  -->			
+			<!-- tabs3 -->
+			<!-- tab4 -->
+		</div>
+	</div>
 
-                  
-         <!-- tab2 -->
-         
-         <!-- tabs3 -->
-         
-         <!-- tab4 -->
-         
-      </div>
-   </div>
-   
-   <%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
+	<%@include file="/WEB-INF/jsp/include/footer.jsp"%>
 
-   <!-- popup  -->
-   <div id="popupBox" title="테이블"></div>
-  
+	<!-- popup  -->
+	<div id="popupBox" title="테이블"></div>
+
 </body>
 </html>
