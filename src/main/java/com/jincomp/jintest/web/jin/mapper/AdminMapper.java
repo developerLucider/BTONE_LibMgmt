@@ -25,4 +25,8 @@ public interface AdminMapper {
 	public BookVO getUpBookList(String goodsId);
 
 	int update(BookVO vo);
+	
+	List<UserVO> getUserListt();
+	
+	List<UserVO> searchUserList(String userKeyWord);
 }

@@ -107,6 +107,20 @@ public class adminService {
 		
 		return mapper;
 	}
-
+	
+	//유저 출력
+	public List<UserVO> getUserListt(){
+		logger.debug("{}", "getUserList 서비스 진입");
+		List<UserVO> getUserListt = adminMapper.getUserListt();
+		
+		return getUserListt;
+	}
+	
+	public List<UserVO> searchUserList(String userKeyWord) {
+		List<UserVO> searchUserList = adminMapper.searchUserList(userKeyWord);
+		logger.debug("{}", "검색 진입");
+		
+		return searchUserList;
+	}
 	
 }
