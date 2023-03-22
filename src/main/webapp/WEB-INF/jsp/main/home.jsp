@@ -257,48 +257,9 @@ function rentBook() {
 				</div>
 			</div>
 			<!-- tab2 -->
-			<!--  orders tab  -->
-			<div class="content" id="tabs2">
-				<div class="fixedTable">
-					<div class="fixedBox">
-						<table>
-							<thead id="tableHead">
-								<tr>
-									<th width='20px'></th>
-									<th width='50px'>No</th>
-									<th width='50px'>ID</th>
-									<th width='200px'>이름</th>
-									<th width='200px'>결제금액</th>
-									<th width='100px'>이벤트가</th>
-									<th width='100px'>이벤트시작기간</th>
-									<th width='100px'>이벤트종료기간</th>
-								</tr>
-							</thead>
-							<tbody class="table" id="tableBody">
-								<c:forEach var="list" items="${list}" varStatus="status">
-									<tr>
-										<th width='20px'><input type="checkbox" name="check"
-											value="${list.goodsId}"></th>
-										<th width='50px'>${status.count}</th>
-										<th width='50px'>${list.goodsId}</th>
-										<th width='200px'>${list.goodsName}</th>
-										<th width='200px'>${list.goodsPrice}</th>
-										<th width='100px'>${list.goodsDiscountPrice}</th>
-										<th width='100px'>${list.eventStrDate}</th>
-										<th width='100px'>${list.eventEndDate}</th>
-										<th width='100px' style="display: none">${list.userId}</th>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-
+			<!--  orders tab  -->			
 			<!-- tabs3 -->
-
 			<!-- tab4 -->
-
 		</div>
 	</div>
 

@@ -6,12 +6,13 @@ import lombok.Data;
 
 @Data
 public class MainBookListDTO {
+	
 	private String goodsId;
 	private String goodsName;
 	private String goodsPrice;
 	private String goodsDiscountPrice;
 	private LocalDate eventStrDate;
 	private LocalDate eventEndDate;
-	private int userId;
+	private int userId;	
 	
 }

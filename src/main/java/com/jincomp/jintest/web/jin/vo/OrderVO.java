@@ -15,8 +15,6 @@ import lombok.Setter;
 public class OrderVO {
 
 	private int orderId;
-	private int userNo;
-	private String goodsId;
 	private int orderPrice;
 	private LocalDate orderDate;
 	
