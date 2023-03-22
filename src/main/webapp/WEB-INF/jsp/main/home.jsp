@@ -163,7 +163,7 @@ function rentBook() {
 				type : "post",
 				data : {
 					"rentBookList" : rentBookList,
-					"userNo" : userNo
+					"userNo" : userNo 
 				},
 				success : function(data) {
 					console.log(data);
