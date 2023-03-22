@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jincomp.jintest.web.jin.mapper.CartBooksMapper">
+
+<insert id="insertCart" useGeneratedKeys="true" keyProperty="cartId" parameterType="com.jincomp.jintest.web.jin.vo.CartBooksVO">
+	
+	INSERT INTO CART_BOOKS(						
+							USER_NO, 
+							GOODS_ID
+						   )
+				  VALUES  (
+				  			#{userNo},
+				  			#{goodsId}
+				  		  )
+</insert>
+
+</mapper>

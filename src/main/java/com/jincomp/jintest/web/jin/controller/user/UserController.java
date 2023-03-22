@@ -41,8 +41,7 @@ public class UserController {
 	   
 		// 로그인 정보 가져오기(db에서)
 	 	UserVO loginUser = userService.loginUser(usrVo);
-	  
-	    
+	  	    
 	 	// 로그인 정보 세션에 담음.
  		HttpSession httpSession = request.getSession();
  		
@@ -78,8 +77,7 @@ public class UserController {
 	@PostMapping("/auth/edit/{userNo}")
 	@ResponseBody
 	public int authUpdate(@PathVariable String userNo, HttpServletRequest request) {
-		
-		
+			
 		// 권한 업데이트(db처리)
 		int result = userService.authUpdate(userNo);
 				

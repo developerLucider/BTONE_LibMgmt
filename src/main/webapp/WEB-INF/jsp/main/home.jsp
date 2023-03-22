@@ -103,7 +103,11 @@
 	      }
 	   }
 </script>
+
+
+<!-- 박상훈 -->
 <script>
+// 권한 업데이트 처리
 function user_auth(){
 		
 		const userNo = '${sessionScope.loginUser.userNo}'
@@ -130,6 +134,58 @@ function user_auth(){
 				}
 			});
 		}
+}
+
+// 장바구니에 담기
+function books_basket(){
+	
+	// 도서 체크 리스트
+	var bookList = new Array();
+	
+	// 유저 id
+	const userNo = '${sessionScope.loginUser.userNo}'
+	
+	$("#tableBody tr").each(function () {
+		if($(this).find('input:checkbox[name=check]').is(":checked")) {
+			bookList.push($(this).children().eq(2).text());
+		}
+	});
+	
+	alert("BookList --> " + bookList)
+	console.log(bookList);
+	
+		
+ 	const basketForm = {
+			bookList
+
+ 	}
+	
+	 
+	//체크된 값 확인 
+	if(bookList.length === 0){
+		
+		alert("체크한 도서가 없습니다.");
+		
+	} else {		
+		$.ajax({
+			url : "add/cart",
+			type : "post",
+			dataType : "json",
+			data : {
+				"bookList": bookList,
+			    "userNo" : userNo
+			},
+			success : function(data){
+				if(data >= 1){
+					
+					alert("장바구니에 담았습니다.");	
+				}
+	
+			}, error : function(xhr, status, error) {
+				alert("에러발생");
+			}			
+		})
+	}
 }
 </script>
 
@@ -181,11 +237,15 @@ function rentBook() {
 				<tbody>
 					<tr>
 						<th style="width: 200px; text-align: left;">HOME</th>
+						  <h4>이름 : ${loginUser.userName}</h2>
+                    	  <h4>권한 :${loginUser.authVO.userAuth}</h2>
 						<td>
 							<ul>
 								<li><a id="allList" href="#tabs1" onclick="AllBookListEvent();">전체조회</a></li>
 								<li><a id="rentList" href="#tabs1" onclick="AvailableBookEvent();">대여가능</a></li>
-								<li><button type= "button" onclick = 'user_auth();'>관리자 등급 up </button></li>
+								<c:if test = "${loginUser != null}">
+									<li><button type= "button" onclick = 'user_auth();'>관리자 등급 up </button></li>
+								</c:if>
 							</ul>
 						</td>
 					</tr>
@@ -200,10 +260,12 @@ function rentBook() {
                         <option value="GOODS_ID">아이디</option>
                         <option value="GOODS_NAME">이름</option>
                         <option value="GOODS_PRICE">가격</option>
-                     </select> <input type="text" name="keyword" value="" id="search"
-                        placeholder="검색어를 입력하세요.">
+                     </select> <input type="text" name="keyword" value="" id="search" placeholder="검색어를 입력하세요.">
                      <button class="button color_sub" onclick="searchBook();">검색</button>
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
+                     <c:if test = "${loginUser != null}">
+                     	<button class="button color_sub" onclick="books_basket();">담기</button>
+                     </c:if>
            		</div>
 				<div class="fixedTable">
 					<div class="fixedBox">
