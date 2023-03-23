@@ -13,7 +13,7 @@ import com.jincomp.jintest.web.jin.vo.UserVO;
 @Mapper
 public interface AdminMapper {
 	
-	List<BookVO> getBookList();
+	List<AdminAddBookDTO> getBookList();
 
 	void insert(AdminAddBookDTO vo);
 	void insertEventInfo (AdminAddBookDTO vo);
@@ -22,7 +22,10 @@ public interface AdminMapper {
 
 	List<BookVO> searchList(String keyword);
 
-	public BookVO getUpBookList(String goodsId);
+	public AdminAddBookDTO getUpBookList(String goodsId);
 
-	int update(BookVO vo);
+	void update(AdminAddBookDTO vo);
+	void updateEventInfo(AdminAddBookDTO vo);
+
+	
 }

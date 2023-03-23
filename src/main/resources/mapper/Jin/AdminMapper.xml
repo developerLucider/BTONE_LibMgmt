@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jincomp.jintest.web.jin.mapper.AdminMapper">
 
-	<!-- 책목록  -->
-	<select id="getBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO">
-	    SELECT GOODS_ID,
-		       GOODS_NAME,
-		       GOODS_PRICE
-		FROM   BOOKS
+    <!-- 책목록 -->
+	<select id="getBookList" resultType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
+	    SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID 
+		FROM BOOKS B 
+		LEFT OUTER JOIN BOOKS_EVENT_INFO E
+		ON B.GOODS_ID = E.GOODS_ID ;
     </select>
+
 
 	<!--책등록  -->
 	<insert id="insert" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
@@ -45,6 +46,11 @@
 		<result column="END_DATE" property="endDate"/>
 	</resultMap>
 	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.BooksEventInfo" id="BooksEventInfo">
+		<result column="USER_NO" property="goodsId"/>
+		<result column="GOODS_ID" property="eventId"/>
+	</resultMap>
+	
 	<resultMap type="com.jincomp.jintest.web.jin.vo.BookVO" id="BookVO">
 		<result column="GOODS_ID" property="goodsId" />
 		<result column="GOODS_NAME" property="goodsName" />
@@ -52,6 +58,7 @@
 		<result column="EVENT_ID" property="eventId" />
 		<collection property="rentVo" resultMap="RentVO" />
 		<collection property="userLogin" resultMap="UserLogin" />
+		<collection property="eventInfo" resultMap="BooksEventInfo" />
 	</resultMap>
 
 
@@ -73,16 +80,31 @@
 	</select>
 	
 	<!--책 상세보기  -->
-	<select id="getUpBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO" parameterType="String">
+	<!-- <select id="getUpBookList" resultType="com.jincomp.jintest.web.jin.vo.BookVO" parameterType="String">
 		SELECT * FROM BOOKS WHERE GOODS_ID = #{goodsId}
+	</select> -->
+	
+	
+	<select id="getUpBookList" resultType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO" parameterType="String">
+		SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID 
+		FROM BOOKS B 
+		LEFT OUTER JOIN BOOKS_EVENT_INFO E
+		ON B.GOODS_ID = E.GOODS_ID
+		WHERE B.GOODS_ID = #{goodsId}
 	</select>
 
-	<!--책 수정  -->
-	<update id="update" parameterType="com.jincomp.jintest.web.jin.vo.BookVO">
-		update BOOKS 
-		SET GOODS_NAME = #{goodsName}
-			, GOODS_PRICE = #{goodsPrice}
-			, EVENT_ID = #{eventId}
+	
+	<!-- 책 수정   -->
+	<update id="update" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO"> 
+		UPDATE BOOKS 
+		SET GOODS_NAME = #{goodsName} 
+			, GOODS_PRICE = #{goodsPrice} 
+		WHERE GOODS_ID = #{goodsId} 
+	</update>
+	
+	<update id="updateEventInfo" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO"> 
+		UPDATE BOOKS_EVENT_INFO 
+		SET EVENT_ID = #{eventId} 
 		WHERE GOODS_ID = #{goodsId} 
 	</update>
 	

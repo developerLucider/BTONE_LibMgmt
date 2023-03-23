@@ -1,4 +1,4 @@
-package com.jincomp.jintest.web.jin.controller;
+package com.jincomp.jintest.web.jin.controller.user;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jincomp.jintest.web.jin.service.BookService;
+import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
@@ -25,20 +25,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping(value = "/main")
 @RestController
-public class BookRestController2 {
+public class UserRestController {
 
-	private static final Logger logger = LoggerFactory.getLogger(BookRestController2.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
 	
-	private final BookService bookService;
-
+	private final UserService userService;
 	
 	@RequestMapping(value = "/getjoin.do")
 	public int join(UserLogin user, Model model,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		logger.debug("{}" ,"회원가입 진입");
-		int joinch = bookService.join(user);
+		int joinch = userService.join(user);
 		
 		return joinch;
 	}
@@ -47,7 +46,9 @@ public class BookRestController2 {
 	@ResponseBody
 	@RequestMapping(value="/idChk", method = RequestMethod.POST)
 	public Boolean idChk(UserLogin user) throws Exception {
-		Boolean result = bookService.idChk(user);
+		
+		Boolean result = userService.idChk(user);
+		logger.debug("{}" ,"중복체크 진입");
 		
 		return result;
 	}
