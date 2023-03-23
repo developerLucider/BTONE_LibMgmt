@@ -11,6 +11,11 @@ spring:
     jdbc-url: jdbc:mysql://192.168.0.152:3306/edu?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
     driver: com.mysql.cj.jdbc.Driver
     
+  thymeleaf:
+     prefix : classpath:templates/html
+     suffix : .html
+     cache : false
+    
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
