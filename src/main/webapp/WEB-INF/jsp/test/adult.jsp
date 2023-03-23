@@ -14,18 +14,55 @@
 <script src="<c:url value='/js/jquery-1.12.4.min.js'/>"></script>
 <script src="<c:url value='/js/jquery.form.js'/>"></script>
 <script src="<c:url value='/js/jquery-ui.js'/>"></script>
-
+ <style>
+      label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        margin-right: 10px;
+      }
+      input {
+        width: 200px;
+      }
+    </style>
+    
+    
 <script>
-
-
+//주민번호 최대자리 입력시 다음 칸으로 바로 이동하는 뻥션
+$(document).ready(function() {
+    $(".inputs").keyup(function () {
+        if (this.value.length == this.maxLength) {
+          $(this).next('.inputs').focus();
+        }
+    });
+});
 </script>
+
+
+
 
 </head>
 <body>
-	<div>
-		Test입니다.
-	</div>
+	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
+	<div class="container">
 
-
+			<div class="" id="tabs1">
+					<div class="content">						 
+						<div class="/adult/action">
+							<h3>성인 인증</h3>	
+							<form action ="/adult" method="post">				
+								<label for="userName">이름:</label>
+							    <input type="text" id="userName" name="userName"><br>
+							
+							    <label for="userRegNo">주민등록번호:</label>
+							    <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="13"> 
+							    <!-- <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="7"> -->
+							<button type="submit">인증하기</button>
+							</form>
+						</div>	
+					</div> <!-- content -->
+			</div> <!-- tab1 -->
+	</div> <!-- contabiner -->
+	<%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
 </body>
 </html>

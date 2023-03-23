@@ -24,4 +24,7 @@ public interface UserMapper {
 
 	public List<OrderVO> orderList(int userNo);
 	
+	
+	//성인인증
+	public UserVO adult(UserVO userVO);
 }

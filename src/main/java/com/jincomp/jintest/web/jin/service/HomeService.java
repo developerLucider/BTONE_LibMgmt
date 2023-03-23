@@ -8,14 +8,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
+import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +35,7 @@ public class HomeService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
 	private final BookMapper bookMapper;
+	private final UserMapper userMapper;
 	
 	private List<MainBookListDTO> addEventPrice(List<BookVO> bookList) {
 		List<MainBookListDTO> mainList = new ArrayList<>();
@@ -140,6 +147,36 @@ public class HomeService {
 		return result;
 	}
 	
-	
+	public UserVO adult(UserVO userVO) {
+		
+		logger.debug("{}", "성인인증 서비스 진입");
+		
+		String uName = userVO.getUserName();
+		String uNum1 = userVO.getUserRegNo();
+//		String uNum2 = userVO.getUserName();
+		
+		logger.debug("입력받은 이름 : {}", uName);
+		logger.debug("입력받은 주민번호 : {}",uNum1);
+		
+		//이게 DB에서 이름 주민번호에 해당하는 정보
+		UserVO adultUser = userMapper.adult(userVO);
+		
+		String dName = adultUser.getUserName(); 
+		String dNum = adultUser.getUserRegNo();
+		
+		logger.debug("DB에서 받은 이름 : {}",dName);
+		logger.debug("DB에서 받은 주민번호 : {}",dNum);
+		
+//		if(adultUser != null) {
+//			
+//			if(dNum == "") {
+//				
+//			}else {
+//				return null;
+//			}
+//		}
+//		
+		return adultUser;
+	}
 	
 }

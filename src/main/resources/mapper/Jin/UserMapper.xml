@@ -103,5 +103,17 @@
 		ON o.user_no = ul.user_no
 		WHERE ul.user_no = #{userNo}
 	</select>
+	
+	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+		select 
+		USER_NO
+		,USER_NAME
+		,USER_ID
+		,USER_ADDRESS
+		,USER_REG_NO
+		from USER_LOGIN
+		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+	</select>
+	
 
 </mapper>
