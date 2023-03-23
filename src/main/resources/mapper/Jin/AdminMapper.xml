@@ -96,6 +96,7 @@
 	from USER_LOGIN
 	</select>
 	
+	<!-- 유저 이름 검색 -->
 	<select id="searchUserList" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
 		select 
 		USER_NO

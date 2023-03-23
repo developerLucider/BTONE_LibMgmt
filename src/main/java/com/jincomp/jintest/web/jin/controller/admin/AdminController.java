@@ -108,7 +108,9 @@ public class AdminController {
 		return "/admin/eventlist";
 	}
 
-	@GetMapping("/list/user")
+	
+	//어드민 유저 리스트 출력
+	@GetMapping("/user/list")
 	public String getUserList(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 		
 		List<UserVO> getUserListt = adminService.getUserListt();
