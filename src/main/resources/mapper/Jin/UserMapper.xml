@@ -3,68 +3,105 @@
 
 <mapper namespace="com.jincomp.jintest.web.jin.mapper.UserMapper">
 
-	<resultMap type="com.jincomp.jintest.web.jin.vo.UserAuthVO" id="auth">		
-		<result column="USER_NO" property="userNo"/>
-		<result column="USER_AUTH" property="userAuth"/>
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserAuthVO"
+		id="auth">
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_AUTH" property="userAuth" />
 	</resultMap>
 	
-	<resultMap type="com.jincomp.jintest.web.jin.vo.UserVO" id="user">
-		<result column="USER_NO" property="userNo"/>
-		<result column="USER_NAME" property="userName"/>
-		<result column="USER_ID" property="userId"/>
-		<result column="USER_PASSWORD" property="userPassword"/>
-		<collection property="authVO" resultMap="auth"/>
+	<resultMap type="com.jincomp.jintest.web.jin.vo.BookVO"
+		id="book">
+		<result column="GOODS_ID" property="goodsId" />
+		<result column="GOODS_NAME" property="goodsName" />
 	</resultMap>
+
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserVO"
+		id="user">
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_ID" property="userId" />
+		<result column="USER_PASSWORD" property="userPassword" />
+		<collection property="authVO" resultMap="auth" />
+	</resultMap>
+	<resultMap type="com.jincomp.jintest.web.jin.vo.OrderVO" id="order">
+		<result column="ORDER_ID" property="orderId"/>
+		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<collection property="UserVO" resultMap="user" />
+		<collection property="BookVO" resultMap="book" />
 	
-	   	    
-   <!--유저 로그인 -->
-   <select id="loginUser" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap ="user">      
-      SELECT ul.USER_NO, 
-      	     ul.USER_ID, 
-      	     ul.USER_NAME, 
-      	     ul.USER_PASSWORD,
-      	     ul.USER_ADDRESS, 
-      	     ua.user_no, 
-      	     ua.user_auth 
-	  FROM USER_LOGIN ul
-	  	left outer join user_auth ua 
-       	 on ul.user_no = ua.user_no 
-	  WHERE USER_ID = #{userId}
-   </select>
-   
-   <!-- 유저 번호로 정보 찾기 -->
-   <select id="findUserByUserNo" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="String">   	  
-   	  SELECT *
-   	  FROM USER_LOGIN
-   	  WHERE USER_ID = #{userId}   	  
-   </select>
-   
-    <!-- 권한만 조회 -->
-    <select id="findUserAuth" resultType="com.jincomp.jintest.web.jin.vo.UserAuthVO" parameterType="String">
-    	SELECT USER_NO, USER_AUTH
-    	FROM USER_AUTH
-    	WHERE USER_NO = #{userNo}
-    </select>
-    
-    <!-- 권한 업데이트 -->
-    <update id="authUpdate" parameterType="String">
-    	UPDATE USER_AUTH
-    	SET USER_AUTH = "admin"
-    	WHERE USER_NO = #{userNo}
-    </update>
-     
-   <!-- 권한 저장(회원가입 할 시, 디폴트로 user 넣으면됨. -->
-   <insert id ="insertAuth">
-	   	INSERT INTO USER_AUTH 
-	   	(
-	   		USER_NO, 
-	   		USER_AUTH
-	   	)
-	   	VALUES 
-	   	(
-	   		#{userNo},
-	   		#{userAuth}
-	   	)
-   </insert>
-   
+	</resultMap>
+
+	<!--유저 로그인 -->
+	<select id="loginUser"
+		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
+		parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
+		SELECT ul.USER_NO,
+		ul.USER_ID,
+		ul.USER_NAME,
+		ul.USER_PASSWORD,
+		ul.USER_ADDRESS,
+		ua.user_no,
+		ua.user_auth
+		FROM USER_LOGIN ul
+		left outer
+		join user_auth ua
+		on ul.user_no = ua.user_no
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- 유저 번호로 정보 찾기 -->
+	<select id="findUserByUserNo"
+		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
+		parameterType="String">
+		SELECT *
+		FROM USER_LOGIN
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- 권한만 조회 -->
+	<select id="findUserAuth"
+		resultType="com.jincomp.jintest.web.jin.vo.UserAuthVO"
+		parameterType="String">
+		SELECT USER_NO, USER_AUTH
+		FROM USER_AUTH
+		WHERE USER_NO =
+		#{userNo}
+	</select>
+
+	<!-- 권한 업데이트 -->
+	<update id="authUpdate" parameterType="String">
+		UPDATE USER_AUTH
+		SET
+		USER_AUTH = "admin"
+		WHERE USER_NO = #{userNo}
+	</update>
+
+	<!-- 권한 저장(회원가입 할 시, 디폴트로 user 넣으면됨. -->
+	<insert id="insertAuth">
+		INSERT INTO USER_AUTH
+		(
+		USER_NO,
+		USER_AUTH
+		)
+		VALUES
+		(
+		#{userNo},
+		#{userAuth}
+		)
+	</insert>
+	<!-- 주문 내역 -->
+	<select id="orderList"
+		resultType="com.jincomp.jintest.web.jin.vo.OrderVO" resultMap="order">
+		SELECT
+		o.order_id , o.order_price , o.order_date , b.goods_id ,b.goods_name, ul.user_no
+		FROM `order` o
+		LEFT OUTER JOIN books b
+		ON o.goods_id =
+		b.goods_id
+		LEFT OUTER JOIN user_login ul
+		ON o.user_no = ul.user_no
+		WHERE ul.user_no = #{userNo}
+	</select>
+
 </mapper>

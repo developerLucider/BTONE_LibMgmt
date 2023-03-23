@@ -17,8 +17,10 @@
 
 <script>
 	$(() => {
-		$("#tabs").tabs();
+		$("#tabs").tabs();		
+	
 	});
+	
 	
 	
 	//회원가입
@@ -27,7 +29,7 @@
 		var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9$@!%*#?&]*$/;
 		var pw = $("#userPassword").val();
 		var pw2 = $("#password2").val();
-
+		
 		console.log(reg.test(pw)); //true 반환
 
 		if(!reg.test(pw)) { //정규식 조건문이 맞지않거나, 
@@ -99,27 +101,27 @@
 								<tr>
 									<td class="text">아이디</td>
 									<td class="line"><input type="text" name="userId"
-										id="userId" placeholder="아이디 입력" /></td>
+										id="userId" placeholder="아이디 입력" required/></td>
 								</tr>
 								<tr>
 									<td class="line pt">비밀번호</td>
 									<td class="line"><input type="password" id="userPassword"
-										name="userPassword" placeholder="비밀번호" /></td>
+										name="userPassword" placeholder="비밀번호" required/></td>
 								</tr>
 								<tr>
 									<td class="line pt">비밀번호 확인</td>
 									<td class="line"><input type="password" name="password2"
-										id="password2" placeholder="비밀번호 확인" /></td>
+										id="password2" placeholder="비밀번호 확인" required /></td>
 								</tr>
 								<tr>
 									<td class="line pt">이름</td>
 									<td class="line"><input type="text" id="userName"
-										name="userName" placeholder="성함" /></td>
+										name="userName" placeholder="성함" required/></td>
 								</tr>
 								<tr>
 									<td class="line pt">주소</td>
 									<td class="line">
-										<input type="text" id="Address" name="Address" placeholder="주소" />
+										<input type="text" id="Address" name="Address" placeholder="주소" required/>
 									</td>
 								</tr>
 								<tr>
