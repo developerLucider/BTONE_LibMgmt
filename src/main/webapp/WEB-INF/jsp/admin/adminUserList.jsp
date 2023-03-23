@@ -62,9 +62,9 @@ function fn_search(){
     <div class="container-fluid position-relative d-flex p-0">
 		<!-- sidebar include -->
 		<%@include file="/WEB-INF/jsp/admin/include/sidebar.jsp" %> 
-			<!-- Content Start -->
-        <div class="content">     
         <%@include file="/WEB-INF/jsp/admin/include/header.jsp" %>  
+			<!-- Content Start -->
+        <div class="">     
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">

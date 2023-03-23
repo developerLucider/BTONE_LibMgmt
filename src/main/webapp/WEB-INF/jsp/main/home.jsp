@@ -215,6 +215,7 @@ function rentBook() {
                      <button class="button color_sub" onclick="searchBook();">검색</button>
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
 					 <a href = "https://naver.com/" target="_blacnk">인증 테스트</a>
+				</div>
 				<div class="fixedTable">
 					<div class="fixedBox">
 						<table>
