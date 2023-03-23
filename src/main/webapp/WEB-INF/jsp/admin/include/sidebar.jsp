@@ -104,7 +104,7 @@
 						<a href="/admin/" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 						<i class="fa fa-laptop me-2"></i>유저관리</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="/admin/list/user" class="dropdown-item">유저정보</a>							
+							<a href="/admin/user/list" class="dropdown-item">유저정보</a>							
 						</div>
 					</div>
 					<!-- <a href="/admin/chart.html" class="nav-item nav-link"><i

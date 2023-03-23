@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.service.EventService;
+import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.EventVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,13 +53,12 @@ public class AdminController {
 		return "/admin/addbook";
 	}
 	
-	
+	//책 전체조회
 	@GetMapping("/list/books")
 	public String adminBookAll(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		
-		List<BookVO> bookList = adminService.getBookList();
-		
+		List<AdminAddBookDTO> bookList = adminService.getBookList();
 		log.debug("bookList : {}", bookList);
 		
 		model.addAttribute("bookList", bookList);
@@ -64,13 +66,15 @@ public class AdminController {
 		return "/admin/bookAllList";
 	}
 	
+	
+	//책상세보기
 	@GetMapping("/edit/book/{goodsId}")
 	public String adminBookEdit(@PathVariable String goodsId,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		
 		log.debug("{}", "수정진입" );
 		
-		BookVO bookList = adminService.getUpBookList(goodsId);
+		AdminAddBookDTO bookList = adminService.getUpBookList(goodsId);
 		
 		model.addAttribute("bookList", bookList);
 		
@@ -107,7 +111,15 @@ public class AdminController {
 	}
 
 	
-	
-	
-}
+	//어드민 유저 리스트 출력
+	@GetMapping("/user/list")
+	public String getUserList(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		
+		List<UserVO> getUserListt = adminService.getUserListt();
+		model.addAttribute("getUserListt", getUserListt);
+			
+			
+			return "/admin/adminUserList";  
+		}
+	}
 

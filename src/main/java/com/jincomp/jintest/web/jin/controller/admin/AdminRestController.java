@@ -57,14 +57,26 @@ public class AdminRestController {
 	}
 	
 	//책 수정
-	@RequestMapping(value = "/update.do", method = RequestMethod.POST)	//타입 확인해주기!
-	public int update(BookVO vo) throws Exception {
+	@RequestMapping(value = "/update.do")	//타입 확인해주기!
+	public void update(@RequestBody AdminAddBookDTO vo) throws Exception {
 
 		logger.debug("{}" ,"글 수정 진입");
 		logger.debug("vo : {}", vo);
 		
-		return  adminService.update(vo);
+		 adminService.update(vo);
 	}
+	@RequestMapping(value = "/getAdminUserList.do")
+	   public List<UserVO> searchUserList(@RequestParam ("userKeyWord") String userKeyWord, 
+			   HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		logger.debug("{}" ,"어드민유저검색창 진입");
+
+		List<UserVO> userList = adminService.searchUserList(userKeyWord);
+		logger.debug("userList : {}" ,userList); 
+
+		return userList;
+	}
+	
 	
 }
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -90,7 +89,6 @@
 						<div class="dropdown-menu bg-transparent border-0">
 							<a href="/admin/add/book" class="dropdown-item">도서등록</a> <a
 								href="/admin/list/books" class="dropdown-item">도서전체조회</a> <a
-								href="/admin/edit/book" class="dropdown-item">도서수정</a> <a
 								href="/admin/books/rent" class="dropdown-item">대여현황</a>
 						</div>
 					</div>
