@@ -140,10 +140,12 @@ function user_auth(){
 <script>
 function rentBook() {    
 	var rentBookList = [];
+	var rentBookPriceList = [];
 	
 	$("#tableBody tr").each(function () {
 		if($(this).find('input:checkbox[name=check]').is(":checked")) {
 			rentBookList.push($(this).children().eq(2).text());
+			rentBookPriceList.push($(this).children().eq(5).text());
 		}
 	});
 	
@@ -162,11 +164,13 @@ function rentBook() {
 				url : "main/rentBooks.do",
 				type : "post",
 				data : {
+					"rentBookPriceList" : rentBookPriceList,
 					"rentBookList" : rentBookList,
 					"userNo" : userNo 
 				},
 				success : function(data) {
-					console.log(data);
+					alert("대여 완료");
+					location.reload();
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
@@ -176,6 +180,7 @@ function rentBook() {
 	} else {
 		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
 	}
+	// TODO : ajax success에서 data(Map<String, Map<String>> 타입)를 iterating해서 출력
 }
   
 </script>
@@ -215,6 +220,7 @@ function rentBook() {
                      <button class="button color_sub" onclick="searchBook();">검색</button>
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
 					 <a href = "https://naver.com/" target="_blacnk">인증 테스트</a>
+				</div>
 				<div class="fixedTable">
 					<div class="fixedBox">
 						<table>
