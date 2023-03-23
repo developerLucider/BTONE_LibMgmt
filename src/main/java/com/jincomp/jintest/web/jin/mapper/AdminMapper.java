@@ -28,4 +28,11 @@ public interface AdminMapper {
 	void updateEventInfo(AdminAddBookDTO vo);
 
 	
+	int update(BookVO vo);
+	
+	//유저 리스트 출력
+	List<UserVO> getUserListt();
+	//유저 이름 검색
+	List<UserVO> searchUserList(String userKeyWord);
+  
 }

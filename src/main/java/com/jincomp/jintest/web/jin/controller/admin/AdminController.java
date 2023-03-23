@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.service.EventService;
+import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.service.adminService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.EventVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,7 +111,15 @@ public class AdminController {
 	}
 
 	
-	
-	
-}
+	//어드민 유저 리스트 출력
+	@GetMapping("/user/list")
+	public String getUserList(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+		
+		List<UserVO> getUserListt = adminService.getUserListt();
+		model.addAttribute("getUserListt", getUserListt);
+			
+			
+			return "/admin/adminUserList";  
+		}
+	}
 

@@ -205,16 +205,16 @@ function rentBook() {
 			<!-- home tab -->
 			<div class="content" id="tabs1">
 				<div class="search_select">
-					<select id="searchType" name="searchType">
-						<option value="">--선택--</option>
-						<option value="GOODS_ID">아이디</option>
-						<option value="GOODS_NAME">이름</option>
-						<option value="GOODS_PRICE">가격</option>
-					</select> <input type="text" name="keyword" value="" id="search"
-						placeholder="검색어를 입력하세요.">
-					<button class="button color_sub" onclick="searchBook();">검색</button>
-					<button class="button color_sub4" onclick="rentBook();">대여</button>
-				</div>
+                     <select id="searchType" name="searchType">
+                        <option value="">--선택--</option>
+                        <option value="GOODS_ID">아이디</option>
+                        <option value="GOODS_NAME">이름</option>
+                        <option value="GOODS_PRICE">가격</option>
+                     </select> <input type="text" name="keyword" value="" id="search"
+                        placeholder="검색어를 입력하세요.">
+                     <button class="button color_sub" onclick="searchBook();">검색</button>
+                     <button class="button color_sub4" onclick="rentBook();">대여</button>
+					 <a href = "https://naver.com/" target="_blacnk">인증 테스트</a>
 				<div class="fixedTable">
 					<div class="fixedBox">
 						<table>

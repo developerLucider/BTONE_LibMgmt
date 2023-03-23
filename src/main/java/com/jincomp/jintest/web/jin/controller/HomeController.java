@@ -62,6 +62,15 @@ public class HomeController {
 
 		return "/login/login";
 	}
+	
+	//성인인증 페이지 진입
+	@GetMapping("/adult")
+	public String showAdult(HttpServletRequest request,
+	HttpServletResponse response, ModelMap model) throws Exception {
+		
+		return "/test/adult";
+	}
+
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
