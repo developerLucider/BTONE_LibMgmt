@@ -104,4 +104,28 @@
 		WHERE ul.user_no = #{userNo}
 	</select>
 
+	<!-- 아이디 중복검사 -->
+	<select id="idChk" resultType="int"> 
+		SELECT COUNT(*) FROM USER_LOGIN
+		WHERE USER_ID = #{userId} 
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin"> 
+		INSERT INTO USER_LOGIN (USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_REG_NO)
+		VALUES(edu.nextval("next_seq"), #{userId}, #{userPassword}, #{userName}, #{userAddress}, #{userRegNo}) 
+	</insert>
+		
+	<!-- 포인트 등록 -->
+	<insert id="getPoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO"> 
+		INSERT INTO EDU.POINT (USER_NO, POINT)
+		VALUES(edu.currval("next_seq"), #{point}) 
+	</insert>
+		
+	<!-- 관리자 권한 user 등록 -->
+	<insert id="getAuth" parameterType="com.jincomp.jintest.web.jin.vo.UserAuthVO">
+		INSERT INTO EDU.USER_AUTH (USER_NO, USER_AUTH)
+		VALUES(edu.currval("next_seq"), #{userAuth}) 
+	</insert>
+
 </mapper>

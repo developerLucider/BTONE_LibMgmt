@@ -12,26 +12,32 @@
 
 <script>
 	function update(){
+		
+		var vo = {
+				goodsId : $("#goodsId").val(),
+				goodsName : $("#goodsName").val(),
+				goodsPrice : $("#goodsPrice").val(),
+				eventId : $("#selectType option:selected").val()
+		};
+		
+		var eventId = $("#selectType option:selected").val();
+		
+		console.log("이벤트 id",eventId);
+		console.log(JSON.stringify(vo));
+		
+		
 		$.ajax({
 			url : "/admin/update.do",
 			dataType : "json",
 	        type :   "post",
-			data :{
-				"goodsId" : $("#goodsId").val(),
-				"goodsName" : $("#goodsName").val(),
-				"name" : $("#up_name").val(),
-				"goodsPrice" : $("#goodsPrice").val(),
-				"eventId" : $("#selectType option:selected").val()
-			},
-		    success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
-		    	if(result > 0){
-		    		console.log( "도서 수정 성공");
-			    	alert('도서 수정을 완료!');
-			    	location.reload();
-			    
-		    	}else if(result == data){
-		    		alert('수정 없음.');
-		    	}
+	        contentType : "application/json",
+			data :JSON.stringify(vo),
+			
+		    success : function() {  //아래와 같은 데이터 형식으로 가져올거임!
+		    	console.log( "도서 수정 성공");
+		    	alert(JSON.stringify('도서 수정을 완료!'));
+		    	location.reload();
+		    	
 		    },error : function(e){
 		    	console.log(e);
 		    	alert(e);
@@ -77,13 +83,15 @@
                                 </div>
                                 <!-- 할인 정책 적용 -->
                                 <label for="eventSelect" class="form-label">할인적용</label>
-		                            <select class="form-select mb-3" aria-label="Default select example" id="selectType">
-		                                <option selected value="">${item.eventId }</option>
-		                                <option value="A">A</option>
-		                                <option value="B">B</option>
-		                                <option value="C">C</option>
-		                                <option value="D">D</option>
-		                            </select>
+		                            <select
+									class="form-select mb-3" aria-label="Default select example"
+									id="selectType">
+									<option selected value="">${item.eventId}</option>
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
 		                        <div class="mb-3">
                                 	<label for="formFile" class="form-label">도서이미지</label>
                                 	<input class="form-control bg-dark" type="file" id="formFile">
