@@ -86,5 +86,27 @@
 		WHERE GOODS_ID = #{goodsId} 
 	</update>
 	
+	<!-- 유저 리스트 -->
+	<select id="getUserListt" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+	select 
+	USER_NO
+	,USER_NAME
+	,USER_ID
+	,USER_ADDRESS
+	from USER_LOGIN
+	</select>
+	
+	<!-- 유저 이름 검색 -->
+	<select id="searchUserList" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+		select 
+		USER_NO
+		,USER_NAME
+		,USER_ID
+		,USER_ADDRESS
+		from USER_LOGIN
+		where USER_NAME like concat ('%',#{userKeyWord},'%')
+		
+	</select>
+	
 
 </mapper>

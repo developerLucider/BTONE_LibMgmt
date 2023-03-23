@@ -79,7 +79,8 @@ public class adminService {
 			user.setEndDate(vo.getRentVo().getEndDate());
 			user.setUserName(vo.getUserLogin().getUserName());
 			
-		}
+		}    
+		//테스트입니다.
 		
 		userList.add(user);
 		
@@ -107,6 +108,21 @@ public class adminService {
 		
 		return mapper;
 	}
-
+	
+	//유저 출력
+	public List<UserVO> getUserListt(){
+		logger.debug("{}", "getUserList 서비스 진입");
+		List<UserVO> getUserListt = adminMapper.getUserListt();
+		
+		return getUserListt;
+	}
+	
+	//유저 이름 검색
+	public List<UserVO> searchUserList(String userKeyWord) {
+		List<UserVO> searchUserList = adminMapper.searchUserList(userKeyWord);
+		logger.debug("{}", "검색 진입");
+		
+		return searchUserList;
+	}
 	
 }
