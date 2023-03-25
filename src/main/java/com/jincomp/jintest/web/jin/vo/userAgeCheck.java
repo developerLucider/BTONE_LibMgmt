@@ -12,17 +12,12 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class UserVO {
+public class userAgeCheck {
 
-	private String userNo;
-	private String userName;
-	private String userId;
-	private String userPassword;
-	private String userAddress;
-	private String userRegNo;
-	private String userAgeCheckYn;
+	private int userNo;
+	private String user_age_check_yn;
+	
 		
-	// 권한
-	private UserAuthVO authVO;
+	
 	
 }

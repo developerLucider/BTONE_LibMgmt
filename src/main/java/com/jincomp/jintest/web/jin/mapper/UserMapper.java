@@ -27,6 +27,14 @@ public interface UserMapper {
 
 	public List<OrderVO> orderList(int userNo);
 	
+
+	
+	//성인인증
+	public UserVO adult(UserVO userVO);
+	
+	//인증 변경
+	public void changeAdult(int userNo);
+
 	//회원가입 (중복체크)
 	int idChk(UserLogin user);
 

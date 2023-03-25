@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -179,5 +183,64 @@ public class HomeService {
 	}
 	
 	
+	
+		//성인 인증 
+		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+		
+		logger.debug("{}", "성인인증 서비스 진입");
+		
+		HttpSession httpSession = request.getSession();
+		//로그인 세션에서 No 값을 가져옴
+		String sNum = (String) httpSession.getAttribute("userNum");
+		//주민번호 뒷자리
+		String backNum = userRegNo1;
+		
+		//주민번호 앞 뒷자리 합친 것
+		String regNo = userVO.getUserRegNo()+backNum;
+		
+		userVO.setUserRegNo(regNo);
+		
+		logger.debug("로그인 세션 중 userNo : {}", sNum);
+
+		//내가 입력한 값 
+		String uName = userVO.getUserName();
+		String uNum1 = userVO.getUserRegNo();
+		
+		logger.debug("입력받은 이름 : {}", uName);
+		logger.debug("입력받은 주민번호 : {}",uNum1);
+		logger.debug("입력한 userRegNo1 : {}", userRegNo1);
+		
+		//이게 DB에서 이름 주민번호에 해당하는 정보
+		UserVO adultUser = userMapper.adult(userVO);
+		
+		
+		//여 아래 num을 쓸거에용. -> DB에서 가져온 데이터입니다.
+		String dNum = adultUser.getUserNo();
+		String dName = adultUser.getUserName();
+		String dCheck = adultUser.getUserAgeCheckYn();
+		
+//		UserVO result;
+		
+		logger.debug("DB에서 받은 전체 데이터 : {}", adultUser);
+
+		logger.debug("DB에서 받은 번호 : {}",dNum);
+		logger.debug("DB에서 받은 이름 : {}",dName);
+		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
+		
+			
+		if(adultUser != null) {
+			
+			if(sNum.equals(dNum)) {
+				
+				userMapper.changeAdult(Integer.parseInt(sNum));
+				
+				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
+			}
+			
+		} 
+		
+		return adultUser;
+	}
 	
 }

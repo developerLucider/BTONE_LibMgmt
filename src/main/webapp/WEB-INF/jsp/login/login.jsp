@@ -37,6 +37,9 @@
 							<button type="submit">로그인</button>
 							
 							</form>
+							<form cation ="/login?userId=11,userpassword=qwqwq" method="get">
+								</button type="submit">어드민로그인</button>
+							</form>
 							<input type="button" value="취소"> 
 							
 						</div>	

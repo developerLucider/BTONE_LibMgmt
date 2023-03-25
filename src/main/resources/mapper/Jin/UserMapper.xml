@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -21,34 +22,38 @@
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_ID" property="userId" />
 		<result column="USER_PASSWORD" property="userPassword" />
+		<result column="user_age_check_yn" property="userAgeCheckYn" />
 		<collection property="authVO" resultMap="auth" />
 	</resultMap>
 	<resultMap type="com.jincomp.jintest.web.jin.vo.OrderVO" id="order">
 		<result column="ORDER_ID" property="orderId"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
 		<result column="ORDER_DATE" property="orderDate"/>
-		<collection property="UserVO" resultMap="user" />
-		<collection property="BookVO" resultMap="book" />
+		<collection property="userVo" resultMap="user" />
+		<collection property="bookVo" resultMap="book" />
 	
 	</resultMap>
 
 	<!--유저 로그인 -->
 	<select id="loginUser"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
-		SELECT ul.USER_NO,
-		ul.USER_ID,
-		ul.USER_NAME,
-		ul.USER_PASSWORD,
-		ul.USER_ADDRESS,
-		ua.user_no,
-		ua.user_auth
-		FROM USER_LOGIN ul
-		left outer
-		join user_auth ua
-		on ul.user_no = ua.user_no
-		WHERE USER_ID = #{userId}
-	</select>
+      resultType="com.jincomp.jintest.web.jin.vo.UserVO"
+      parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
+      SELECT ul.USER_NO,
+      ul.USER_ID,
+      ul.USER_NAME,
+      ul.USER_PASSWORD,
+      ul.USER_ADDRESS,
+      ua.user_no,
+      ua.user_auth,
+      uac.user_age_check_yn
+      FROM USER_LOGIN ul
+      left outer
+      join user_auth ua
+      on ul.user_no = ua.user_no
+      inner join edu.user_age_check uac 
+      on ul.user_no = uac.user_no
+      WHERE USER_ID = #{userId}
+   </select>
 
 	<!-- 유저 번호로 정보 찾기 -->
 	<select id="findUserByUserNo"
@@ -103,8 +108,8 @@
 		ON o.user_no = ul.user_no
 		WHERE ul.user_no = #{userNo}
 	</select>
-
-	<!-- 아이디 중복검사 -->
+	
+  <!-- 아이디 중복검사 -->
 	<select id="idChk" resultType="int"> 
 		SELECT COUNT(*) FROM USER_LOGIN
 		WHERE USER_ID = #{userId} 
@@ -135,5 +140,35 @@
 		point = point - #{point}
 		WHERE USER_NO = #{userNo}
 	</update>
-
+  
+  
+	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+		select 
+		 a.USER_NO
+		,a.USER_NAME
+		,a.USER_ID
+		,a.USER_ADDRESS
+		,a.USER_REG_NO
+		,b.USER_AGE_CHECK_YN
+		from USER_LOGIN as a
+		inner join USER_AGE_CHECK as b 
+		on a.USER_NO = b.USER_NO 
+		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+	</select>
+	
+	<update id="changeAdult">
+		update 
+		USER_LOGIN as a 
+		inner join 
+		USER_AGE_CHECK	as b 
+		on a.USER_NO = b.USER_NO 
+		set b.USER_AGE_CHECK_YN = 'y'
+		where a.USER_NO = #{userNo}
+	
+	</update>
+  
+  
+	
+	
+	
 </mapper>
