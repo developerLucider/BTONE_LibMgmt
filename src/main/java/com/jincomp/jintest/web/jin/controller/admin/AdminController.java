@@ -50,7 +50,7 @@ public class AdminController {
 	@GetMapping("/add/book")
 	public String adminAddBook() {
 		
-		return "/admin/addbook";
+		return "/admin/book/addbook";
 	}
 	
 	//책 전체조회
@@ -63,7 +63,7 @@ public class AdminController {
 		
 		model.addAttribute("bookList", bookList);
 			
-		return "/admin/bookAllList";
+		return "/admin/book/bookAllList";
 	}
 	
 	
@@ -78,7 +78,7 @@ public class AdminController {
 		
 		model.addAttribute("bookList", bookList);
 		
-		return "/admin/bookedit";
+		return "/admin/book/bookedit";
 	}
 	
 	@GetMapping("/books/rent")
@@ -90,13 +90,13 @@ public class AdminController {
 		
 		model.addAttribute("userList", userList);
 		
-		return "/admin/rentlist";
+		return "/admin/book/rentlist";
 	}
 	
 	@GetMapping("/event/add")
 	public String adminAddEvent() {
 
-		return "/admin/eventadd";
+		return "/admin/event/eventadd";
 	}
 
 	@GetMapping("/event/list")
@@ -107,7 +107,7 @@ public class AdminController {
 
 		model.addAttribute("list", list);
 		
-		return "/admin/eventlist";
+		return "/admin/event/eventlist";
 	}
 
 	
@@ -119,7 +119,7 @@ public class AdminController {
 		model.addAttribute("getUserListt", getUserListt);
 			
 			
-			return "/admin/adminUserList";  
+			return "/admin/member/adminUserList";  
 		}
 	}
 

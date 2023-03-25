@@ -15,8 +15,6 @@ spring:
     driver: com.mysql.cj.jdbc.Driver
     
   thymeleaf:
-     prefix : classpath:templates/html
-     suffix : .html
      cache : false
     
 mybatis:

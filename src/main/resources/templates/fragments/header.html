@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<div th:fragment="headerFragment">
+	<div class="header">
+		<table width="100%">
+			<tbody>
+				<tr>
+					<th style="width: 200px; text-align: left;">BTONE_LibraryManagement</th>
+					<td></td>
+					<td>
+						<button class="button color_header" onclick="location.href='/'">HOME</button>
+
+
+						<button th:if="${session.loginUser == null}"
+							class="button color_header" onclick="location.href='/regist'">회원가입</button>
+						<button th:if="${session.loginUser == null}"
+							class="button color_header" onclick="location.href='/login'">로그인</button>
+						<button th:if="${session.loginUser != null}"
+							class="button color_header" onclick="location.href='/logout'">로그아웃</button>
+						<button th:if="${session.loginUser != null}"
+							class="button color_header" onclick="location.href='/'">장바구니</button>
+						<button th:if="${session.loginUser != null}"
+							class="button color_header"	th:onclick="|location.href='@{/mypage/{userNo}(userNo=${session.loginUser.userNo})}'|"
+							style="width: 80px">마이페이지</button>	
+												
+						<button th:if="|${session.userAuth == 'admin'}|"class="button color_header" onclick="location.href='/admin'">관리자</button>
+						<!--<ul>
+							<li><a href="" onclick="">회원가입</a></li>
+							<li><a href="" onclick="">관리자</a></li>
+							<li><a href="" onclick="">로그인</a></li>
+						</ul> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</html>
