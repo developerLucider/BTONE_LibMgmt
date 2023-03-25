@@ -56,9 +56,10 @@ public class UserService {
 	      // 디비 값 
 		  String oldId = loginUser.getUserId();
 		  String oldPw = loginUser.getUserPassword();
-		  
-		  logger.debug("디비에 저장된 아이디 : {}", oldId);
-		  logger.debug("디비에 저장된 암호화 비밀번호 : {}", oldPw);   //인코딩된 비밀번호 안나옴.
+
+		  logger.debug("디비에 저장된 아이디{}", oldId);
+		  logger.debug("디비에 저장된 암호화 비밀번호{}", oldPw);   //인코딩된 비밀번호 안나옴.
+
 	      
 		  // 비밀번호 디코딩
 		  String decodPw = new String (decoder.decode(oldPw));

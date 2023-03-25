@@ -206,7 +206,6 @@
             responsive: true
         }
     });
-
     
-})(jQuery);
+});
 

@@ -46,10 +46,11 @@ public class HomeController {
 		List<MainBookListDTO> list = homeService.getMainBookList();
 
 		logger.debug("list : {}", list);
+		
 
 		model.addAttribute("list", list);
 
-		return "/main/home"; // home.jsp 로 구성
+		return "home"; // home.html로 이동
 	}
 
 	@GetMapping("/admin")
@@ -62,13 +63,13 @@ public class HomeController {
 	public String showRegist(HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {
 
-		return "/regist/regist";
+		return "/user/regist";
 	}
 
 	@GetMapping("/login")
 	public String showLogin(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 
-		return "/login/login";
+		return "/user/login";
 	}
 	
 	
@@ -77,6 +78,7 @@ public class HomeController {
 	//성인인증 페이지 진입
 	@GetMapping("/adult")
 	public String showAdult(HttpServletRequest request,
+
 	HttpServletResponse response, Model model) throws Exception {
 		
 		return "/test/adult";
@@ -97,10 +99,6 @@ public class HomeController {
 			model.addAttribute("msg", "인증완료");
 		}
 		
-		
-		return "/test/adult";
-	}
-
 	
 
 	@GetMapping("/mypage/{userNo}")
@@ -116,6 +114,6 @@ public class HomeController {
 
 		model.addAttribute("list", list);
 
-		return "/mypage/mypage"; // mypage 폴더의 mypage화면으로 이동.
+		return "/user/mypage"; // mypage 폴더의 mypage화면으로 이동.
 	}
 }
