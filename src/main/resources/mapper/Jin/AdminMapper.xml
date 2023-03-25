@@ -4,23 +4,34 @@
 
     <!-- 책목록 -->
 	<select id="getBookList" resultType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
-	    SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID 
+	    SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID, T.GOODS_QUANTITY
 		FROM BOOKS B 
 		LEFT OUTER JOIN BOOKS_EVENT_INFO E
-		ON B.GOODS_ID = E.GOODS_ID ;
+		ON B.GOODS_ID = E.GOODS_ID
+		LEFT OUTER JOIN BOOKS_COUNT T
+		ON B.GOODS_ID = T.GOODS_ID;
     </select>
 
 
 	<!--책등록  -->
 	<insert id="insert" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
-
 		INSERT INTO BOOKS(GOODS_ID, GOODS_NAME, GOODS_PRICE)
 		VALUES (#{goodsId}, #{goodsName}, #{goodsPrice})
-		
 	</insert>
+	
 	<insert id="insertEventInfo" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
 		INSERT INTO BOOKS_EVENT_INFO(GOODS_ID,EVENT_ID)
 		VALUES (#{goodsId}, #{eventId})
+	</insert>
+	
+	<insert id="insertBookAge" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
+		INSERT INTO BOOKS_AGE_CHECK(GOODS_ID,GOODS_AGE_LIMIT)
+		VALUES (#{goodsId}, #{goodsAgeLimit})
+	</insert>
+	
+	<insert id="insertBookQty" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO">
+		INSERT INTO BOOKS_COUNT(GOODS_ID, GOODS_QUANTITY)
+		VALUES (#{goodsId}, #{goodsQuantity})
 	</insert>
 	
 	
@@ -86,10 +97,14 @@
 	
 	
 	<select id="getUpBookList" resultType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO" parameterType="String">
-		SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID 
+		SELECT B.GOODS_ID, B.GOODS_NAME, B.GOODS_PRICE, E.EVENT_ID , C.GOODS_AGE_LIMIT, T.GOODS_QUANTITY
 		FROM BOOKS B 
-		LEFT OUTER JOIN BOOKS_EVENT_INFO E
-		ON B.GOODS_ID = E.GOODS_ID
+			LEFT OUTER JOIN BOOKS_EVENT_INFO E
+			ON B.GOODS_ID = E.GOODS_ID
+			LEFT OUTER JOIN BOOKS_AGE_CHECK C
+			ON B.GOODS_ID = C.GOODS_ID
+			LEFT OUTER JOIN BOOKS_COUNT T
+			ON B.GOODS_ID = T.GOODS_ID
 		WHERE B.GOODS_ID = #{goodsId}
 	</select>
 
@@ -105,6 +120,18 @@
 	<update id="updateEventInfo" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO"> 
 		UPDATE BOOKS_EVENT_INFO 
 		SET EVENT_ID = #{eventId} 
+		WHERE GOODS_ID = #{goodsId} 
+	</update>
+	
+	<update id="updateBookAge" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO"> 
+		UPDATE BOOKS_AGE_CHECK 
+		SET GOODS_AGE_LIMIT = #{goodsAgeLimit} 
+		WHERE GOODS_ID = #{goodsId} 
+	</update>
+	
+	<update id="updateBookQty" parameterType="com.jincomp.jintest.web.jin.dto.AdminAddBookDTO"> 
+		UPDATE BOOKS_COUNT 
+		SET GOODS_QUANTITY = #{goodsQuantity} 
 		WHERE GOODS_ID = #{goodsId} 
 	</update>
 	

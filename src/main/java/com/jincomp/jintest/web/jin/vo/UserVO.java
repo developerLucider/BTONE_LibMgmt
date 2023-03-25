@@ -19,8 +19,12 @@ public class UserVO {
 	private String userId;
 	private String userPassword;
 	private String userAddress;
+	private String userRegNo;
+	
+
 		
 	// 권한
 	private UserAuthVO authVO;
+	private UserAgeCheckVo userAgeVO;
 	
 }

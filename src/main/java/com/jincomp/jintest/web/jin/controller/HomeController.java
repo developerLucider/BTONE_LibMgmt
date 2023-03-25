@@ -9,15 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.dto.OrderDTO;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
 public class HomeController {
@@ -63,14 +66,7 @@ public class HomeController {
 		return "/login/login";
 	}
 	
-	//성인인증 페이지 진입
-	@GetMapping("/adult")
-	public String showAdult(HttpServletRequest request,
-	HttpServletResponse response, ModelMap model) throws Exception {
-		
-		return "/test/adult";
-	}
-
+	
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)

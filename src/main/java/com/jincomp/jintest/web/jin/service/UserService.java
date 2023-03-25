@@ -3,6 +3,9 @@ package com.jincomp.jintest.web.jin.service;
 import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import com.common.Base64Utils;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
+import com.jincomp.jintest.web.jin.vo.UserAgeCheckVo;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
@@ -144,52 +148,59 @@ public class UserService {
 	
 	//회원가입
 		public int join(UserLogin user) {
+		logger.debug("user : {}", user);
+		
+		int joinck = 0;
+		//중복된 아이디가 없으면
+		if (idChk(user)) { //id가  true이면
+
+			String pass = user.getUserPassword(); // user에 가져온 비번
+			//비번 없을떄 예외처리 하기.
+			String pwd = Base64Utils.base64Encoder(pass);
+//
+			user.setUserPassword(pwd);
 			logger.debug("user : {}", user);
 			
-			int joinck = 0;
-			//중복된 아이디가 없으면
-			if (idChk(user) == true) {
-
-				String pass = user.getUserPassword(); // user에 가져온 비번
-				String pwd = Base64Utils.base64Encoder(pass);
-	//
-				user.setUserPassword(pwd);
-				logger.debug("user : {}", user);
-				
-				joinck = userMapper.join(user);  //회원가입 mapper
-				
-				int point = 500000;  //포인트 금액 설정
-				PointVO pvo = new PointVO(); 
-				pvo.setPoint(point); //포인트 넣어주기
-				
-				userMapper.getPoint(pvo);    //포인트 mapper
-				
-				logger.debug("pointVO : {}", pvo);
-				
-				String Auth = "user"; //관리자권한 user생성
-				
-				UserAuthVO avo = new UserAuthVO();
-				avo.setUserAuth(Auth);
-				
-				userMapper.getAuth(avo);  //관리자권한 mapper
-				
-				logger.debug("UserAuthVO : {}", avo);
-				
-			}	
+			joinck = userMapper.join(user);  //회원가입 mapper
 			
-			return joinck;
-		}
-		
-		//아이디 중복체크
-		public Boolean idChk(UserLogin user) {
-			int result = userMapper.idChk(user);
+			//포인트 삽입
+			int point = 500000;  //포인트 금액 설정
+			PointVO pvo = new PointVO(); 
+			pvo.setPoint(point); //포인트 넣어주기
 			
-			//중복된 아이디가 없음
-			if(result == 0) {
-				return true;
-			}
-			return false;
-		}
+			userMapper.getPoint(pvo);    //포인트 mapper
+			
+			logger.debug("pointVO : {}", pvo);
+			
+			//관리자 권한 생성
+			String auth = "user";
+			
+			UserAuthVO avo = new UserAuthVO();
+			avo.setUserAuth(auth);
+			
+			userMapper.getAuth(avo);  //관리자권한 mapper
+			
+			logger.debug("UserAuthVO : {}", avo);
+			
+			//유저 성인 인증 체크 유무
+			UserAgeCheckVo uvo = new UserAgeCheckVo();
+			userMapper.getUserAgeCheckVo(uvo); 
+			
+		}	
 		
+		return joinck;
+	}
 	
+	//아이디 중복체크
+	public Boolean idChk(UserLogin user) {
+		int result = userMapper.idChk(user);
+		
+		//중복된 아이디가 없음
+		if(result == 0) {
+			return true;
+		}
+		return false;
+	}
+		
+		
 }
