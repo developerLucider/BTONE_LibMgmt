@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.service.EventService;
 import com.jincomp.jintest.web.jin.service.UserService;
@@ -52,13 +53,12 @@ public class AdminController {
 		return "/admin/addbook";
 	}
 	
-	
+	//책 전체조회
 	@GetMapping("/list/books")
 	public String adminBookAll(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		
-		List<BookVO> bookList = adminService.getBookList();
-		
+		List<AdminAddBookDTO> bookList = adminService.getBookList();
 		log.debug("bookList : {}", bookList);
 		
 		model.addAttribute("bookList", bookList);
@@ -66,13 +66,15 @@ public class AdminController {
 		return "/admin/bookAllList";
 	}
 	
+	
+	//책상세보기
 	@GetMapping("/edit/book/{goodsId}")
 	public String adminBookEdit(@PathVariable String goodsId,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		
 		log.debug("{}", "수정진입" );
 		
-		BookVO bookList = adminService.getUpBookList(goodsId);
+		AdminAddBookDTO bookList = adminService.getUpBookList(goodsId);
 		
 		model.addAttribute("bookList", bookList);
 		

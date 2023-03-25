@@ -17,21 +17,51 @@
 
 <script>
 	$(() => {
-		$("#tabs").tabs();		
-	
+		$("#tabs").tabs();
 	});
 	
 	
+	// 아이디 중복체크
+	function idcheck(){
+		var id = $("#userId").val();
+		
+		if(id.length == 0){
+			alert('아이디를 입력해 주세요!');
+		}
+		
+		else{
+		$.ajax({
+			url : "main/idChk",
+			dataType : "json",
+	        type :   "post",
+		    
+			data :{
+				"userId" : $("#userId").val(),
+			},
+		    success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
+		    	if(result == true){
+					alert('사용가능!');
+				}
+		    	else {
+		    		alert('이미 존재합니다!');
+				}
+		    },
+		    error : function(result) {
+				console.log(result);
+			}
+		});
+		}
+	};
 	
 	//회원가입
 	function join(){
 		
-		var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9$@!%*#?&]*$/;
+		var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9$@!%*#^?&]*$/;
 		var pw = $("#userPassword").val();
 		var pw2 = $("#password2").val();
-		
-		console.log(reg.test(pw)); //true 반환
 
+		console.log(reg.test(pw)); //true 반환
+		
 		if(!reg.test(pw)) { //정규식 조건문이 맞지않거나, 
 			alert('비밀번호는 8자 이상이며 숫자/영소문자/특수문자를 모두 1개이상 포함해야 합니다.');
 			
@@ -49,6 +79,7 @@
 					"userName" : $("#userName").val(),
 					"userId" : $("#userId").val(),
 					"userPassword" : $("#userPassword").val(),
+					"userRegNo" : $("#userRegNo").val(),
 					"userAddress" :  $("#Address").val() + $("#userAddress").val()
 					},
 			    success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
@@ -57,6 +88,7 @@
 					}
 			    	else {
 			    		alert('가입성공!');
+			    		location.href="/";
 					}
 			    },
 			    error : function(result) {
@@ -100,28 +132,39 @@
 							<table >
 								<tr>
 									<td class="text">아이디</td>
-									<td class="line"><input type="text" name="userId"
-										id="userId" placeholder="아이디 입력" required/></td>
+									<button onclick="idcheck();">중복체크</button>									
+									<td class="line">
+										<input type="text" width="400px" name="userId" id="userId" placeholder="아이디 입력" />
+									</td>
 								</tr>
 								<tr>
 									<td class="line pt">비밀번호</td>
-									<td class="line"><input type="password" id="userPassword"
-										name="userPassword" placeholder="비밀번호" required/></td>
+									<td class="line">
+										<input type="password" id="userPassword" name="userPassword" placeholder="비밀번호" />
+									</td>
 								</tr>
 								<tr>
 									<td class="line pt">비밀번호 확인</td>
-									<td class="line"><input type="password" name="password2"
-										id="password2" placeholder="비밀번호 확인" required /></td>
+									<td class="line">
+										<input type="password" name="password2" id="password2" placeholder="비밀번호 확인" />
+									</td>
 								</tr>
 								<tr>
 									<td class="line pt">이름</td>
-									<td class="line"><input type="text" id="userName"
-										name="userName" placeholder="성함" required/></td>
+									<td class="line">
+										<input type="text" id="userName" name="userName" placeholder="성함" />
+									</td>
+								</tr>
+								<tr>
+									<td class="line pt">주민번호</td>
+									<td class="line">
+										<input type="text" id="userRegNo" name="userRegNo" placeholder="주민번호" />
+									</td>
 								</tr>
 								<tr>
 									<td class="line pt">주소</td>
 									<td class="line">
-										<input type="text" id="Address" name="Address" placeholder="주소" required/>
+										<input type="text" id="Address" name="Address" placeholder="주소" />
 									</td>
 								</tr>
 								<tr>

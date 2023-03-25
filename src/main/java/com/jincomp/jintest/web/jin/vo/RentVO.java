@@ -17,5 +17,6 @@ public class RentVO {
 	private String goodsId;
 	private String startDate;
 	private String endDate;
+	private String userAgeLimit;
 	
 }

@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -108,8 +109,44 @@
 		WHERE ul.user_no = #{userNo}
 	</select>
 	
+<<<<<<< HEAD
 	
 	<!-- 이름 주민번호로 db에 담긴 정보를 가져온다. -->
+=======
+  <!-- 아이디 중복검사 -->
+	<select id="idChk" resultType="int"> 
+		SELECT COUNT(*) FROM USER_LOGIN
+		WHERE USER_ID = #{userId} 
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin"> 
+		INSERT INTO USER_LOGIN (USER_NO, USER_ID, USER_PASSWORD, USER_NAME, USER_ADDRESS, USER_REG_NO)
+		VALUES(edu.nextval("next_seq"), #{userId}, #{userPassword}, #{userName}, #{userAddress}, #{userRegNo}) 
+	</insert>
+		
+	<!-- 포인트 등록 -->
+	<insert id="getPoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO"> 
+		INSERT INTO EDU.POINT (USER_NO, POINT)
+		VALUES(edu.currval("next_seq"), #{point}) 
+	</insert>
+		
+	<!-- 관리자 권한 user 등록 -->
+	<insert id="getAuth" parameterType="com.jincomp.jintest.web.jin.vo.UserAuthVO">
+		INSERT INTO EDU.USER_AUTH (USER_NO, USER_AUTH)
+		VALUES(edu.currval("next_seq"), #{userAuth}) 
+	</insert>
+	
+	<!--  결제(포인트 수정) -->
+	<update id="updatePoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO">
+		UPDATE point
+		SET
+		point = point - #{point}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
+  
+>>>>>>> branch '신승현' of https://github.com/developerLucider/BTONE_LibMgmt.git
 	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
 		select 
 		 a.USER_NO
@@ -135,7 +172,8 @@
 		where a.USER_NO = #{userNo}
 	
 	</update>
-	
+  
+  
 	
 	
 	
