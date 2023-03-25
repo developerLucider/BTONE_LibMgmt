@@ -9,8 +9,10 @@ import java.util.List;
 import org.eclipse.jdt.internal.compiler.batch.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.dto.UserLentalDTO;
 import com.jincomp.jintest.web.jin.mapper.AdminMapper;
@@ -44,19 +46,23 @@ public class adminService {
 	}
 
 	
-	public List<BookVO> searchList(String search, String searchType) {
-		
-		return null;
-	}
+//	public List<BookVO> searchList(String search, String searchType) {
+//		
+//		return null;
+//	}
 	
 
 //	책등록
 	public void insert(AdminAddBookDTO vo) {
 	
+//		BeanUtils.copyProperties(vo, vo);//복사
+		
 		logger.debug("vo : {}",vo);
 //		info.setEventId(vo.getEventId());
 		adminMapper.insert(vo);
 		adminMapper.insertEventInfo(vo);
+		adminMapper.insertBookAge(vo);
+		adminMapper.insertBookQty(vo);
 	}
 
 	//대여현황 목록
@@ -70,8 +76,7 @@ public class adminService {
 		
 		for(BookVO vo : bookList) {
 			// 가져온 리스트에서 책별로 필요한 정보만 가져와 DTO에담아서 리스트로 생성
-			UserLentalDTO user = null;
-			 user = new UserLentalDTO();
+			UserLentalDTO user = new UserLentalDTO();
 			
 			user.setGoodsId(vo.getGoodsId());
 			user.setGoodsName(vo.getGoodsName());
@@ -81,6 +86,8 @@ public class adminService {
 			
 			userList.add(user);
 		}
+		logger.debug("user: {}", " book :{}" , userList, bookList);
+		
 		
 		return userList;
 	}
@@ -88,6 +95,7 @@ public class adminService {
 	public List<BookVO> searchList(String keyword) {
 		List<BookVO> mapper = adminMapper.searchList(keyword);
 		logger.debug("{}", "검색 진입");
+		logger.debug("{}", mapper);
 		
 		return mapper;
 	}
@@ -106,6 +114,8 @@ public class adminService {
 		
 		adminMapper.update(vo);
 		adminMapper.updateEventInfo(vo);
+		adminMapper.updateBookAge(vo);
+		adminMapper.updateBookQty(vo);
 		
 	}
 	

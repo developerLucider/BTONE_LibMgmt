@@ -35,7 +35,7 @@ public class AdminRestController {
 	@RequestMapping(value = "/add/book.do")	
 	public void insert(@RequestBody AdminAddBookDTO vo) throws Exception {
 
-		logger.debug("{}" ,"게시글쓰기 진입");
+		logger.debug("{}" ,"책등록 진입");
 		
 		logger.debug("eventId : {}" , vo);
 		
@@ -60,11 +60,13 @@ public class AdminRestController {
 	@RequestMapping(value = "/update.do")	//타입 확인해주기!
 	public void update(@RequestBody AdminAddBookDTO vo) throws Exception {
 
-		logger.debug("{}" ,"글 수정 진입");
+		logger.debug("{}" ,"책 수정 진입");
 		logger.debug("vo : {}", vo);
 		
 		 adminService.update(vo);
 	}
+	
+	
 	@RequestMapping(value = "/getAdminUserList.do")
 	   public List<UserVO> searchUserList(@RequestParam ("userKeyWord") String userKeyWord, 
 			   HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -19,4 +19,7 @@ public class AdminAddBookDTO {
 	private String goodsName;
 	private String goodsPrice;
 	private String eventId;
+	private String goodsAgeLimit;
+	private int goodsQuantity;
+	
 }

@@ -7,6 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +26,7 @@ import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -103,8 +112,9 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
-											 	List<String> rentBookQuantityList,
-											 	List<String> rentBookAgeLimitList,
+			/*
+			 * List<String> rentBookQuantityList, List<String> rentBookAgeLimitList,
+			 */
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -123,16 +133,22 @@ public class HomeService {
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
 			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
+			boolean flag = true;
 			for(RentVO rentBook : rentBookList) {
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());
-					continue rentList;
+//					continue rentList;
+					flag = false;
 				}
 			}
+//			Optional.ofNullable(rentBookList).ifPresent();
+			List<RentVO> failResult2 = rentBookList.stream().filter(t -> t.getGoodsId().equals(goodsId)).collect(Collectors.toList());
 			
-			RentVO rentVo = new RentVO();
-			rentVo.setGoodsId(goodsId);
-			rentVo.setUserNo(userNo);
+			RentVO rentVo= RentVO.builder()
+					.goodsId(goodsId)
+					.userNo(userNo).build();
+//			rentVo.setGoodsId(goodsId);
+//			rentVo.setUserNo(userNo);
 			
 			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -142,6 +158,7 @@ public class HomeService {
 			
 			// insert의 결과가 0 이상(성공했다면) -> 해당 아이디로 값을 찾아 해당 ID를 리턴
 			if(bookMapper.addRentBook(rentVo) > 0) {
+				
 				List<MainBookListDTO> tmp = this.getMainBookList("goods_id", rentVo.getGoodsId());
 				successResult.add(tmp.get(0).getGoodsName());
 				successPayResult.add(tmp.get(0).getGoodsId());
@@ -153,8 +170,8 @@ public class HomeService {
 		result.put("success", successResult);
 		
 		
-		// -------- 해당 유저 포인트 총 액수 만큼 차감 -------------
-		// 성공한 리스트에 대해 이벤트가를 합친다(이벤트없는 책은 이벤트에 원가가 들어감)
+		// -------- TODO 해당 유저 포인트 총 액수 만큼 차감 -------------
+		// FIXME 성공한 리스트에 대해 이벤트가를 합친다(이벤트없는 책은 이벤트에 원가가 들어감)
 		logger.debug("결제 시작");
 		int sumPoint = 0;			// 대여 할 책의 총가격
 		for(String rentGoodsId :successPayResult) {	// 성공한 책의 ID별로
@@ -173,11 +190,72 @@ public class HomeService {
 		
 		logger.debug("결제자 ID : {} 결제금액 : {}", paymentInfo.getUserNo(), paymentInfo.getPoint());
 		userMapper.updatePoint(paymentInfo);
+		
 		//-----------------------------------------------------
 		
 		return result;
 	}
 	
+
+
 	
+		//성인 인증 
+		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+		
+		logger.debug("{}", "성인인증 서비스 진입");
+		
+		HttpSession httpSession = request.getSession();
+		//로그인 세션에서 No 값을 가져옴
+		String sNum = (String) httpSession.getAttribute("userNum");
+		//주민번호 뒷자리
+		String backNum = userRegNo1;
+		
+		//주민번호 앞 뒷자리 합친 것
+		String regNo = userVO.getUserRegNo()+backNum;
+		
+		userVO.setUserRegNo(regNo);
+		
+		logger.debug("로그인 세션 중 userNo : {}", sNum);
+
+		//내가 입력한 값 
+		String uName = userVO.getUserName();
+		String uNum1 = userVO.getUserRegNo();
+		
+		logger.debug("입력받은 이름 : {}", uName);
+		logger.debug("입력받은 주민번호 : {}",uNum1);
+		logger.debug("입력한 userRegNo1 : {}", userRegNo1);
+		
+		//이게 DB에서 이름 주민번호에 해당하는 정보
+		UserVO adultUser = userMapper.adult(userVO);
+		
+		
+		//여 아래 num을 쓸거에용. -> DB에서 가져온 데이터입니다.
+		String dNum = adultUser.getUserNo();
+		String dName = adultUser.getUserName();
+		String dCheck = adultUser.getUserAgeCheckYn();
+		
+//		UserVO result;
+		
+		logger.debug("DB에서 받은 전체 데이터 : {}", adultUser);
+
+		logger.debug("DB에서 받은 번호 : {}",dNum);
+		logger.debug("DB에서 받은 이름 : {}",dName);
+		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
+		
+			
+		if(adultUser != null) {
+			
+			if(sNum.equals(dNum)) {
+				
+				userMapper.changeAdult(Integer.parseInt(sNum));
+				
+				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
+			}
+			
+		} 
+		
+		return adultUser;
+	}
 	
 }

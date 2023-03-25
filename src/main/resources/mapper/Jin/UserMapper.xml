@@ -15,14 +15,15 @@
 		<result column="GOODS_NAME" property="goodsName" />
 	</resultMap>
 
-	<resultMap type="com.jincomp.jintest.web.jin.vo.UserVO"
-		id="user">
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserVO" id="user">
 		<result column="USER_NO" property="userNo" />
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_ID" property="userId" />
 		<result column="USER_PASSWORD" property="userPassword" />
 		<collection property="authVO" resultMap="auth" />
+		<collection property="userAgeVO" resultMap="UserAgeCheckVo" />
 	</resultMap>
+	
 	<resultMap type="com.jincomp.jintest.web.jin.vo.OrderVO" id="order">
 		<result column="ORDER_ID" property="orderId"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
@@ -31,6 +32,13 @@
 		<collection property="BookVO" resultMap="book" />
 	
 	</resultMap>
+	
+	<resultMap type="com.jincomp.jintest.web.jin.vo.UserAgeCheckVo" id="UserAgeCheckVo">
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_AGE_CHECK_YN" property="userAgeCheckYn" />
+	</resultMap>
+	
+
 
 	<!--유저 로그인 -->
 	<select id="loginUser"
@@ -127,6 +135,13 @@
 		INSERT INTO EDU.USER_AUTH (USER_NO, USER_AUTH)
 		VALUES(edu.currval("next_seq"), #{userAuth}) 
 	</insert>
+
+	<!-- 유저 업데이트 유무 등록 -->
+	<insert id="getUserAgeCheckVo" parameterType="com.jincomp.jintest.web.jin.vo.UserAgeCheckVo">
+		INSERT INTO EDU.USER_AGE_CHECK (USER_NO)
+		VALUES(edu.currval("next_seq")) 
+	</insert>
+	
 	
 	<!--  결제(포인트 수정) -->
 	<update id="updatePoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO">
@@ -135,5 +150,31 @@
 		point = point - #{point}
 		WHERE USER_NO = #{userNo}
 	</update>
-
+  
+  
+	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+		select 
+		 a.USER_NO
+		,a.USER_NAME
+		,a.USER_ID
+		,a.USER_ADDRESS
+		,a.USER_REG_NO
+		,b.USER_AGE_CHECK_YN
+		from USER_LOGIN as a
+		inner join USER_AGE_CHECK as b 
+		on a.USER_NO = b.USER_NO 
+		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+	</select>
+	
+	<update id="changeAdult">
+		update 
+		USER_LOGIN as a 
+		inner join 
+		USER_AGE_CHECK	as b 
+		on a.USER_NO = b.USER_NO 
+		set b.USER_AGE_CHECK_YN = 'y'
+		where a.USER_NO = #{userNo}
+	
+	</update>
+  
 </mapper>

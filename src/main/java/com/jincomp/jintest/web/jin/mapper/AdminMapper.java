@@ -17,6 +17,8 @@ public interface AdminMapper {
 
 	void insert(AdminAddBookDTO vo);
 	void insertEventInfo (AdminAddBookDTO vo);
+	void insertBookAge(AdminAddBookDTO vo);
+	void insertBookQty(AdminAddBookDTO vo);
 	
 	List<BookVO> getUserList();
 
@@ -26,6 +28,8 @@ public interface AdminMapper {
 
 	void update(AdminAddBookDTO vo);
 	void updateEventInfo(AdminAddBookDTO vo);
+	void updateBookAge(AdminAddBookDTO vo);
+	void updateBookQty(AdminAddBookDTO vo);
 
 	
 	int update(BookVO vo);
@@ -34,5 +38,9 @@ public interface AdminMapper {
 	List<UserVO> getUserListt();
 	//유저 이름 검색
 	List<UserVO> searchUserList(String userKeyWord);
+
+
+
+
   
 }

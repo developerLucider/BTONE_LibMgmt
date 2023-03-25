@@ -1,20 +1,27 @@
 package com.jincomp.jintest.web.jin.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.jincomp.jintest.web.jin.controller.HomeController;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -31,16 +38,26 @@ public class UserController {
 		
 		log.info("post 로그인");
 	   
-		// 로그인 정보 가져오기(db에서)
-	 	UserVO loginUser = userService.loginUser(usrVo);	  
+
+		// 로그인 정보 가져오기
+	 	UserVO loginUser = userService.loginUser(usrVo);
+
 	    
 	 	// 로그인 정보 세션에 담음.
  		HttpSession httpSession = request.getSession();
  		
  		if( loginUser != null) {
  			// 세션에 로그인 정보 담기
- 		    httpSession.setAttribute("loginUser", loginUser);
- 		    httpSession.setAttribute("userAuth", loginUser.getAuthVO().getUserAuth());   // 등급만 따로 추가 (소진)
+
+ 		   httpSession.setAttribute("loginUser", loginUser);
+       httpSession.setAttribute("userAuth", loginUser.getAuthVO().getUserAuth());   // 등급만 따로 추가 (소진)
+ 		   httpSession.setAttribute("userNum", loginUser.getUserNo());
+ 		   httpSession.setAttribute("userAgeCheckYn", loginUser.getUserAgeCheckYn());
+ 		   
+ 			String yN = (String) httpSession.getAttribute("userAgeCheckYn");
+ 		   
+ 			log.debug("잠시 자리 빌립니다. : {}", yN);
+ 		   
  			return "redirect:/";
  			
  		} else {
@@ -89,4 +106,7 @@ public class UserController {
 					
 		return result;
 	}
+	
+	
+	
 }

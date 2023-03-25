@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -94,6 +93,7 @@ function fn_search(){
                                             <th scope="col">도서ID</th>
                                             <th scope="col">도서제목</th>
                                             <th scope="col">도서가격</th>                                     
+                                            <th scope="col">도서수량</th>                                     
                                             <th scope="col">버튼</th>
                                         </tr>
                                     </thead>
@@ -105,6 +105,7 @@ function fn_search(){
 											<th>${item.goodsId}</th>
 											<th>${item.goodsName}</th>
 											<th>${item.goodsPrice}</th>
+											<th>${item.goodsQuantity}</th>
                                             <td><a href="/admin/edit/book/${item.goodsId }"><button class="btn btn-success">수정</button></a></td>                                          
                                         </tr>
                                         </c:forEach>
