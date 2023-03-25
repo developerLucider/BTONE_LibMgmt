@@ -41,11 +41,12 @@ public class HomeRestController {
    
    @RequestMapping(value = "/rentBooks.do")
    public Map<String, List<String>> rentBooks(@RequestParam("rentBookList[]")List<String> rentBookList,
+		   				@RequestParam("rentBookPriceList[]") List<String> rentBookPriceList,
 		   				@RequestParam("userNo") int userNo,
 		   HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   	logger.debug("대여 책 목록 : {} 대여 유저 정보 : {}", rentBookList, userNo);
 	   	
-	   	return homeService.rentBooks(rentBookList, userNo);
+	   	return homeService.rentBooks(rentBookList, rentBookPriceList, userNo);
    }
 }
 

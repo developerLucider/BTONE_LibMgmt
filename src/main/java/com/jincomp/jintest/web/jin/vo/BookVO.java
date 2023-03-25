@@ -24,5 +24,10 @@ public class BookVO {
 	//모현진
 	private UserLogin userLogin;
 	private BooksEventInfo eventInfo;
-
+	
+	/**
+	 * @author mskim 0325
+	 * 
+	 */
+	private int goodsQuantity;
 }

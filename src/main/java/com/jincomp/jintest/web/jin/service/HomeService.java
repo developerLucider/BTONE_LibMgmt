@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
+import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
+import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class HomeService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
 	private final BookMapper bookMapper;
+	private final UserMapper userMapper;
 	
 	private List<MainBookListDTO> addEventPrice(List<BookVO> bookList) {
 		List<MainBookListDTO> mainList = new ArrayList<>();
@@ -45,6 +48,7 @@ public class HomeService {
 				mainbook.setEventEndDate(tmp.getEventVo().getRateEndDay());
 			}
 			mainbook.setUserId(tmp.getRentVo().getUserNo());
+			mainbook.setGoodsQuantity(tmp.getGoodsQuantity());
 			
 			// 이벤트 유무에 따라 할인가를 계산해준다.
 			//logger.debug("{}의 이벤트 : {}", tmp.getGoodsName() , tmp.getEventId());
@@ -77,6 +81,7 @@ public class HomeService {
 		return mainList; 
 	}
 	
+	
 	public List<MainBookListDTO> getMainBookList() {
 		logger.debug("-------------------userService bookList 진입");
 		
@@ -93,11 +98,18 @@ public class HomeService {
 		return addEventPrice(bookList);
 	}
 	
-	public Map<String, List<String>> rentBooks(List<String> rentList, int userNo) {
+	
+	
+	public Map<String, List<String>> rentBooks(List<String> rentList,
+											 	List<String> rentPriceList,
+											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
 		List<String> failResult = new ArrayList<>();	// 대여 실패한 책 이름의 리스트
 		List<String> successResult = new ArrayList<>(); // 대여 성공한 책 이름의 리스트
+		List<String> successPayResult = new ArrayList<>(); // 대여 성공한 책의 ID 리스트
+		
+		
 		logger.debug("rentBooks 진입");
 		// 대여할 책 ID 리스트를 iterating
 		rentList:
@@ -130,12 +142,36 @@ public class HomeService {
 			if(bookMapper.addRentBook(rentVo) > 0) {
 				List<MainBookListDTO> tmp = this.getMainBookList("goods_id", rentVo.getGoodsId());
 				successResult.add(tmp.get(0).getGoodsName());
+				successPayResult.add(tmp.get(0).getGoodsId());
 			}
 			
 			logger.debug("{} 대여 리스트 추가 완료", rentVo);
 		}
 		result.put("fail", failResult);
 		result.put("success", successResult);
+		
+		
+		// -------- 해당 유저 포인트 총 액수 만큼 차감 -------------
+		// 성공한 리스트에 대해 이벤트가를 합친다(이벤트없는 책은 이벤트에 원가가 들어감)
+		logger.debug("결제 시작");
+		int sumPoint = 0;			// 대여 할 책의 총가격
+		for(String rentGoodsId :successPayResult) {	// 성공한 책의 ID별로
+			logger.debug(rentGoodsId);
+			// 성공한 ID의 이벤트가 포함 책정보를 불러옴
+			List<MainBookListDTO> rentBook = this.addEventPrice(bookMapper.searchBookList("goods_id", rentGoodsId));
+			
+			
+			// 해당 책의 이벤트가를 가격에 포함
+			String price = rentBook.get(0).getGoodsDiscountPrice();
+			sumPoint += Integer.parseInt(price);
+		}
+		PointVO paymentInfo = new PointVO();
+		paymentInfo.setPoint(sumPoint);
+		paymentInfo.setUserNo(userNo);
+		
+		logger.debug("결제자 ID : {} 결제금액 : {}", paymentInfo.getUserNo(), paymentInfo.getPoint());
+		userMapper.updatePoint(paymentInfo);
+		//-----------------------------------------------------
 		
 		return result;
 	}

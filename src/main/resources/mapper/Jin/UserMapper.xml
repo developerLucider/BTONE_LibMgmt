@@ -127,5 +127,13 @@
 		INSERT INTO EDU.USER_AUTH (USER_NO, USER_AUTH)
 		VALUES(edu.currval("next_seq"), #{userAuth}) 
 	</insert>
+	
+	<!--  결제(포인트 수정) -->
+	<update id="updatePoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO">
+		UPDATE point
+		SET
+		point = point - #{point}
+		WHERE USER_NO = #{userNo}
+	</update>
 
 </mapper>

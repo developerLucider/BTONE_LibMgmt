@@ -88,7 +88,8 @@
                             	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th></tr>"	
                             } else {
                             	result += "<th width='100px' id='userId" + i + "' style='display:none'></th>"
-                            } 
+                            }
+                            result += "<th width='50px'>" + data[i].goodsQuantity  + "</th>"
                         }
 
                         $("#tableBody").append(result);
@@ -140,10 +141,12 @@ function user_auth(){
 <script>
 function rentBook() {    
 	var rentBookList = [];
+	var rentBookPriceList = [];
 	
 	$("#tableBody tr").each(function () {
 		if($(this).find('input:checkbox[name=check]').is(":checked")) {
 			rentBookList.push($(this).children().eq(2).text());
+			rentBookPriceList.push($(this).children().eq(5).text());
 		}
 	});
 	
@@ -162,11 +165,13 @@ function rentBook() {
 				url : "main/rentBooks.do",
 				type : "post",
 				data : {
+					"rentBookPriceList" : rentBookPriceList,
 					"rentBookList" : rentBookList,
 					"userNo" : userNo 
 				},
 				success : function(data) {
-					console.log(data);
+					alert("대여 완료");
+					location.reload();
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
@@ -174,8 +179,9 @@ function rentBook() {
 			});
 		}
 	} else {
-		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
+		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
 	}
+	// TODO : ajax success에서 data(Map<String, Map<String>> 타입)를 iterating해서 출력
 }
   
 </script>
@@ -229,6 +235,7 @@ function rentBook() {
 									<th width='100px'>이벤트가</th>
 									<th width='100px'>이벤트시작기간</th>
 									<th width='100px'>이벤트종료기간</th>
+									<th width='50px'>수량</th>
 								</tr>
 							</thead>
 							<tbody class="table" id="tableBody">
@@ -243,6 +250,7 @@ function rentBook() {
 										<th width='100px'>${list.goodsDiscountPrice}</th>
 										<th width='100px'>${list.eventStrDate}</th>
 										<th width='100px'>${list.eventEndDate}</th>
+										<th width='50px'>${list.goodsQuantity}</th>
 										<th width='100px' style="display: none">${list.userId}</th>
 									</tr>
 								</c:forEach>

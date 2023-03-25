@@ -13,6 +13,7 @@ public class MainBookListDTO {
 	private String goodsDiscountPrice;
 	private LocalDate eventStrDate;
 	private LocalDate eventEndDate;
-	private int userId;	
+	private int userId;
+	private int goodsQuantity;
 	
 }
