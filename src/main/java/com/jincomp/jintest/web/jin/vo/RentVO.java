@@ -1,6 +1,7 @@
 package com.jincomp.jintest.web.jin.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,13 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
+@Builder
 public class RentVO {
 
 	private int userNo;
 	private String goodsId;
 	private String startDate;
 	private String endDate;
-	private String userAgeLimit;
+	//private String userAgeLimit;
 	
 }

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,8 +109,9 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
-											 	List<String> rentBookQuantityList,
-											 	List<String> rentBookAgeLimitList,
+			/*
+			 * List<String> rentBookQuantityList, List<String> rentBookAgeLimitList,
+			 */
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -127,16 +130,22 @@ public class HomeService {
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
 			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
+			boolean flag = true;
 			for(RentVO rentBook : rentBookList) {
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());
-					continue rentList;
+//					continue rentList;
+					flag = false;
 				}
 			}
+//			Optional.ofNullable(rentBookList).ifPresent();
+			List<RentVO> failResult2 = rentBookList.stream().filter(t -> t.getGoodsId().equals(goodsId)).collect(Collectors.toList());
 			
-			RentVO rentVo = new RentVO();
-			rentVo.setGoodsId(goodsId);
-			rentVo.setUserNo(userNo);
+			RentVO rentVo= RentVO.builder()
+					.goodsId(goodsId)
+					.userNo(userNo).build();
+//			rentVo.setGoodsId(goodsId);
+//			rentVo.setUserNo(userNo);
 			
 			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -146,6 +155,7 @@ public class HomeService {
 			
 			// insert의 결과가 0 이상(성공했다면) -> 해당 아이디로 값을 찾아 해당 ID를 리턴
 			if(bookMapper.addRentBook(rentVo) > 0) {
+				
 				List<MainBookListDTO> tmp = this.getMainBookList("goods_id", rentVo.getGoodsId());
 				successResult.add(tmp.get(0).getGoodsName());
 				successPayResult.add(tmp.get(0).getGoodsId());
@@ -157,8 +167,8 @@ public class HomeService {
 		result.put("success", successResult);
 		
 		
-		// -------- 해당 유저 포인트 총 액수 만큼 차감 -------------
-		// 성공한 리스트에 대해 이벤트가를 합친다(이벤트없는 책은 이벤트에 원가가 들어감)
+		// -------- TODO 해당 유저 포인트 총 액수 만큼 차감 -------------
+		// FIXME 성공한 리스트에 대해 이벤트가를 합친다(이벤트없는 책은 이벤트에 원가가 들어감)
 		logger.debug("결제 시작");
 		int sumPoint = 0;			// 대여 할 책의 총가격
 		for(String rentGoodsId :successPayResult) {	// 성공한 책의 ID별로
@@ -177,6 +187,7 @@ public class HomeService {
 		
 		logger.debug("결제자 ID : {} 결제금액 : {}", paymentInfo.getUserNo(), paymentInfo.getPoint());
 		userMapper.updatePoint(paymentInfo);
+		
 		//-----------------------------------------------------
 		
 		return result;
