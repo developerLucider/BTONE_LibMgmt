@@ -196,7 +196,7 @@ function rentBook() {
 				type : "post",
 				data : {
 					"rentBookPriceList" : rentBookPriceList,
-					"rentBookList" : rentBookList,
+					"rentBookList" : rentBookList, 
 					//"rentBookQuantityList" : rentBookQuantity,
 					//"rentBookAgeLimitList" : rentBookAgeLimit,
 					"userNo" : userNo 
