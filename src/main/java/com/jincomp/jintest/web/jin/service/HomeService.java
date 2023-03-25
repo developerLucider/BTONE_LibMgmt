@@ -49,6 +49,7 @@ public class HomeService {
 			}
 			mainbook.setUserId(tmp.getRentVo().getUserNo());
 			mainbook.setGoodsQuantity(tmp.getGoodsQuantity());
+			mainbook.setGoodsAgeLimit(tmp.getGoodsAgeLimit());
 			
 			// 이벤트 유무에 따라 할인가를 계산해준다.
 			//logger.debug("{}의 이벤트 : {}", tmp.getGoodsName() , tmp.getEventId());
@@ -102,6 +103,8 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
+											 	List<String> rentBookQuantityList,
+											 	List<String> rentBookAgeLimitList,
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -119,8 +122,7 @@ public class HomeService {
 			
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
-			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음
-			
+			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
 			for(RentVO rentBook : rentBookList) {
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());

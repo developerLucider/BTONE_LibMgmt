@@ -30,4 +30,5 @@ public class BookVO {
 	 * 
 	 */
 	private int goodsQuantity;
+	private String goodsAgeLimit;
 }

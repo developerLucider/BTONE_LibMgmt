@@ -15,5 +15,6 @@ public class MainBookListDTO {
 	private LocalDate eventEndDate;
 	private int userId;
 	private int goodsQuantity;
+	private String goodsAgeLimit;
 	
 }
