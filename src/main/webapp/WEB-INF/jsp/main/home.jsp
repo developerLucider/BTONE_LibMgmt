@@ -39,9 +39,14 @@
 	
 	function AvailableBookEvent(){
 		$("#tableBody tr").each(function () {
-			if($(this).children().eq(8).text() != 0) {	// 숨겨진 대여자의 아이디가 존재하면																
+			if($(this).children().eq(10).text() != 0) {	// 숨겨진 대여자의 아이디가 존재하면																
 				$(this).hide();												
 			}
+			
+			if($(this).children().eq(8).text() == 0) {	// 수량이 0일경우
+				$(this).hide();
+			}
+			
 		});
 	}
 </script>
@@ -85,10 +90,22 @@
                             	result += "<th width='100px' id='eventEndDate" + i + "'></th>"
                             }
                             if(data[i].userId) {
-                            	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th></tr>"	
+                            	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th>"	
                             } else {
                             	result += "<th width='100px' id='userId" + i + "' style='display:none'></th>"
-                            } 
+                            }
+                            result += "<th width='50px'>" + data[i].goodsQuantity  + "</th>"
+                            
+                            console.log(data[i].goodsAgeLimit);
+                            if(data[i].goodsAgeLimit == 'y'){
+                            	result += "<th width='50px'>성인이용가</th>"	
+                            } else if(data[i].goodsAgeLimit == 'n') {
+                            	result += "<th width='50px'>전체이용가</th>"                            	
+                            } else {
+                            	result += "<th width='50px'>미분류</th>"
+                            }
+                            
+                            result += "</tr>"
                         }
 
                         $("#tableBody").append(result);
@@ -140,10 +157,26 @@ function user_auth(){
 <script>
 function rentBook() {    
 	var rentBookList = [];
+	var rentBookPriceList = [];
+	var rentBookAgeLimit = [];
+	var rentBookQuantiy = [];
+	
 	
 	$("#tableBody tr").each(function () {
 		if($(this).find('input:checkbox[name=check]').is(":checked")) {
 			rentBookList.push($(this).children().eq(2).text());
+			rentBookPriceList.push($(this).children().eq(5).text());
+			rentBookQuantiy.push($(this).children().eq(8).text());
+			rentBookAgeLimit.push($(this).children().eq(9).text());
+			
+			// TODO: 성인인증 완료 여부를 받아오는게 필요
+			if($(this).children().eq(9).text() == "성인이용가") {
+				alert("해당 품목 (" + $(this).children().eq(2).text() + "(" +$(this).children().eq(3).text() + ")은 성인인증이 필요합니다." );
+			}
+			
+			if($(this).children().eq(8).text() == '0') {	// 수량이 0인경우
+				alert("선택 하신" + $(this).children().eq(2).text() + "(" +$(this).children().eq(3).text() +")은 수량이 없습니다.");
+			}
 		}
 	});
 	
@@ -162,11 +195,28 @@ function rentBook() {
 				url : "main/rentBooks.do",
 				type : "post",
 				data : {
+					"rentBookPriceList" : rentBookPriceList,
 					"rentBookList" : rentBookList,
+					"rentBookQuantityList" : rentBookQuantity,
+					"rentBookAgeLimitList" : rentBookAgeLimit,
 					"userNo" : userNo 
 				},
 				success : function(data) {
 					console.log(data);
+					
+					for(var [k , v] of data) {
+						console.log(k + ":" + v);
+					}
+					/* if(data.has("fail")) {
+						alert("대여 실패 테스트");
+					}
+					
+					if(data.has("success")) {
+						alert("대여 성공 테스트");
+					} */
+					
+					//alert("대여 완료");
+					location.reload();
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
@@ -174,8 +224,9 @@ function rentBook() {
 			});
 		}
 	} else {
-		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
+		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
 	}
+	// TODO : ajax success에서 data(Map<String, Map<String>> 타입)를 iterating해서 출력
 }
   
 </script>
@@ -216,6 +267,7 @@ function rentBook() {
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
 					 <a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a>
 				</div>	 
+
 				<div class="fixedTable">
 					<div class="fixedBox">
 						<table>
@@ -229,6 +281,8 @@ function rentBook() {
 									<th width='100px'>이벤트가</th>
 									<th width='100px'>이벤트시작기간</th>
 									<th width='100px'>이벤트종료기간</th>
+									<th width='50px'>수량</th>
+									<th width='50px'>성인물여부</th>
 								</tr>
 							</thead>
 							<tbody class="table" id="tableBody">
@@ -243,6 +297,18 @@ function rentBook() {
 										<th width='100px'>${list.goodsDiscountPrice}</th>
 										<th width='100px'>${list.eventStrDate}</th>
 										<th width='100px'>${list.eventEndDate}</th>
+										<th width='50px'>${list.goodsQuantity}</th>
+										<c:choose>
+											<c:when test="${list.goodsAgeLimit == 'y'}">
+												<th width='50px'>성인이용가</th>
+											</c:when>
+											<c:when test="${list.goodsAgeLimit == 'n'}">
+												<th width="50px">전체이용가</th>
+											</c:when>
+											<c:otherwise>
+												<th width="50px">미분류</th>
+											</c:otherwise>
+										</c:choose> 
 										<th width='100px' style="display: none">${list.userId}</th>
 									</tr>
 								</c:forEach>

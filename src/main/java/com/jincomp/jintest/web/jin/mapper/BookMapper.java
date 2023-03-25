@@ -20,8 +20,5 @@ public interface BookMapper {
 	
 	
 	int addRentBook(RentVO rentVo);
-	//회원가입 (중복체크)
-	int idChk(UserLogin user);
-
-	int join(UserLogin user);
+	
 }
