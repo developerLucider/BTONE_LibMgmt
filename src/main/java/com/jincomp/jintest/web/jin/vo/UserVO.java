@@ -20,7 +20,7 @@ public class UserVO {
 	private String userPassword;
 	private String userAddress;
 	private String userRegNo;
-	
+	private String UserAgeCheckYn;
 
 		
 	// 권한
