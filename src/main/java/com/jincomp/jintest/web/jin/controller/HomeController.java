@@ -1,6 +1,7 @@
 package com.jincomp.jintest.web.jin.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
@@ -95,11 +96,12 @@ public class HomeController {
 		
 		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
 		
-		if(adultUser != null) {
+		if(Objects.isNull(adultUser)) {
 			model.addAttribute("msg", "인증완료");
 		}
 		
-	
+		return "/test/adult";
+	}
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
