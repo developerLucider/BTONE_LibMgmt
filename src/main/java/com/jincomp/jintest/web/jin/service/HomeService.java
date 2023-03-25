@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
@@ -22,6 +22,7 @@ import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
+import com.jincomp.jintest.web.jin.vo.userAgeCheck;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Service
+@SessionAttributes("user")
 public class HomeService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
@@ -147,35 +149,51 @@ public class HomeService {
 		return result;
 	}
 	
-	public UserVO adult(UserVO userVO) {
+	public UserVO adult(UserVO userVO, HttpServletRequest request) {
 		
 		logger.debug("{}", "성인인증 서비스 진입");
 		
+//		HttpSession session = request.getSession();
+		
 		String uName = userVO.getUserName();
 		String uNum1 = userVO.getUserRegNo();
-//		String uNum2 = userVO.getUserName();
 		
 		logger.debug("입력받은 이름 : {}", uName);
 		logger.debug("입력받은 주민번호 : {}",uNum1);
 		
 		//이게 DB에서 이름 주민번호에 해당하는 정보
 		UserVO adultUser = userMapper.adult(userVO);
+
+//		session.setAttribute("num", adultUser.getUserNo());
+//		
+//		String sessionNum = (String) session.getAttribute("num");
+//		
+//		logger.debug("세션에 들어간 번호 : {}", sessionNum);
+		
 		
 		String dName = adultUser.getUserName(); 
 		String dNum = adultUser.getUserRegNo();
+		String dCheck = adultUser.getUserAgeCheckYn();
+		
+//		UserVO result;
+		
+		logger.debug("DB에서 받은 전체 데이터 : {}", adultUser);
 		
 		logger.debug("DB에서 받은 이름 : {}",dName);
 		logger.debug("DB에서 받은 주민번호 : {}",dNum);
+		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
 		
+				
 //		if(adultUser != null) {
 //			
-//			if(dNum == "") {
-//				
-//			}else {
-//				return null;
-//			}
-//		}
-//		
+//			UserVO changeAdult = userMapper.changeAdult(userVO);
+//			
+//			
+//		} 
+		
+		
+		
+		
 		return adultUser;
 	}
 	

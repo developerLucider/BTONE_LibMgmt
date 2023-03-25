@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.dto.OrderDTO;
+import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
@@ -81,12 +83,23 @@ public class HomeController {
 	@PostMapping("/adult")
 	public String adult(UserVO userVO, HttpServletRequest request, Model model) {
 		
-		
 		logger.debug("{}", "깐트롤러 진입");
 		
-		UserVO getUserinfo = homeService.adult(userVO);
 		
-		//다시 인증창으로 돌아가고 자식창 꺼지고 부모창은 새로고침(이 됐으면 좋겠다.)
+		UserVO adultUser = homeService.adult(userVO, request);
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("userAgeCheckYn", adultUser.getUserAgeCheckYn());
+		session.setAttribute("userNo", adultUser.getUserNo());
+		
+		String userNo = (String)session.getAttribute("userNo");
+		
+		String userAgeCheckYn = (String)session.getAttribute("userAgeCheckYn");
+		
+		
+		
+		
 		return "/test/adult";
 	}
 

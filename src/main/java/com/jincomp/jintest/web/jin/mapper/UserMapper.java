@@ -27,4 +27,7 @@ public interface UserMapper {
 	
 	//성인인증
 	public UserVO adult(UserVO userVO);
+	
+	//인증 변경
+	public UserVO changeAdult(UserVO userVO);
 }

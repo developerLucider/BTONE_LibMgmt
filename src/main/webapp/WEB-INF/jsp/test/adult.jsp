@@ -36,6 +36,31 @@ $(document).ready(function() {
         }
     });
 });
+
+
+function change_adult(){
+	
+	const userNo = '${sessionScope.userNo}'
+	
+	
+	const userAgeCheckYn = '${sessionScope.userAgeCheckYn}'
+	
+	
+	
+	alert("userTest : " + userAgeCheckYn);
+	
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+
 </script>
 
 
@@ -51,13 +76,16 @@ $(document).ready(function() {
 						<div class="/adult/action">
 							<h3>성인 인증</h3>	
 							<form action ="/adult" method="post">				
+								<input type="hidden" id="userNo" name="userNo" value = ""><br>
 								<label for="userName">이름:</label>
 							    <input type="text" id="userName" name="userName"><br>
 							
 							    <label for="userRegNo">주민등록번호:</label>
 							    <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="13"> 
+							    
 							    <!-- <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="7"> -->
-							<button type="submit">인증하기</button>
+								<button type="submit" onclick='change_adult()'>인증</button>
+								${text}
 							</form>
 						</div>	
 					</div> <!-- content -->
