@@ -2,6 +2,7 @@ package com.jincomp.jintest.web.jin.controller;
 
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.dto.OrderDTO;
@@ -81,12 +83,17 @@ public class HomeController {
 	
 	//페이지에서 인증
 	@PostMapping("/adult")
-	public String adult(UserVO userVO, HttpServletRequest request, Model model) {
+	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, Model model) {
 		
 		logger.debug("{}", "깐트롤러 진입");
 		
+//		logger.debug("userRegNo1 : {}", userRegNo1);
 		
-		UserVO adultUser = homeService.adult(userVO, request);
+		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
+		
+		if(adultUser != null) {
+			model.addAttribute("msg", "인증완료");
+		}
 		
 		
 		return "/test/adult";

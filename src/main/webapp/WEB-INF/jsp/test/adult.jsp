@@ -68,12 +68,13 @@ function change_adult(){
 							    <input type="text" id="userName" name="userName"><br>
 							
 							    <label for="userRegNo">주민등록번호:</label>
-							    <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="13"> 
+							    <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="6"> -
 							    
-							    <!-- <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="7"> -->
+							    <input class="inputs" type="password" id="userRegNo1" name="userRegNo1" maxlength="7">
 								<button type="submit" onclick='change_adult()'>인증</button>
-								${text}
+								
 							</form>
+							${msg}
 						</div>	
 					</div> <!-- content -->
 			</div> <!-- tab1 -->

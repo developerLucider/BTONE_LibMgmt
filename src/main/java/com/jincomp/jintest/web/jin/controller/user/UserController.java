@@ -34,17 +34,24 @@ public class UserController {
 		
 		log.info("post 로그인");
 	   
-		// 로그인 정보 가져오기(db에서)
+		// 로그인 정보 가져오기
 	 	UserVO loginUser = userService.loginUser(usrVo);
 	  
+	 	
 	    
 	 	// 로그인 정보 세션에 담음.
  		HttpSession httpSession = request.getSession();
  		
  		if( loginUser != null) {
  			// 세션에 로그인 정보 담기
- 		    httpSession.setAttribute("loginUser", loginUser);
+ 		   httpSession.setAttribute("loginUser", loginUser);
  		   httpSession.setAttribute("userNum", loginUser.getUserNo());
+ 		   httpSession.setAttribute("userAgeCheckYn", loginUser.getUserAgeCheckYn());
+ 		   
+ 			String yN = (String) httpSession.getAttribute("userAgeCheckYn");
+ 		   
+ 			log.debug("잠시 자리 빌립니다. : {}", yN);
+ 		   
  			return "redirect:/";
  		} else {
  			// 로그인 실패 시 세션 null 담음.

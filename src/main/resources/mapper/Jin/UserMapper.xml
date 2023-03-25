@@ -21,34 +21,38 @@
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_ID" property="userId" />
 		<result column="USER_PASSWORD" property="userPassword" />
+		<result column="user_age_check_yn" property="userAgeCheckYn" />
 		<collection property="authVO" resultMap="auth" />
 	</resultMap>
 	<resultMap type="com.jincomp.jintest.web.jin.vo.OrderVO" id="order">
 		<result column="ORDER_ID" property="orderId"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
 		<result column="ORDER_DATE" property="orderDate"/>
-		<collection property="UserVO" resultMap="user" />
-		<collection property="BookVO" resultMap="book" />
+		<collection property="userVo" resultMap="user" />
+		<collection property="bookVo" resultMap="book" />
 	
 	</resultMap>
 
 	<!--유저 로그인 -->
 	<select id="loginUser"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
-		SELECT ul.USER_NO,
-		ul.USER_ID,
-		ul.USER_NAME,
-		ul.USER_PASSWORD,
-		ul.USER_ADDRESS,
-		ua.user_no,
-		ua.user_auth
-		FROM USER_LOGIN ul
-		left outer
-		join user_auth ua
-		on ul.user_no = ua.user_no
-		WHERE USER_ID = #{userId}
-	</select>
+      resultType="com.jincomp.jintest.web.jin.vo.UserVO"
+      parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
+      SELECT ul.USER_NO,
+      ul.USER_ID,
+      ul.USER_NAME,
+      ul.USER_PASSWORD,
+      ul.USER_ADDRESS,
+      ua.user_no,
+      ua.user_auth,
+      uac.user_age_check_yn
+      FROM USER_LOGIN ul
+      left outer
+      join user_auth ua
+      on ul.user_no = ua.user_no
+      inner join edu.user_age_check uac 
+      on ul.user_no = uac.user_no
+      WHERE USER_ID = #{userId}
+   </select>
 
 	<!-- 유저 번호로 정보 찾기 -->
 	<select id="findUserByUserNo"

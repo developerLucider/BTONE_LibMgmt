@@ -45,7 +45,7 @@ public class UserService {
 	    
 	    // 로그인 정보(db)
 	 	UserVO loginUser = userMapper.loginUser(userVo);
-
+	 	logger.debug("------------------loginUser : {}", loginUser);
 	    
 	    if(loginUser != null) {	 	    			
 	      // 디비 값 
