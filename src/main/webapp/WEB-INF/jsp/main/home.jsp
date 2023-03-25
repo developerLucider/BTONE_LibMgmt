@@ -188,7 +188,7 @@ function rentBook() {
 		
 		if(userNo === "") {
 			alert("로그인 후 이용 가능 합니다.");
-			location.href = "/login";
+			location.href = "/login";  
 		} else {
 			
 			$.ajax({
