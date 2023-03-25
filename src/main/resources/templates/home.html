@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BTONE_LIBRARY_MANAGEMENT</title>
+<script th:inline="javascript">
+	$(() => {
+		$("#tabs").tabs();
+		/* new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        }
+	    }).open(); */
+	});
+	
+	function AllBookListEvent() {
+		$("#tableBody tr").each(function () {
+			$(this).show();												
+		});
+	}
+	
+	function AvailableBookEvent(){
+		$("#tableBody tr").each(function () {
+			if($(this).children().eq(8).text() != 0) {	// 숨겨진 대여자의 아이디가 존재하면																
+				$(this).hide();												
+			}
+		});
+	}
+</script>
+
+<script th:inline="javascript">
+	function searchBook() {    
+
+	      var frmData = {
+	         "searchType" : $("#searchType option:selected").val(),
+	         "keyword" : $("input[name=keyword]").val()
+	      }
+
+	      if (frmData["searchType"] && frmData["keyword"]) { //검색 조건이 모두 입력된 경우 
+
+	         $.ajax({
+                  url : "main/getBooks.do",
+                  type : "POST",
+                  contentType : "application/json",
+                  data : JSON.stringify(frmData),
+                  success : function(data) {
+                     if (data.length > 0) {
+                        var result = "";
+                        $("#tableBody").empty();
+						
+                        for (i = 0; i < data.length; i++) {
+                        	
+                       	  	result += "<tr><th width='20px'><input type='checkbox' name='check' value='" + data[i].goodsId + "'></th>"
+                            result += "<th width='50px'>" + (i + 1)  + "</th>"
+                            result += "<th width='50px'>" + data[i].goodsId + "</th>"
+                            result += "<th width='200px'>" + data[i].goodsName + "</th>"
+                            result += "<th width='200px'>" + data[i].goodsPrice + "</th>"
+                            result += "<th width='100px'>" + data[i].goodsDiscountPrice + "</th>"
+                            if(data[i].eventStrDate) {	
+                                result += "<th width='100px'>" + data[i].eventStrDate + "</th>"
+                            } else {	// null일경우는 비워두도록
+                            	result += "<th width='100px'></th>"
+                            }
+                            if(data[i].eventEndDate) {
+                                result += "<th width='100px' id='eventEndDate" + i + "'>" + data[i].eventEndDate + "</th>"
+                            } else {	// null일경우는 비워두도록
+                            	result += "<th width='100px' id='eventEndDate" + i + "'></th>"
+                            }
+                            if(data[i].userId) {
+                            	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th></tr>"	
+                            } else {
+                            	result += "<th width='100px' id='userId" + i + "' style='display:none'></th>"
+                            } 
+                        }
+
+                        $("#tableBody").append(result);
+                     } else {
+                        alert("검색 결과가 없습니다.");
+                     }
+                     
+                     $("#allList").trigger("click");
+                  }
+              });
+	      } else if (!frmData["keyword"]) { //키워드가 없을경우 
+	         location.reload(); // 전체 조회로 다시
+	      } else {
+	         alert("검색조건을 확인해주세요.");
+	      }
+	   }
+</script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function user_auth(){
+	var session =/*[[${session}]]*/ "${session}";
+		
+		const userNo = session.loginUser.userNo;
+		
+		const userAuth =session.userAuth;
+		
+		console.log("session: " + JSON.stringify(session));
+		alert("userAuth : " + userAuth);
+		alert("userNo : " + userNo);		
+	
+		if(userAuth === 'admin'){
+			alert("이미 관리자 이십니다.");
+			return;
+		}
+		  else {
+			 $.ajax({	
+				url : "/auth/edit/" + userNo,
+				type : "post",
+				success : function(data){
+					if(data >= 1){
+						alert("권한 변경 완료")
+					} 		
+					location.reload();
+				}, error:  function (request, status, error){
+					alert("권한 비어 있음. 관리자 문의")
+				}
+			});
+		}
+}
+/*]]>*/
+</script>
+
+
+<script th:inline="javascript">
+function rentBook() {    
+	var rentBookList = [];
+	
+	$("#tableBody tr").each(function () {
+		if($(this).find('input:checkbox[name=check]').is(":checked")) {
+			rentBookList.push($(this).children().eq(2).text());
+		}
+	});
+	
+	
+	// 체크된 값이 없을때
+	if (rentBookList.length > 0) {
+		// session값 가져오지 못함.
+		var userNo = '${sessionScope.loginUser.userNo}';
+		console.log("userNo", userNo);
+		
+		if(userNo === "") {
+			alert("로그인 후 이용 가능 합니다.");
+			location.href = "/login";
+		} else {
+			
+			$.ajax({
+				url : "main/rentBooks.do",
+				type : "post",
+				data : {
+					"rentBookList" : rentBookList,
+					"userNo" : userNo 
+				},
+				success : function(data) {
+					console.log(data);
+				},
+				error : function(xhr, status, error) {
+					alert("에러발생");
+				}
+			});
+		}
+	} else {
+		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
+	}
+}  
+</script>
+</head>
+
+<div layout:fragment="content">
+	<div class="container">
+		<div id="tabs">
+			<table width="100%">
+				<tbody>
+					<tr>
+						<th style="width: 200px; text-align: left;">HOME</th>
+						<td>
+							<ul>
+								<li><a id="allList" href="#tabs1"
+									onclick="AllBookListEvent();">전체조회</a></li>
+								<li><a id="rentList" href="#tabs1"
+									onclick="AvailableBookEvent();">대여가능</a></li>
+								<li><button type="button" onclick='user_auth();'>관리자
+										등급 up</button></li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- home tab -->
+			<div class="content" id="tabs1">
+				<div class="search_select">
+					<select id="searchType" name="searchType">
+						<option value="">--선택--</option>
+						<option value="GOODS_ID">아이디</option>
+						<option value="GOODS_NAME">이름</option>
+						<option value="GOODS_PRICE">가격</option>
+					</select> <input type="text" name="keyword" value="" id="search"
+						placeholder="검색어를 입력하세요.">
+					<button class="button color_sub" onclick="searchBook();">검색</button>
+					<button class="button color_sub4" onclick="rentBook();">대여</button>
+					<a href="https://naver.com/" target="_blacnk">인증 테스트</a>
+					<div class="fixedTable">
+						<div class="fixedBox">
+							<table>
+								<thead id="tableHead">
+									<tr>
+										<th width='20px'></th>
+										<th width='50px'>No</th>
+										<th width='50px'>ID</th>
+										<th width='200px'>이름</th>
+										<th width='200px'>가격</th>
+										<th width='100px'>이벤트가</th>
+										<th width='100px'>이벤트시작기간</th>
+										<th width='100px'>이벤트종료기간</th>
+									</tr>
+								</thead>
+								<tbody class="table" id="tableBody">
+									<tr th:each="list : ${list}">
+										<th width='20px'><input type="checkbox" name="check"
+											th:value="${list.goodsId}"></th>
+										<th width='50px' th:text="${listStat.count}"></th>
+										<!-- 반복상태 추적해주는  status변수 사용. list이름+Stat로 접근 -->
+										<th width='50px' th:text="${list.goodsId}"></th>
+										<th width='200px' th:text="${list.goodsName}"></th>
+										<th width='200px' th:text="${list.goodsPrice}"></th>
+										<th width='100px' th:text="${list.goodsDiscountPrice}"></th>
+										<th width='100px' th:text="${list.eventStrDate}"></th>
+										<th width='100px' th:text="${list.eventEndDate}"></th>
+										<th width='100px' style="display: none"
+											th:text="${list.userId}"></th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- tab2 -->
+				<!--  orders tab  -->
+				<!-- tabs3 -->
+				<!-- tab4 -->
+			</div>
+		</div>
+	</div>
+	<!-- popup  -->
+	<div id="popupBox" title="테이블"></div>
+</div>
+</html>
