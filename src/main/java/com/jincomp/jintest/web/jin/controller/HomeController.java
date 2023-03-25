@@ -48,7 +48,7 @@ public class HomeController {
 		logger.debug("list : {}", list);
 		
 
-		model.addAttribute("list", list); 
+		model.addAttribute("list", list);
 
 		return "home"; // home.html로 이동
 	}
