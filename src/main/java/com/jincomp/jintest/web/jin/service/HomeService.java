@@ -48,6 +48,7 @@ public class HomeService {
 				mainbook.setEventEndDate(tmp.getEventVo().getRateEndDay());
 			}
 			mainbook.setUserId(tmp.getRentVo().getUserNo());
+			mainbook.setGoodsQuantity(tmp.getGoodsQuantity());
 			
 			// 이벤트 유무에 따라 할인가를 계산해준다.
 			//logger.debug("{}의 이벤트 : {}", tmp.getGoodsName() , tmp.getEventId());
