@@ -39,20 +39,7 @@ $(document).ready(function() {
 
 
 function change_adult(){
-	
-	const userNo = '${sessionScope.userNo}'
-	
-	
-	const userAgeCheckYn = '${sessionScope.userAgeCheckYn}'
-	
-	
-	
 	alert("userTest : " + userAgeCheckYn);
-	
-	
-	
-	
-	
 	
 }
 

@@ -88,17 +88,6 @@ public class HomeController {
 		
 		UserVO adultUser = homeService.adult(userVO, request);
 		
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("userAgeCheckYn", adultUser.getUserAgeCheckYn());
-		session.setAttribute("userNo", adultUser.getUserNo());
-		
-		String userNo = (String)session.getAttribute("userNo");
-		
-		String userAgeCheckYn = (String)session.getAttribute("userAgeCheckYn");
-		
-		
-		
 		
 		return "/test/adult";
 	}

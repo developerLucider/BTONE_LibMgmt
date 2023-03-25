@@ -29,5 +29,5 @@ public interface UserMapper {
 	public UserVO adult(UserVO userVO);
 	
 	//인증 변경
-	public UserVO changeAdult(UserVO userVO);
+	public void changeAdult(int userNo);
 }

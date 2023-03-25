@@ -44,6 +44,7 @@ public class UserController {
  		if( loginUser != null) {
  			// 세션에 로그인 정보 담기
  		    httpSession.setAttribute("loginUser", loginUser);
+ 		   httpSession.setAttribute("userNum", loginUser.getUserNo());
  			return "redirect:/";
  		} else {
  			// 로그인 실패 시 세션 null 담음.

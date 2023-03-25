@@ -118,7 +118,7 @@
 		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
 	</select>
 	
-	<update id="changeAdult" parameterType="com.jincomp.jintest.web.jin.vo.UserVO">
+	<update id="changeAdult">
 		update 
 		USER_LOGIN as a 
 		inner join 
