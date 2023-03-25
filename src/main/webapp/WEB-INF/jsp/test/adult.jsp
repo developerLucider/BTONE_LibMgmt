@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-			
+         
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,21 +38,7 @@ $(document).ready(function() {
 });
 
 
-function change_adult(){
-	alert("userTest : " + userAgeCheckYn);
-	
-}
-
-
-
-
-
-
 </script>
-
-
-
-
 </head>
 <body>
 	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>

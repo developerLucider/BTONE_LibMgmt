@@ -59,6 +59,9 @@
 		var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9$@!%*#^?&]*$/;
 		var pw = $("#userPassword").val();
 		var pw2 = $("#password2").val();
+		var regNo = $("#userRegNo").val() + $("#userRegNo2").val();
+		var userRegNo2 = $("#userRegNo2").val();
+		
 
 		console.log(reg.test(pw)); //true 반환
 		
@@ -67,6 +70,12 @@
 			
 		}else if(pw != pw2){ //패스워드,패스워드2가 같지않다면 
 			alert('비밀번호가 같지 않습니다.');
+			
+		}else if(regNo.length != 13){ //13자리가 아닐때
+			alert('주민번호를 다시 확인해주세요!');
+			
+		}else if(userRegNo2.substr(0,1) > 4 ){ //주민번호 뒤에 첫글자가 1,2,3,4가 아닐때
+			alert('주민번호 뒷자리를 올바르게 입력해주세요!');
 			
 		}else if(reg.test(pw) || pw == pw2){
 
@@ -79,7 +88,7 @@
 					"userName" : $("#userName").val(),
 					"userId" : $("#userId").val(),
 					"userPassword" : $("#userPassword").val(),
-					"userRegNo" : $("#userRegNo").val(),
+					"userRegNo" : $("#userRegNo").val() + $("#userRegNo2").val(),
 					"userAddress" :  $("#Address").val() + $("#userAddress").val()
 					},
 			    success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
@@ -158,7 +167,8 @@
 								<tr>
 									<td class="line pt">주민번호</td>
 									<td class="line">
-										<input type="text" id="userRegNo" name="userRegNo" placeholder="주민번호" />
+										<input type="text" id="userRegNo" name="userRegNo" maxlength="6" placeholder="주민번호 앞자리" /> - 
+										<input type="password" id="userRegNo2" name="userRegNo" maxlength="7" placeholder="주민번호 뒷자리" />
 									</td>
 								</tr>
 								<tr>

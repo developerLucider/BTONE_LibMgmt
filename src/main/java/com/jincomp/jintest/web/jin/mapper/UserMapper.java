@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
+import com.jincomp.jintest.web.jin.vo.UserAgeCheckVo;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
@@ -44,6 +45,12 @@ public interface UserMapper {
 	void getPoint(PointVO pvo);
 	//관리자 권한user
 	void getAuth(UserAuthVO avo);
+
+	//유저업데이트 유무 
+	void getUserAgeCheckVo(UserAgeCheckVo uvo);
+	
+
+
 	
 	/** 결제(총 액수 만큼 포인트 차감)
 	 * @author mskim

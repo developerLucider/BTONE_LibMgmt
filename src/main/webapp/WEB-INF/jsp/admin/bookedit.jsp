@@ -17,7 +17,9 @@
 				goodsId : $("#goodsId").val(),
 				goodsName : $("#goodsName").val(),
 				goodsPrice : $("#goodsPrice").val(),
-				eventId : $("#selectType option:selected").val()
+				goodsQuantity : $("#goodsQuantity").val(),
+				eventId : $("#selectType option:selected").val(),
+				goodsAgeLimit : $("#goodsAgeLimit option:selected").val()
 		};
 		
 		var eventId = $("#selectType option:selected").val();
@@ -81,6 +83,16 @@
                                     <label for="goodsPrice" class="form-label">대여가격</label>
                                     <input type="text" class="form-control" id="goodsPrice" value="${item.goodsPrice }">
                                 </div>
+                                <div class="mb-3">
+									<label for="goodsPrice" class="form-label">수량</label> <input
+										type="text" class="form-control" id="goodsQuantity" value="${item.goodsQuantity }">
+								</div>
+                                <label for="eventSelect" class="form-label">19세미만 관람여부</label> 
+								<select class="form-select mb-3" aria-label="Default select example" id="goodsAgeLimit">
+									<option selected value="">${item.goodsAgeLimit}</option>
+									<option value="y">19세 이상</option>
+									<option value="n">19세 미만</option>
+								</select>
                                 <!-- 할인 정책 적용 -->
                                 <label for="eventSelect" class="form-label">할인적용</label>
 		                            <select

@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -193,7 +196,8 @@ public class HomeService {
 		return result;
 	}
 	
-	
+
+
 	
 		//성인 인증 
 		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
