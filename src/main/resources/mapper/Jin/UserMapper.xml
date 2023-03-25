@@ -108,6 +108,8 @@
 		WHERE ul.user_no = #{userNo}
 	</select>
 	
+	
+	<!-- 이름 주민번호로 db에 담긴 정보를 가져온다. -->
 	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
 		select 
 		 a.USER_NO
@@ -122,6 +124,7 @@
 		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
 	</select>
 	
+	<!-- 유저 번호에 대한 인증을 바꾼다. -->
 	<update id="changeAdult">
 		update 
 		USER_LOGIN as a 

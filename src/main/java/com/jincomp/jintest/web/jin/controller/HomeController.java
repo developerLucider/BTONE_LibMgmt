@@ -64,14 +64,6 @@ public class HomeController {
 		return "/regist/regist";
 	}
 
-	@GetMapping("/login")
-	public String showLogin(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
-
-		return "/login/login";
-	}
-	
-	
-	
 	//성인인증 페이지 진입
 	@GetMapping("/adult")
 	public String showAdult(HttpServletRequest request,
@@ -87,7 +79,6 @@ public class HomeController {
 		
 		logger.debug("{}", "깐트롤러 진입");
 		
-//		logger.debug("userRegNo1 : {}", userRegNo1);
 		
 		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
 		

@@ -1,6 +1,7 @@
 package com.jincomp.jintest.web.jin.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,14 @@ public class UserController {
 	
 	private final UserService userService;
 	
+	//로그인 폼 이동
+	@GetMapping("/login")
+	public String showLogin(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+
+		return "/login/login";
+	}
+	
+	//로그인 액션
 	@PostMapping("/login")
 	public String userLogin(UserVO usrVo, HttpServletRequest request, Model model){
 		
@@ -48,9 +58,9 @@ public class UserController {
  		   httpSession.setAttribute("userNum", loginUser.getUserNo());
  		   httpSession.setAttribute("userAgeCheckYn", loginUser.getUserAgeCheckYn());
  		   
- 			String yN = (String) httpSession.getAttribute("userAgeCheckYn");
+// 			String yN = (String) httpSession.getAttribute("userAgeCheckYn");
  		   
- 			log.debug("잠시 자리 빌립니다. : {}", yN);
+// 			log.debug("잠시 자리 빌립니다. : {}", yN);
  		   
  			return "redirect:/";
  		} else {
