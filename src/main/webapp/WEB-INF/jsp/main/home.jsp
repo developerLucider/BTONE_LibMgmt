@@ -197,8 +197,8 @@ function rentBook() {
 				data : {
 					"rentBookPriceList" : rentBookPriceList,
 					"rentBookList" : rentBookList,
-					"rentBookQuantityList" : rentBookQuantity,
-					"rentBookAgeLimitList" : rentBookAgeLimit,
+					//"rentBookQuantityList" : rentBookQuantity,
+					//"rentBookAgeLimitList" : rentBookAgeLimit,
 					"userNo" : userNo 
 				},
 				success : function(data) {

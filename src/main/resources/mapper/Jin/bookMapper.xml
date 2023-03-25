@@ -51,7 +51,10 @@
 	</select>
 	
 	<select id="getRentList" resultMap="RentVO">
-		SELECT USER_NO, GOODS_ID, START_DATE, END_DATE, 	
+		SELECT USER_NO
+			, GOODS_ID
+			, START_DATE
+			, END_DATE 	
 		FROM BOOKS_CHECK_OUT;
 	</select>
 	
