@@ -28,8 +28,8 @@
 		<result column="ORDER_ID" property="orderId"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
 		<result column="ORDER_DATE" property="orderDate"/>
-		<collection property="UserVO" resultMap="user" />
-		<collection property="BookVO" resultMap="book" />
+		<collection property="userVo" resultMap="user" />
+		<collection property="bookVo" resultMap="book" />
 	
 	</resultMap>
 	
