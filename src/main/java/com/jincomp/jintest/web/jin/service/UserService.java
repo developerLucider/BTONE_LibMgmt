@@ -41,7 +41,7 @@ public class UserService {
 	    String newPw = userVo.getUserPassword();
 	    
 	    logger.debug("클라이언트에서 받은 아이디 : {}", newId);
-	    logger.debug("클라이언트에서 받은 비밀번호: {}", newPw);
+	    logger.debug("클라이언트에서 받은 비밀번호 : {}", newPw);
 	    
 	    // 로그인 정보(db)
 	 	UserVO loginUser = userMapper.loginUser(userVo);
@@ -52,12 +52,12 @@ public class UserService {
 		  String oldId = loginUser.getUserId();
 		  String oldPw = loginUser.getUserPassword();
 		  
-		  logger.debug("디비에 저장된 아이디{}", newId);
-		  logger.debug("디비에 저장된 암호화 비밀번호{}", newPw);   //인코딩된 비밀번호 안나옴.
+		  logger.debug("디비에 저장된 아이디 : {}", oldId);
+		  logger.debug("디비에 저장된 암호화 비밀번호 : {}", oldPw);   //인코딩된 비밀번호 안나옴.
 	      
 		  // 비밀번호 디코딩
 		  String decodPw = new String (decoder.decode(oldPw));
-		  logger.debug("디코딩된 비밀번호 {}", decodPw);
+		  logger.debug("디코딩된 비밀번호 : {}", decodPw);
 		  
 		    
 		  if(newId.equals(oldId) && newPw.equals(decodPw)) {		    	
