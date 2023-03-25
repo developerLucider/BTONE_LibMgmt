@@ -143,7 +143,38 @@
 	</insert>
 	
 	
+	<!--  결제(포인트 수정) -->
+	<update id="updatePoint" parameterType="com.jincomp.jintest.web.jin.vo.PointVO">
+		UPDATE point
+		SET
+		point = point - #{point}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
+  
+	<select id="adult" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+		select 
+		 a.USER_NO
+		,a.USER_NAME
+		,a.USER_ID
+		,a.USER_ADDRESS
+		,a.USER_REG_NO
+		,b.USER_AGE_CHECK_YN
+		from USER_LOGIN as a
+		inner join USER_AGE_CHECK as b 
+		on a.USER_NO = b.USER_NO 
+		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+	</select>
 	
+	<update id="changeAdult">
+		update 
+		USER_LOGIN as a 
+		inner join 
+		USER_AGE_CHECK	as b 
+		on a.USER_NO = b.USER_NO 
+		set b.USER_AGE_CHECK_YN = 'y'
+		where a.USER_NO = #{userNo}
 	
-
+	</update>
+  
 </mapper>

@@ -28,6 +28,14 @@ public interface UserMapper {
 
 	public List<OrderVO> orderList(int userNo);
 	
+
+	
+	//성인인증
+	public UserVO adult(UserVO userVO);
+	
+	//인증 변경
+	public void changeAdult(int userNo);
+
 	//회원가입 (중복체크)
 	int idChk(UserLogin user);
 
@@ -37,8 +45,16 @@ public interface UserMapper {
 	void getPoint(PointVO pvo);
 	//관리자 권한user
 	void getAuth(UserAuthVO avo);
+
 	//유저업데이트 유무 
 	void getUserAgeCheckVo(UserAgeCheckVo uvo);
 	
 
+
+	
+	/** 결제(총 액수 만큼 포인트 차감)
+	 * @author mskim
+	 * @param pvo
+	 */
+	void updatePoint(PointVO pvo);
 }

@@ -37,60 +37,34 @@ $(document).ready(function() {
     });
 });
 
-function adult(){
-	
-	$.ajax({
-		url : "/main/adult.do",
-		dataType : "json",
-        type :   "post",
-        contentType : "application/json",
-		data :{
-			userName : $("#userName").val(),
-			userRegNo : $("#userRegNo").val() + $("#userRegNo2").val()
-		},
-		
-	    success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
-	    	console.log( "주민번호 조회 성공");
-	    	alert(JSON.stringify('인증 완료!'));
-	    	location.reload();    	
-	    	
-	    },error : function(e){
-	    	console.log(e);
-	    	alert(e);
-	    }
-		      
-	}); 
-}
-
-
 
 </script>
-
 </head>
 <body>
-   <%@include file = "/WEB-INF/jsp/include/header.jsp" %>
-   <div class="container">
+	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
+	<div class="container">
 
-         <div class="" id="tabs1">
-               <div class="content">                   
-                  <div class="/adult/action">
-                     <h3>성인 인증</h3>   
-                         
-                        <label for="userName">이름:</label>
-                         <input type="text" id="userName" name="userName"><br>
-                     
-                         <label for="userRegNo">주민등록번호:</label>
-                         <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="6" placeholder="주민번호 앞자리"> -  
-                         <input class="inputs" type="password" id="userRegNo2" name="userRegNo" maxlength="7" placeholder="주민번호 뒷자리"> 
-                         
-                         <!-- <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="7"> -->
-                        <button onclick="adult();">인증</button>
-                       	 ${text}
-                  </div>   
-                  
-               </div> <!-- content -->
-         </div> <!-- tab1 -->
-   </div> <!-- contabiner -->
-   <%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
+			<div class="" id="tabs1">
+					<div class="content">						 
+						<div class="/adult/action">
+							<h3>성인 인증</h3>	
+							<form action ="/adult" method="post">				
+								<input type="hidden" id="userNo" name="userNo" value = ""><br>
+								<label for="userName">이름:</label>
+							    <input type="text" id="userName" name="userName"><br>
+							
+							    <label for="userRegNo">주민등록번호:</label>
+							    <input class="inputs" type="text" id="userRegNo" name="userRegNo" maxlength="6"> -
+							    
+							    <input class="inputs" type="password" id="userRegNo1" name="userRegNo1" maxlength="7">
+								<button type="submit" onclick='change_adult()'>인증</button>
+								
+							</form>
+							${msg}
+						</div>	
+					</div> <!-- content -->
+			</div> <!-- tab1 -->
+	</div> <!-- contabiner -->
+	<%@include file = "/WEB-INF/jsp/include/footer.jsp" %>
 </body>
 </html>

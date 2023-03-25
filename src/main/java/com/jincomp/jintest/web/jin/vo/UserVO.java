@@ -27,4 +27,5 @@ public class UserVO {
 	private UserAuthVO authVO;
 	private UserAgeCheckVo userAgeVO;
 	
+
 }
