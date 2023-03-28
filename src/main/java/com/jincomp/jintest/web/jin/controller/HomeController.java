@@ -99,7 +99,8 @@ public class HomeController {
 			model.addAttribute("msg", "인증완료");
 		}
 		
-	
+		return "/test/adult";
+	}
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
