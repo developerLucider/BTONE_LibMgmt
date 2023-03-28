@@ -114,7 +114,9 @@ public class HomeController {
 		return "/test/adult";
 	}
 		
-	
+		return "/test/adult";
+	}
+
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)

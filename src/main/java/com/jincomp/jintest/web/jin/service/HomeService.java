@@ -1,3 +1,4 @@
+
 package com.jincomp.jintest.web.jin.service;
 
 import java.time.LocalDate;
@@ -8,11 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,7 +26,6 @@ import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
-import groovy.lang.Script;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -114,9 +110,8 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
-			/*
-			 * List<String> rentBookQuantityList, List<String> rentBookAgeLimitList,
-			 */
+											 	List<String> rentBookQuantityList,
+											 	List<String> rentBookAgeLimitList,
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -134,23 +129,22 @@ public class HomeService {
 			
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
-			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
-			boolean flag = true;
+			
 			for(RentVO rentBook : rentBookList) {
+				// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음		
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());
-//					continue rentList;
-					flag = false;
+					continue rentList;
 				}
 			}
-//			Optional.ofNullable(rentBookList).ifPresent();
+			//Otional.ofNullable(rentBookList).ifPresent();
 			List<RentVO> failResult2 = rentBookList.stream().filter(t -> t.getGoodsId().equals(goodsId)).collect(Collectors.toList());
 			
 			RentVO rentVo= RentVO.builder()
 					.goodsId(goodsId)
 					.userNo(userNo).build();
-//			rentVo.setGoodsId(goodsId);
-//			rentVo.setUserNo(userNo);
+			//rentVo.setGoodsId(goodsId);
+			//rentVo.setUserNo(userNo);
 			
 			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -200,9 +194,13 @@ public class HomeService {
 	
 
 
+
+
+		
+			
 	
-		//성인 인증 
-		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+	//성인 인증 
+	public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
 		
 		logger.debug("{}", "성인인증 서비스 진입");
 		
@@ -244,15 +242,40 @@ public class HomeService {
 		logger.debug("DB에서 받은 이름 : {}",dName);
 		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
 		
+		
+	
+		
 		if(adultUser != null) {
 	         
 	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
+	            
+	            String no = regNo.substring(0,2);
+	            logger.debug("주민번호 생년 : {}", no);
+	            
+	            Calendar now = Calendar.getInstance();
+	            int year = now.get(Calendar.YEAR);
+	            logger.debug("이번년도 : {}", year);
+	            
+	            String ye = String.valueOf(year).substring(2);
+	            logger.debug("이번년도 뒤2자리 : {}", ye);
+	            
+	            if((Integer.parseInt(ye) - Integer.parseInt(no) ) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
 	               
 	               userMapper.changeAdult(Integer.parseInt(sNum));
 	               
+	            }else { //19세 미만이면 
+	               
+	               return null;
 	            }
+	            
+	            //추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+	            //이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
 	         }
+	         
+	      } 
 	      
 	      return adultUser;
-	   }
+	   }	
+		
+	
 }

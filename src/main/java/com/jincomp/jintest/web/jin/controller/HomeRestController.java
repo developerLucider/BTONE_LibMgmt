@@ -42,13 +42,13 @@ public class HomeRestController {
    @RequestMapping(value = "/rentBooks.do")		// TODO requestParam으로 쪼개받은거 body로 바꾸기
    public Map<String, List<String>> rentBooks(@RequestParam("rentBookList[]")List<String> rentBookList,
 		   				@RequestParam("rentBookPriceList[]") List<String> rentBookPriceList,
-		   				//@RequestParam("rentBookQuantityList[]")List<String> rentBookQuantityList,
-		   				//@RequestParam("rentBookAgeLimitList[]")List<String> rentBookAgeLimitList,
+		   				@RequestParam("rentBookQuantityList[]")List<String> rentBookQuantityList,
+		   				@RequestParam("rentBookAgeLimitList[]")List<String> rentBookAgeLimitList,
 		   				@RequestParam("userNo") int userNo,
 		   HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   	logger.debug("대여 책 목록 : {} 대여 유저 정보 : {}", rentBookList, userNo);
 		Map<String, List<String>> result = homeService.rentBooks(rentBookList, rentBookPriceList,
-				/* rentBookQuantityList, rentBookAgeLimitList, */ userNo);
+				 rentBookQuantityList, rentBookAgeLimitList,  userNo);
 	   	
 	   	logger.debug("대여 성공 실패 여부 {}", result);
 	   	
