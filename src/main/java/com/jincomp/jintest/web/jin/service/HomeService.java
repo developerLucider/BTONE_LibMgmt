@@ -3,6 +3,7 @@ package com.jincomp.jintest.web.jin.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,20 +237,37 @@ public class HomeService {
 		logger.debug("DB에서 받은 이름 : {}",dName);
 		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
 		
-			
 		if(adultUser != null) {
-			
-			if(sNum.equals(dNum)) {
-				
-				userMapper.changeAdult(Integer.parseInt(sNum));
-				
-				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
-				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
-			}
-			
-		} 
+	         
+	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
+	            
+	            String no = regNo.substring(0,2);
+	            logger.debug("주민번호 생년 : {}", no);
+	            
+	            Calendar now = Calendar.getInstance();
+	            int year = now.get(Calendar.YEAR);
+	            logger.debug("이번년도 : {}", year);
+	            
+	            String ye = String.valueOf(year).substring(2);
+	            logger.debug("이번년도 뒤2자리 : {}", ye);
+	            
+	            if((Integer.parseInt(ye) - Integer.parseInt(no) ) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
+	               
+	               userMapper.changeAdult(Integer.parseInt(sNum));
+	               
+	            }else { //19세 미만이면 
+	               
+	               return null;
+	            }
+	            
+	            //추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+	            //이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
+	         }
+	         
+	      } 
+	      
+	      return adultUser;
+	   }	
 		
-		return adultUser;
-	}
 	
 }
