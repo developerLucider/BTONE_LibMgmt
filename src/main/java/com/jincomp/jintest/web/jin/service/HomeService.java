@@ -7,11 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -112,9 +108,8 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
-			/*
-			 * List<String> rentBookQuantityList, List<String> rentBookAgeLimitList,
-			 */
+											 	List<String> rentBookQuantityList,
+											 	List<String> rentBookAgeLimitList,
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -132,23 +127,22 @@ public class HomeService {
 			
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
-			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
-			boolean flag = true;
+			
 			for(RentVO rentBook : rentBookList) {
+				// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음		
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());
-//					continue rentList;
-					flag = false;
+					continue rentList;
 				}
 			}
-//			Optional.ofNullable(rentBookList).ifPresent();
+			//Otional.ofNullable(rentBookList).ifPresent();
 			List<RentVO> failResult2 = rentBookList.stream().filter(t -> t.getGoodsId().equals(goodsId)).collect(Collectors.toList());
 			
 			RentVO rentVo= RentVO.builder()
 					.goodsId(goodsId)
 					.userNo(userNo).build();
-//			rentVo.setGoodsId(goodsId);
-//			rentVo.setUserNo(userNo);
+			//rentVo.setGoodsId(goodsId);
+			//rentVo.setUserNo(userNo);
 			
 			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -199,8 +193,8 @@ public class HomeService {
 
 
 	
-		//성인 인증 
-		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+	//성인 인증 
+	public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
 		
 		logger.debug("{}", "성인인증 서비스 진입");
 		
