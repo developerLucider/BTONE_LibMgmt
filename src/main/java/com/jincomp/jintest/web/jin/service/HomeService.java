@@ -3,6 +3,7 @@ package com.jincomp.jintest.web.jin.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
+import groovy.lang.Script;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -242,20 +244,15 @@ public class HomeService {
 		logger.debug("DB에서 받은 이름 : {}",dName);
 		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
 		
-			
 		if(adultUser != null) {
-			
-			if(sNum.equals(dNum)) {
-				
-				userMapper.changeAdult(Integer.parseInt(sNum));
-				
-				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
-				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
-			}
-			
-		} 
-		
-		return adultUser;
-	}
-	
+	         
+	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
+	               
+	               userMapper.changeAdult(Integer.parseInt(sNum));
+	               
+	            }
+	         }
+	      
+	      return adultUser;
+	   }
 }
