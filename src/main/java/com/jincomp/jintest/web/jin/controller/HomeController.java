@@ -83,39 +83,12 @@ public class HomeController {
 
 	HttpServletResponse response, Model model) throws Exception {
 		
+
 		return "/test/adult";
 	}
 	
 	
-	//페이지에서 인증
-	@PostMapping("/adult")
-	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-		
-		logger.debug("{}", "깐트롤러 진입");
-		
-//		logger.debug("userRegNo1 : {}", userRegNo1);
-		
-		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
-		if(adultUser != null) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
-			
-			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
-			
-			out.flush();
-		} else if(adultUser == null) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('정보를 확인해주세요.'); history.go(-1); </script>");
-			out.flush();
-			
-		}
-		return "/test/adult";
-	}
-		
-		return "/test/adult";
-	}
+
 
 
 	@GetMapping("/mypage/{userNo}")
