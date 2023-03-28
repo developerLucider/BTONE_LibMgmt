@@ -15,6 +15,7 @@
 	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
 	        }
 	    }).open(); */
+	    
 	});
 	
 	function AllBookListEvent() {
@@ -25,7 +26,7 @@
 	
 	function AvailableBookEvent(){
 		$("#tableBody tr").each(function () {
-			if($(this).children().eq(8).text() != 0) {	// 숨겨진 대여자의 아이디가 존재하면																
+			if($(this).children().eq(10).text() != 0) {	// 숨겨진 대여자의 아이디가 존재하면																
 				$(this).hide();												
 			}
 		});
@@ -33,65 +34,78 @@
 </script>
 
 <script th:inline="javascript">
-	function searchBook() {    
+function searchBook() {    
 
-	      var frmData = {
-	         "searchType" : $("#searchType option:selected").val(),
-	         "keyword" : $("input[name=keyword]").val()
-	      }
+    var frmData = {
+       "searchType" : $("#searchType option:selected").val(),
+       "keyword" : $("input[name=keyword]").val()
+    }
 
-	      if (frmData["searchType"] && frmData["keyword"]) { //검색 조건이 모두 입력된 경우 
+    if (frmData["searchType"] && frmData["keyword"]) { //검색 조건이 모두 입력된 경우 
 
-	         $.ajax({
-                  url : "main/getBooks.do",
-                  type : "POST",
-                  contentType : "application/json",
-                  data : JSON.stringify(frmData),
-                  success : function(data) {
-                     if (data.length > 0) {
-                        var result = "";
-                        $("#tableBody").empty();
-						
-                        for (i = 0; i < data.length; i++) {
-                        	
-                       	  	result += "<tr><th width='20px'><input type='checkbox' name='check' value='" + data[i].goodsId + "'></th>"
-                            result += "<th width='50px'>" + (i + 1)  + "</th>"
-                            result += "<th width='50px'>" + data[i].goodsId + "</th>"
-                            result += "<th width='200px'>" + data[i].goodsName + "</th>"
-                            result += "<th width='200px'>" + data[i].goodsPrice + "</th>"
-                            result += "<th width='100px'>" + data[i].goodsDiscountPrice + "</th>"
-                            if(data[i].eventStrDate) {	
-                                result += "<th width='100px'>" + data[i].eventStrDate + "</th>"
-                            } else {	// null일경우는 비워두도록
-                            	result += "<th width='100px'></th>"
-                            }
-                            if(data[i].eventEndDate) {
-                                result += "<th width='100px' id='eventEndDate" + i + "'>" + data[i].eventEndDate + "</th>"
-                            } else {	// null일경우는 비워두도록
-                            	result += "<th width='100px' id='eventEndDate" + i + "'></th>"
-                            }
-                            if(data[i].userId) {
-                            	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th></tr>"	
-                            } else {
-                            	result += "<th width='100px' id='userId" + i + "' style='display:none'></th>"
-                            } 
-                        }
-
-                        $("#tableBody").append(result);
-                     } else {
-                        alert("검색 결과가 없습니다.");
-                     }
-                     
-                     $("#allList").trigger("click");
+       $.ajax({
+            url : "main/getBooks.do",
+            type : "POST",
+            contentType : "application/json",
+            data : JSON.stringify(frmData),
+            success : function(data) {
+               if (data.length > 0) {
+                  var result = "";
+                  $("#tableBody").empty();
+					
+                  for (i = 0; i < data.length; i++) {
+                  	
+                 	  	result += "<tr><th width='20px'><input type='checkbox' name='check' value='" + data[i].goodsId + "'></th>"
+                      result += "<th width='50px'>" + (i + 1)  + "</th>"
+                      result += "<th width='50px'>" + data[i].goodsId + "</th>"
+                      result += "<th width='200px'>" + data[i].goodsName + "</th>"
+                      result += "<th width='200px'>" + data[i].goodsPrice + "</th>"
+                      result += "<th width='100px'>" + data[i].goodsDiscountPrice + "</th>"
+                      if(data[i].eventStrDate) {	
+                          result += "<th width='100px'>" + data[i].eventStrDate + "</th>"
+                      } else {	// null일경우는 비워두도록
+                      	result += "<th width='100px'></th>"
+                      }
+                      if(data[i].eventEndDate) {
+                          result += "<th width='100px' id='eventEndDate" + i + "'>" + data[i].eventEndDate + "</th>"
+                      } else {	// null일경우는 비워두도록
+                      	result += "<th width='100px' id='eventEndDate" + i + "'></th>"
+                      }
+                      if(data[i].userId) {
+                      	result += "<th width='100px' id='userId" + i + "' style='display:none'>" + data[i].userId + "</th>"	
+                      } else {
+                      	result += "<th width='100px' id='userId" + i + "' style='display:none'></th>"
+                      }
+                      result += "<th width='50px'>" + data[i].goodsQuantity  + "</th>"
+                      
+                      console.log(data[i].goodsAgeLimit);
+                      if(data[i].goodsAgeLimit == 'y'){
+                      	result += "<th width='50px'>성인이용가</th>"	
+                      } else if(data[i].goodsAgeLimit == 'n') {
+                      	result += "<th width='50px'>전체이용가</th>"                            	
+                      } else {
+                      	result += "<th width='50px'>미분류</th>"
+                      }
+                      
+                      result += "</tr>"
                   }
-              });
-	      } else if (!frmData["keyword"]) { //키워드가 없을경우 
-	         location.reload(); // 전체 조회로 다시
-	      } else {
-	         alert("검색조건을 확인해주세요.");
-	      }
-	   }
+
+                  $("#tableBody").append(result);
+               } else {
+                  alert("검색 결과가 없습니다.");
+               }
+               
+               $("#allList").trigger("click");
+            }
+        });
+    } else if (!frmData["keyword"]) { //키워드가 없을경우 
+       location.reload(); // 전체 조회로 다시
+    } else {
+       alert("검색조건을 확인해주세요.");
+    }
+ }   
 </script>
+
 <script th:inline="javascript">
 /*<![CDATA[*/
 function user_auth(){
@@ -129,22 +143,44 @@ function user_auth(){
 
 
 <script th:inline="javascript">
+/*<![CDATA[*/
 function rentBook() {    
 	var rentBookList = [];
+	var rentBookPriceList = [];
+	var rentBookAgeLimit = [];
+	var rentBookQuantiy = [];
+
+
+	var session = /*[[${session}]]*/ "${session}";
+	
+	const userNo = session.loginUser.userNo;
+	
 	
 	$("#tableBody tr").each(function () {
 		if($(this).find('input:checkbox[name=check]').is(":checked")) {
 			rentBookList.push($(this).children().eq(2).text());
+			rentBookPriceList.push($(this).children().eq(5).text());
+			rentBookQuantiy.push($(this).children().eq(8).text());
+			rentBookAgeLimit.push($(this).children().eq(9).children().eq(0).text());
+			
+			// TODO: 성인인증 완료 여부를 받아오는게 필요
+			if($(this).children().eq(9).children().eq(0).text() == "성인이용가") {
+				alert("해당 품목 (" + $(this).children().eq(2).text() + "(" +$(this).children().eq(3).text() + ")은 성인인증이 필요합니다." );
+				return;
+			}
+			
+			if($(this).children().eq(8).text() == '0') {	// 수량이 0인경우
+				alert("선택 하신" + $(this).children().eq(2).text() + "(" +$(this).children().eq(3).text() +")은 수량이 없습니다.");
+				return;
+			}
 		}
 	});
 	
 	
 	// 체크된 값이 없을때
 	if (rentBookList.length > 0) {
-		// session값 가져오지 못함.
-		var userNo = '${sessionScope.loginUser.userNo}';
-		console.log("userNo", userNo);
 		
+		console.log(userNo);
 		if(userNo === "") {
 			alert("로그인 후 이용 가능 합니다.");
 			location.href = "/login";
@@ -154,11 +190,27 @@ function rentBook() {
 				url : "main/rentBooks.do",
 				type : "post",
 				data : {
+					"rentBookPriceList" : rentBookPriceList,
 					"rentBookList" : rentBookList,
+					//"rentBookQuantityList" : rentBookQuantity,
+					//"rentBookAgeLimitList" : rentBookAgeLimit,
 					"userNo" : userNo 
 				},
 				success : function(data) {
 					console.log(data);
+					var list = JSON.stringify(data);
+					console.log(list);
+					
+					
+					/* if(data.has("fail")) {
+						alert("대여 실패 테스트");
+					}
+					
+					if(data.has("success")) {
+						alert("대여 성공 테스트");
+					} */
+					
+					alert("대여 완료");
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
@@ -166,9 +218,12 @@ function rentBook() {
 			});
 		}
 	} else {
-		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.   ");		
+		alert("대여 할 책을 고른뒤 대여 버튼을 눌러주세요.");		
 	}
-}  
+	// TODO : ajax success에서 data(Map<String, Map<String>> 타입)를 iterating해서 출력
+}
+
+/*]]>*/
 </script>
 </head>
 
@@ -205,7 +260,7 @@ function rentBook() {
 						placeholder="검색어를 입력하세요.">
 					<button class="button color_sub" onclick="searchBook();">검색</button>
 					<button class="button color_sub4" onclick="rentBook();">대여</button>
-					<a href="https://naver.com/" target="_blacnk">인증 테스트</a>
+					<a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a>
 					<div class="fixedTable">
 						<div class="fixedBox">
 							<table>
@@ -219,6 +274,8 @@ function rentBook() {
 										<th width='100px'>이벤트가</th>
 										<th width='100px'>이벤트시작기간</th>
 										<th width='100px'>이벤트종료기간</th>
+										<th width='50px'>수량</th>
+										<th width='50px'>성인물여부</th>
 									</tr>
 								</thead>
 								<tbody class="table" id="tableBody">
@@ -233,8 +290,13 @@ function rentBook() {
 										<th width='100px' th:text="${list.goodsDiscountPrice}"></th>
 										<th width='100px' th:text="${list.eventStrDate}"></th>
 										<th width='100px' th:text="${list.eventEndDate}"></th>
-										<th width='100px' style="display: none"
-											th:text="${list.userId}"></th>
+										<th width='50px' th:text="${list.goodsQuantity}"></th>
+										<th width='50px' th:switch="${list.goodsAgeLimit}">
+											<span th:case="y">성인이용가</span>
+											<span th:case="n">전체이용가</span>
+											<span th:case="*">미분류</span>
+										</th>
+										<th width='100px' style="display: none" th:text="${list.userId}"></th>
 									</tr>
 								</tbody>
 							</table>
