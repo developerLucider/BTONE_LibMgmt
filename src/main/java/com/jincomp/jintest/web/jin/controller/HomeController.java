@@ -81,25 +81,7 @@ public class HomeController {
 
 	HttpServletResponse response, Model model) throws Exception {
 		
-		return "/test/adult";
-	}
-	
-	
-	//페이지에서 인증
-	@PostMapping("/adult")
-	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, Model model) {
-		
-		logger.debug("{}", "깐트롤러 진입");
-		
-//		logger.debug("userRegNo1 : {}", userRegNo1);
-		
-		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
-		
-		if(adultUser != null) {
-			model.addAttribute("msg", "인증완료");
-		}
-		
-		return "/test/adult";
+		return "/user/adult";
 	}
 
 

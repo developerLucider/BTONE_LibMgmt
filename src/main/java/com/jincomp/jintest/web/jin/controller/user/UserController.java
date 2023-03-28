@@ -107,6 +107,23 @@ public class UserController {
 		return result;
 	}
 	
+	//페이지에서 인증
+	@PostMapping("/adult.do")
+	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, Model model) {
+		
+		log.debug("{}", "깐트롤러 진입");
+		
+//		logger.debug("userRegNo1 : {}", userRegNo1);
+		
+		UserVO adultUser = userService.adult(userVO, request, userRegNo1);
+		
+		if(adultUser != null) {
+			model.addAttribute("msg", "인증완료");
+		}
+		
+		return "/user/adult";
+	}
+	
 	
 	
 }
