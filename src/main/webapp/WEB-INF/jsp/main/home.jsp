@@ -265,7 +265,7 @@ function rentBook() {
                         placeholder="검색어를 입력하세요.">
                      <button class="button color_sub" onclick="searchBook();">검색</button>
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
-					 <a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a>
+					 <!-- <a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a> -->
 				</div>	 
 
 				<div class="fixedTable">

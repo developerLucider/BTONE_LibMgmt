@@ -114,8 +114,6 @@ public class HomeController {
 		return "/test/adult";
 	}
 		
-		return "/test/adult";
-	}
 
 
 	@GetMapping("/mypage/{userNo}")
