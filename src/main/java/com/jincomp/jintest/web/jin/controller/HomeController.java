@@ -48,7 +48,7 @@ public class HomeController {
 
 		return "home"; // home.html로 이동
 	}
-
+	// test
 	@GetMapping("/admin")
 	public String showAdmin(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
 
