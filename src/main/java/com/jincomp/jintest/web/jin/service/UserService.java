@@ -283,6 +283,8 @@ public class UserService {
 	      return adultUser;
 	   }
 
+	
+	//test
 	//사용자 정보 조회
 	public List<UserLogin> userPage( int userNo ) {
 		logger.debug("userNo : {}", userNo);
