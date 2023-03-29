@@ -106,7 +106,7 @@ function fn_search(){
 											<th>${item.goodsName}</th>
 											<th>${item.goodsPrice}</th>
 											<th>${item.goodsQuantity}</th>
-                                            <td><a href="/admin/edit/book/${item.goodsId }"><button class="btn btn-success">수정</button></a></td>                                          
+                                            <td><a href="/admin/edit/book/${item.goodsId }"><button class="btn btn-success">수정</button></a></td>
                                         </tr>
                                         </c:forEach>
                                     </tbody>
