@@ -7,7 +7,6 @@ public class BtoneException extends RuntimeException{
 	private ErrorCode errorCode;
 	
 	public BtoneException(ErrorCode errorCode) { 
-    	this.errorCode = errorCode;
+    	super(errorCode.getStatus() + " : " + errorCode.getMsg());
     }
-	
 }

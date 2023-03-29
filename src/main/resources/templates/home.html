@@ -265,7 +265,7 @@ function rentBook() {
 </script>
 </head>
 
-<div layout:fragment="content">
+<div layout:fragment="content" th:with="temp=${hello}" th:text="${temp}">
 	<div class="container">
 		<div id="tabs">
 			<table width="100%">
