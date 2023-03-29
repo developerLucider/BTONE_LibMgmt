@@ -74,6 +74,7 @@ public class HomeController {
 		return "/user/login";
 	}
 	
+<<<<<<< HEAD
 	
 
 	
@@ -89,6 +90,8 @@ public class HomeController {
 	
 
 
+=======
+>>>>>>> feature/승현
 
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)

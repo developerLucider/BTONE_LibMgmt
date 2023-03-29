@@ -18,6 +18,24 @@
 	    
 	});
 	
+	function testPopUp(){
+		var session =/*[[${session}]]*/ "${session}";
+		
+		const test = session.loginUser;
+		const y = "y";
+		const check = test.userAgeCheckYn;
+		
+		if(check===y){
+			alert("이미 인증되어있습니다.");
+		} else {
+			alert("성인인증 창이 열립니다.");
+			window.open("adult","testPopUp", "width=650, height=250, top=150, left=200");
+		}
+				
+	}
+	
+	
+	
 	function AllBookListEvent() {
 		$("#tableBody tr").each(function () {
 			$(this).show();												
@@ -280,7 +298,8 @@ function rentBook() {
 						placeholder="검색어를 입력하세요.">
 					<button class="button color_sub" onclick="searchBook();">검색</button>
 					<button class="button color_sub4" onclick="rentBook();">대여</button>
-					<a href = "/adult" target="_blank">인증 테스트</a>
+					<button type="button" onclick ="testPopUp()">성인인증</button> 
+					 
 					<div class="fixedTable">
 						<div class="fixedBox">
 							<table>

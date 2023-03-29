@@ -110,6 +110,17 @@ public class UserController {
 		return result;
 	}
 	
+	//성인인증 페이지 진입
+		@GetMapping("/adult")
+		public String showAdult(HttpServletRequest request,
+
+		HttpServletResponse response, Model model) throws Exception {
+			
+
+			return "/user/adult";
+		}
+	
+	
 	//페이지에서 인증
 	@PostMapping("/adult.do")
 	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
@@ -124,7 +135,8 @@ public class UserController {
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
 			
-//			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
+			//이거 잘 됩니다.
+			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
 			
 			out.flush();
 		} else if(adultUser == null) {
