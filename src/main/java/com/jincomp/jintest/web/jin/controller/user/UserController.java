@@ -133,12 +133,10 @@ public class UserController {
 		if(adultUser != null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
 			
-			//이거 잘 됩니다.
+			//이거 잘 됩니다. alert 확인 시 팝업 닫고 부모페이지 새로고침
 			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
 			
-			out.flush();
 		} else if(adultUser == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
