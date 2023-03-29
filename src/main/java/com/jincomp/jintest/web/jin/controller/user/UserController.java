@@ -147,7 +147,21 @@ public class UserController {
 		}
 
 		return "/user/adult";
-
 	}
 	
+	
+	//회원정보 수정페이지 진입
+	@GetMapping("/userUpdate")
+	public String getUser(HttpServletRequest request, UserLogin user,
+	HttpServletResponse response, Model model) throws Exception {
+		UserLogin userList = userService.getUser(request, user);
+		
+		log.debug("{}", "회원정보 상세보기");
+		log.debug("userList : {}", userList);
+		
+		model.addAttribute("userList", userList);
+		
+		return "/user/userUpdate";
+	}
+		
 }

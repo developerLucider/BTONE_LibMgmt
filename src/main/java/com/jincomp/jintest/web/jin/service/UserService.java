@@ -284,13 +284,25 @@ public class UserService {
 	   }
 
 	
-	//test
 	//사용자 정보 조회
 	public List<UserLogin> userPage( int userNo ) {
 		logger.debug("userNo : {}", userNo);
 		
 		return userMapper.userPage(userNo);
 	}
+	
+	//회원정보 상세 가져오기
+	public UserLogin getUser(HttpServletRequest request, UserLogin user) {
+		HttpSession httpSession = request.getSession();
+		//로그인 세션에서 No 값을 가져옴
+		String userNo = (String) httpSession.getAttribute("userNum");
+		logger.debug("userNo : {}", userNo);
+		
+		UserLogin mapper = userMapper.getUser(Integer.parseInt(userNo));
+		
+		return mapper;
+	}
+
 		
 		
 }

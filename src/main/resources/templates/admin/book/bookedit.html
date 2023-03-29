@@ -6,7 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
+
 <script th:inline="javascript">
+
 $(document).ready(function(){	
 /*<![CDATA[*/
     var book =/*[[${list}]]*/ "book";
@@ -25,6 +27,7 @@ $(document).ready(function(){
 });
 </script>
 <script>
+
 	function update() {
 
 		var vo = {
@@ -98,12 +101,14 @@ $(document).ready(function(){
 								
 							</select>
 							<!-- 할인 정책 적용 -->
+
 							<label for="eventSelect" class="form-label">할인적용</label> <select
 								class="form-select mb-3" aria-label="Default select example"
 								id="selectType" th:field="${event}">
 								<option th:value= null th:text ="적용안함"></option>
 								<option th:each="event : ${event}" th:value="${event.eventId}" th:text="${event.eventId}">
 								
+
 								
 							</select>
 							<div class="mb-3">
@@ -112,8 +117,7 @@ $(document).ready(function(){
 							</div>
 
 							<button type="button" class="btn btn-primary" onclick="update();">수정</button>
-							<a href="/admin/list/books"><button type="button"
-									class="btn btn-primary">목록</button></a>
+							<a href="/admin/list/books"><button type="button" class="btn btn-primary">목록</button></a>
 
 						</form>
 					</div>

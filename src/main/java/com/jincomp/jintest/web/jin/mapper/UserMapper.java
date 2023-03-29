@@ -60,4 +60,8 @@ public interface UserMapper {
 
 	//마이페이지의 사용자정보 조회
 	public List<UserLogin> userPage(int userNo);
+
+	//회원정보 상세보기
+	public UserLogin getUser(int userNo);
+	
 }

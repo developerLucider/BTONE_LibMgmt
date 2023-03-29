@@ -13,13 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.common.error.BtoneException;
-import com.common.error.ErrorCode;
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
+
 import com.jincomp.jintest.web.jin.vo.UserLogin;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 
 
@@ -36,30 +36,17 @@ public class HomeController {
 
 	@GetMapping("/") // 처음 DOMAIN 주소로 접근시 jsp 호출용.
 	public String showFirstHome(HttpServletRequest request, HttpServletResponse response, ModelMap model)
-		throws BtoneException{
+			throws Exception {
 		logger.debug("showFirstHome 진입");
 
 		List<MainBookListDTO> list = homeService.getMainBookList();
 
 		logger.debug("list : {}", list);
 		
+
 		model.addAttribute("list", list);
-		
-		
-		
-		// exception test 중
-		//		throw new BtoneException(ErrorCode.NOT_SUPPORTED_HTTP_METHOD);	
-		//		  try { 
-		//			  
-		//		  }
-		//		  catch(BtoneException e) { 
-		//			  logger.error(e.getMsg());
-		//			  model.addAttribute("errorCode",e.getErrorCode()); return "error/error";
-		//			  
-		//		  }
-		 
+
 		return "home"; // home.html로 이동
-	
 	}
 	// test
 	@GetMapping("/admin")
@@ -97,10 +84,10 @@ public class HomeController {
 		
 		
 		//사용자 정보 조회
-		List<UserLogin> userList =  userService.userPage( userNo);
-		logger.debug("userList : {}", userList);
+		List<UserLogin> user =  userService.userPage( userNo);
+		logger.debug("user : {}", user);
 		
-		model.addAttribute("userList", userList);
+		model.addAttribute("user", user);
 
 		return "/user/mypage"; // mypage 폴더의 mypage화면으로 이동.
 	}
