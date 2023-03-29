@@ -10,41 +10,92 @@
 	$(() => {
 		$("#tabs").tabs();
 	});
+	
+	
 </script>
 </head>
 <div layout:fragment="content">
-	<div class="content" id="tabs1">
-		<h1 style="text-align: center">주문 내역</h1>
-		<div class="fixedTable">
-			<div class="fixedBox">
-				<table>
-					<thead id="tableHead">
-						<tr>
-							<th width='20px'></th>
-							<th width='50px'>No</th>
-							<th width='50px'>ID</th>
-							<th width='200px'>책이름</th>
-							<th width='200px'>가격</th>
-							<th width='100px'>결제일</th>
-							<th width='100px'>반납일</th>
-						</tr>
-					</thead>
-					<tbody class="table" id="tableBody">
-						<tr th:each="list : ${list}">
-							<th width='20px'><input type="checkbox" name="check"
-								th:value="${list.orderId}"></th>
-							<th width='50px' th:text="${listStat.count}"></th>
-							<th width='50px' th:text="${list.bookVo.goodsId}"></th>
-							<th width='200px' th:text="${list.bookVo.goodsName}"></th>
-							<th width='200px' th:text="${list.orderPrice}"></th>
-							<th width='100px' th:text="${list.orderDate}"></th>
-							<th width='100px' th:text="${list.orderDate}+7"></th>
-						</tr>
-					</tbody>
-				</table>
+	<div class="container">
+		<div id="tabs">
+			<table width="100%">
+				<tbody>
+					<tr>
+						<td>
+							<ul>
+								<li style="width: 90px;"><a id="allList" href="#tabs1"
+									onclick="AllBookListEvent();">주문내역</a></li>
+								<li style="width: 90px;"><a id="rentList" href="tabs2" >사용자 정보</a></li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="" id="tabs1">
+				<h1 style="text-align: center">주문 내역</h1>
+				<div class="content fixedTable">
+					<div class="fixedBox">
+						<table>
+							<thead id="tableHead">
+								<tr>
+									<th width='20px'></th>
+									<th width='50px'>No</th>
+									<th width='50px'>ID</th>
+									<th width='200px'>책이름</th>
+									<th width='200px'>가격</th>
+									<th width='100px'>결제일</th>
+									<th width='100px'>반납일</th>
+								</tr>
+							</thead>
+							<tbody class="table" id="tableBody">
+								<tr th:each="list : ${list}">
+									<th width='20px'><input type="checkbox" name="check"
+										th:value="${list.orderId}"></th>
+									<th width='50px' th:text="${listStat.count}"></th>
+									<th width='50px' th:text="${list.bookVo.goodsId}"></th>
+									<th width='200px' th:text="${list.bookVo.goodsName}"></th>
+									<th width='200px' th:text="${list.orderPrice}"></th>
+									<th width='100px' th:text="${list.orderDate}"></th>
+									<th width='100px' th:text="${list.orderDate}+7"></th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
+			<!-- <!-- tab2 -->
+           <div class="" id="tabs2">
+           	<h1 style="text-align: center">사용자 정보</h1>
+				<div class="content fixedTable">
+					<div class="fixedBox">
+						<table>
+							<thead id="tableHead">
+								<tr>
+									<th width='50px'>사용자 No</th>
+									<th width='50px'>ID</th>
+									<th width='50px'>이름</th>
+									<th width='50px'>패스워드</th>
+									<th width='100px'>주소</th>
+									<th width='100px'>주민번호</th>
+									<th width='80px'></th>
+								</tr>
+							</thead>
+							
+							<tbody class="table" id="tableBody2">
+								<tr th:each="userList : ${userList}">
+									<th width='50px' th:text="${userList.userNo}"></th>
+									<th width='50px' th:text="${userList.userId}"></th>
+									<th width='50px' th:text="${userList.userName}"></th>
+									<th width='50px' th:text="${userList.userPassword}"></th>
+									<th width='100px' th:text="${userList.userAddress}"></th>
+									<th width='100px' th:text="${userList.userRegNo}"></th>
+									<th width='80px'><button class="button color_sub"></button></th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+         	</div>
 		</div>
 	</div>
-
 </div>
 </html>

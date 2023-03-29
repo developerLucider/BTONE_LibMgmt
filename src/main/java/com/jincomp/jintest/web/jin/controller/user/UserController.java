@@ -1,6 +1,7 @@
 package com.jincomp.jintest.web.jin.controller.user;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jincomp.jintest.web.jin.controller.HomeController;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
+import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -138,6 +140,5 @@ public class UserController {
 		return "/user/adult";
 
 	}
-	
 	
 }

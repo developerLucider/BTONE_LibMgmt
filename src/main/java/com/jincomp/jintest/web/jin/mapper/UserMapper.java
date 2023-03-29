@@ -57,4 +57,7 @@ public interface UserMapper {
 	 * @param pvo
 	 */
 	void updatePoint(PointVO pvo);
+
+	//마이페이지의 사용자정보 조회
+	public List<UserLogin> userPage(int userNo);
 }

@@ -27,6 +27,7 @@ import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
+import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
@@ -83,12 +84,9 @@ public class HomeController {
 
 	HttpServletResponse response, Model model) throws Exception {
 		
-
-		return "/test/adult";
+		return "/user/adult";
 	}
 	
-	
-
 
 
 	@GetMapping("/mypage/{userNo}")
@@ -101,9 +99,18 @@ public class HomeController {
 		List<OrderVO> list = userService.orderList(userNo);   // userNo를 매개변수로 받아 로그인된 회원의 주문 내역리슽트만 가져옴
 		
 		logger.debug("list : {}", list);
-
+		
 		model.addAttribute("list", list);
+		
+		
+		//사용자 정보 조회
+		List<UserLogin> userList =  userService.userPage( userNo);
+		logger.debug("userList : {}", userList);
+		
+		model.addAttribute("userList", userList);
 
 		return "/user/mypage"; // mypage 폴더의 mypage화면으로 이동.
 	}
+	
+	
 }
