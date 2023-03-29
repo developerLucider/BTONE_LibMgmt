@@ -68,7 +68,7 @@ public class AdminRestController {
 	
 	
 	@RequestMapping(value = "/getAdminUserList.do")
-	   public List<UserVO> searchUserList(@RequestParam ("userKeyWord") String userKeyWord, 
+	   public List<UserVO> searchAdminList(@RequestParam ("userKeyWord") String userKeyWord, 
 			   HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		logger.debug("{}" ,"어드민유저검색창 진입");

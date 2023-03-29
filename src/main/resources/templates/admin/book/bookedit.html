@@ -7,6 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
 <script th:inline="javascript">
+$(document).ready(function(){	
+/*<![CDATA[*/
+    var book =/*[[${list}]]*/ "book";
+	var eventId= book.eventId;
+
+	if(eventId === null){
+		$("#selectType").val(null).prop("selected",true);
+	}else{
+		$("#selectType").val(eventId).prop("selected",true);
+	}
+	 
+    console.log("book: ",book);
+    console.log("eventId: ",eventId);
+    /*]]>*/
+    
+});
+</script>
+<script>
 	function update() {
 
 		var vo = {
@@ -16,11 +34,8 @@
 			goodsQuantity : $("#goodsQuantity").val(),
 			eventId : $("#selectType option:selected").val(),
 			goodsAgeLimit : $("#goodsAgeLimit option:selected").val()
-		};
-
-		var eventId = $("#selectType option:selected").val();
-
-		console.log("이벤트 id", eventId);
+		};		
+		
 		console.log(JSON.stringify(vo));
 
 		$.ajax({
@@ -50,7 +65,6 @@
 		<!-- Form Start -->
 		<div class="container-fluid pt-4 px-4">
 			<div class="row g-4">
-				<!-- <div class="col-sm-12 col-xl-6"> -->
 				<div class="col-12">
 					<div class="bg-secondary rounded h-100 p-4">
 						<h6 class="mb-4">도서 수정</h6>
@@ -86,13 +100,11 @@
 							<!-- 할인 정책 적용 -->
 							<label for="eventSelect" class="form-label">할인적용</label> <select
 								class="form-select mb-3" aria-label="Default select example"
-								id="selectType">
+								id="selectType" th:field="${event}">
+								<option th:value= null th:text ="적용안함"></option>
+								<option th:each="event : ${event}" th:value="${event.eventId}" th:text="${event.eventId}">
 								
-								<option th:selected="${list.eventId == null}" th:text="적용안됨"></option>
-								<option th:selected="${list.evebtId == 'A'}" th:text="A"></option>
-								<option th:selected="${list.evebtId == 'B'}" th:text="B"></option>
-								<option th:selected="${list.evebtId == 'C'}" th:text="C"></option>
-								<option th:selected="${list.evebtId == 'D'}" th:text="D"></option>
+								
 							</select>
 							<div class="mb-3">
 								<label for="formFile" class="form-label">도서이미지</label> <input
