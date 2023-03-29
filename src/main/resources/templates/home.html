@@ -200,18 +200,20 @@ function rentBook() {
 					"userNo" : userNo 
 				},
 				success : function(data) {
-					console.log(data);
-					var list = JSON.stringify(data);
-					console.log(list);
 					
-					//TODO: 리스트 출력 (has 안먹힘)
-					if(list.has("fail")) {
-						alert("대여 실패 테스트");
+					// 실패에 값이 있다면
+					if(typeof data.fail !== '') {
+						for(var i = 0; i < data.fail.length; i++) {
+							alert('책 ' + data.fail[i] + '을(를) 대여 하지 못했습니다.');	
+						}
+					}
+					// 성공에 값이 있다면
+					if(typeof data.success !== '') {
+						for(var i = 0; i < data.success.length; i++) {
+							alert('책 ' + data.success[i] + '을(를) 대여 했습니다.');	
+						}
 					}
 					
-					if(list.has("success")) {
-						alert("대여 성공 테스트");
-					}
 				},
 				error : function(xhr, status, error) {
 					alert("에러발생");
