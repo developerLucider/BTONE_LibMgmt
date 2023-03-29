@@ -66,13 +66,13 @@ public class adminService {
 	}
 
 	//대여현황 목록
-	public List<UserLentalDTO> getUserList() {
+	public List<UserLentalDTO> rentList() {
 		
 		logger.debug("------------------ getUserList 진입");
 		
 		List<UserLentalDTO> userList = new ArrayList<>();
-		List<BookVO> bookList = adminMapper.getUserList();
-		logger.debug("bookList : {}" , adminMapper.getUserList());
+		List<BookVO> bookList = adminMapper.rentList();
+		logger.debug("bookList : {}" , adminMapper.rentList());
 		
 		for(BookVO vo : bookList) {
 			// 가져온 리스트에서 책별로 필요한 정보만 가져와 DTO에담아서 리스트로 생성
@@ -120,11 +120,13 @@ public class adminService {
 	}
 	
 	//유저 출력
-	public List<UserVO> getUserListt(){
+	public List<UserVO> userList(){
 		logger.debug("{}", "getUserList 서비스 진입");
-		List<UserVO> getUserListt = adminMapper.getUserListt();
+		List<UserVO> userList = adminMapper.userList();
 		
-		return getUserListt;
+		logger.debug("adminList : {}", userList);
+		
+		return userList;
 	}
 	
 	//유저 이름 검색

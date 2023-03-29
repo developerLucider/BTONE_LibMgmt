@@ -74,7 +74,7 @@
 
 
   <!-- 대여현황 목록  -->
-	<select id="getUserList" resultMap="BookVO">
+	<select id="rentList" resultMap="BookVO">
 		SELECT UL.USER_NAME,B.GOODS_NAME , BCO.START_DATE ,BCO.END_DATE
 		FROM USER_LOGIN UL 															
 		INNER JOIN BOOKS_CHECK_OUT BCO ON BCO.USER_NO = UL.USER_NO
@@ -136,7 +136,7 @@
 	</update>
 	
   <!-- 유저 리스트 -->
-	<select id="getUserListt" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
+	<select id="userList" resultType="com.jincomp.jintest.web.jin.vo.UserVO">
 	select 
 	USER_NO
 	,USER_NAME

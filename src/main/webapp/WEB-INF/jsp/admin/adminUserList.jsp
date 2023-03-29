@@ -64,7 +64,7 @@ function fn_search(){
 		<%@include file="/WEB-INF/jsp/admin/include/sidebar.jsp" %> 
         <%@include file="/WEB-INF/jsp/admin/include/header.jsp" %>  
 			<!-- Content Start -->
-        <div class="">     
+        <div class="content">     
             <!-- Table Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
