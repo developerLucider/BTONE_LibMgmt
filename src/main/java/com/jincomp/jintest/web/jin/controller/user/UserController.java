@@ -112,8 +112,19 @@ public class UserController {
 		return result;
 	}
 	
+	//성인인증 페이지 진입
+		@GetMapping("/adult")
+		public String showAdult(HttpServletRequest request,
+
+		HttpServletResponse response, Model model) throws Exception {
+			
+
+			return "/user/adult";
+		}
+	
+	
 	//페이지에서 인증
-	@PostMapping("/adult")
+	@PostMapping("/adult.do")
 	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		
 		log.debug("{}", "깐트롤러 진입");
@@ -124,17 +135,15 @@ public class UserController {
 		if(adultUser != null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
 			
+			//이거 잘 됩니다. alert 확인 시 팝업 닫고 부모페이지 새로고침
 			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
 			
-			out.flush();
 		} else if(adultUser == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('정보를 확인해주세요.'); history.go(-1); </script>");
-			out.flush();
-			
+			out.flush();			
 		}
 
 		return "/user/adult";

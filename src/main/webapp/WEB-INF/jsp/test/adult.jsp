@@ -41,7 +41,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-	<%@include file = "/WEB-INF/jsp/include/header.jsp" %>
+	<%-- <%@include file = "/WEB-INF/jsp/include/header.jsp" %> --%>
 	<div class="container">
 
 			<div class="" id="tabs1">

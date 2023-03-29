@@ -61,7 +61,7 @@ public class AdminController {
 		List<AdminAddBookDTO> bookList = adminService.getBookList();
 		log.debug("bookList : {}", bookList);
 		
-		model.addAttribute("bookList", bookList);
+		model.addAttribute("list", bookList);
 			
 		return "/admin/book/bookAllList";
 	}
@@ -71,12 +71,13 @@ public class AdminController {
 	@GetMapping("/edit/book/{goodsId}")
 	public String adminBookEdit(@PathVariable String goodsId,
 			HttpServletResponse response, ModelMap model) throws Exception {
-		
+		log.debug("goodsId : ",goodsId);
 		log.debug("{}", "수정진입" );
 		
 		AdminAddBookDTO bookList = adminService.getUpBookList(goodsId);
 		
-		model.addAttribute("bookList", bookList);
+		model.addAttribute("list", bookList);
+		log.debug("book : {}", bookList);
 		
 		return "/admin/book/bookedit";
 	}
