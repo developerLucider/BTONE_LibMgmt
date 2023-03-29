@@ -1,6 +1,8 @@
 package com.jincomp.jintest.web.jin.service;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.common.Base64Utils;
+import com.jincomp.jintest.web.jin.dto.OrderDTO;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
@@ -128,20 +131,20 @@ public class UserService {
 	 */
 	public List<OrderVO> orderList(int userNo) {
 		
-//		List<OrderDTO> order = new ArrayList<>();
-//		List<OrderVO> list = userMapper.orderList(userNo);  // 현재 회원의 주문내역 리스트 
-//		
-//		for(OrderVO vo :list) {
-//			
-//			OrderDTO dto = new OrderDTO();
-//			
-//			dto.setBookVo(vo.getBookVo());
-//			dto.setUserVo(vo.getUserVo());
-//			dto.setOrderId(vo.getOrderId());
-//			dto.setOrderPrice(vo.getOrderPrice());
-//			dto.setOrderDate(vo.getOrderDate());
-//			order.add(dto);
-//		}
+		List<OrderDTO> order = new ArrayList<>();
+		List<OrderVO> list = userMapper.orderList(userNo);  // 현재 회원의 주문내역 리스트 
+		
+		for(OrderVO vo :list) {
+			
+			OrderDTO dto = new OrderDTO();
+			
+			dto.setBookVo(vo.getBookVo());
+			dto.setUserVo(vo.getUserVo());
+			dto.setOrderId(vo.getOrderId());
+			dto.setOrderPrice(vo.getOrderPrice());
+			dto.setOrderDate(vo.getOrderDate());
+			order.add(dto);
+		}
 		
 		return userMapper.orderList(userNo); 
 	}
@@ -249,18 +252,42 @@ public class UserService {
 		
 			
 		if(adultUser != null) {
-			
-			if(sNum.equals(dNum)) {
-				
-				userMapper.changeAdult(Integer.parseInt(sNum));
-				
-				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
-				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
-			}
-			
-		} 
+	         
+	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
+	            
+	            String no = regNo.substring(0,2);
+	            logger.debug("주민번호 생년 : {}", no);
+	            
+	            Calendar now = Calendar.getInstance();
+	            int year = now.get(Calendar.YEAR);
+	            logger.debug("이번년도 : {}", year);
+	            
+	            String ye = String.valueOf(year).substring(2);
+	            logger.debug("이번년도 뒤2자리 : {}", ye);
+	            
+	            if((Integer.parseInt(ye) - Integer.parseInt(no) ) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
+	               
+	               userMapper.changeAdult(Integer.parseInt(sNum));
+	               
+	            }else { //19세 미만이면 
+	               
+	               return null;
+	            }
+	            
+	            //추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+	            //이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
+	         }
+	         
+	      } 
+	      
+	      return adultUser;
+	   }
+
+	//사용자 정보 조회
+	public List<UserLogin> userPage( int userNo ) {
+		logger.debug("userNo : {}", userNo);
 		
-		return adultUser;
+		return userMapper.userPage(userNo);
 	}
 		
 		

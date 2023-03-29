@@ -182,4 +182,10 @@
 	
 	</update>
   
+  <!-- 마이페이지 사용자 정보 조회 -->
+  <select id="userPage" resultType="com.jincomp.jintest.web.jin.vo.UserLogin">
+  	SELECT * FROM USER_LOGIN UL WHERE USER_NO = #{userNo}
+  </select>
+  
+  
 </mapper>
