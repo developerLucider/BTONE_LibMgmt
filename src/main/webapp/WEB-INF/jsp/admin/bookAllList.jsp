@@ -12,51 +12,6 @@
 
 <script>
 //검색
-function fn_search(){
-	   
-	   $.ajax({
-			url : "/admin/getAdminSearch.do", //액션역할.
-			type : "post", // 보내는 타입 형식
-			/* dataType : "json", //데이터 타임 */
-			data : {     // 받을 데이터 : 폼데이터
-					"keyword" : $("#keyword").val(), //input 검색
-					
-			}, 
-			success : function(data) {  //아레와 같은 데이터 형식으로 가져올거임!
-				
-		  		if (data.length > 0) {
-                 var result = "";
-                 
-                 $("#tableBody").empty(); //기존 리스트 비우기
-
-                 for ( var i in data) { // 검색결과 리스트 순서대로 출력
-                    result += "<tr>"
-                    result += "<th>" + (i) + "</th>"
-                    result += "<th>" + "이미지 X-" + "</th>"
-                    result += "<th id='goodsId'>"
-                          + data[i].goodsId + "</th>"
-                    result += "<th id='goodsName'>"
-                          + data[i].goodsName + "</th>"
-                    result += "<th id='goodsPrice'>"
-                          + data[i].goodsPrice + "</th>"
-                    result += "<th id='goodsPrice'>" + "<a href='/admin/edit/book'>"
-                             +"<button class='btn btn-success'>" + "수정" +"</button>" +"</a>" +"</th>"
-                    result += "</tr>"
-                 }
-                 
-                 $("#tableBody").append(result); // 검색 결과 table에 적용
-                 click_event(); //검색이 끝난후에 생성된 테이블에도 적용이 되어야 하기 때문에  
-                   
-
-              } else {
-                 alert("검색 결과가 없습니다.");
-              }
-			},
-			error : function(xhr, status, error) {
-				alert("에러발생");
-			}
-	   });
-	}
 
 
 </script>

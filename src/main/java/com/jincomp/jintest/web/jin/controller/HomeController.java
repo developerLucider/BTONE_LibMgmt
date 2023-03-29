@@ -81,10 +81,9 @@ public class HomeController {
 	@GetMapping("/adult")
 	public String showAdult(HttpServletRequest request,
 
-	HttpServletResponse response, Model model) throws Exception {
-		
+	HttpServletResponse response, Model model) throws Exception {		
 
-		return "/test/adult";
+		return "/user/adult";
 	}
 	
 	
