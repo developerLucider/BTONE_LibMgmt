@@ -104,12 +104,11 @@ public class UserController {
 		log.debug("{}", authVO.getUserAuth());
 		
 		//세션에 다시 넣기
-		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
-			
-		// 세션도 admin 업데이트
-		loginUser.getAuthVO().setUserAuth(authVO.getUserAuth());
-					
+		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");	
+		// 세션도 admin 업데이트				
+		
 		return result;
+		
 	}
 	
 	//성인인증 페이지 진입

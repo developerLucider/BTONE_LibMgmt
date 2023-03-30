@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
+
+
+<!-- 자동완성 기능을 위한 제이쿼리 라이브러리 -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script th:inline="javascript">
 	$(() => {
 		$("#tabs").tabs();
@@ -256,8 +262,97 @@ function rentBook() {
 		}		
 	}	
 }
+</script>
 
-/*]]>*/
+<!-- 자동 완성 검색 기능 -->
+<script>
+	$(function(){ // 화면 다 뜨면 시작
+		$("#search").autocomplete({
+			source : function(request, response){
+				$.ajax({
+					type : 'POST',
+					url : "/main/view/autocomplete",
+					dataType : "json",
+					data : {value : request.term},
+					success: function(data){
+						// 서버에서 json 데이터 response 후 목록에 추가
+						response(
+							$.map(data.resultList, function(item){ // json[i]번째에 있는게 item
+								return{
+									label: item.GOODS_NAME,
+									value : item.GOODS_NAME,
+									test : item+"test"
+								} // return
+							}) // map
+						); // response
+					} // success
+				}); // ajax	
+			}, // source 는 자동 완성 대상이다.
+			select : function(event, ui){ // 아이템 선택 시
+				console.log(ui); // 사용자가 오토컴플릿이 만들어준 목록에서 선택을 하면 반환되는 객체
+				console.log(ui.item.label);
+				console.log(ui.item.value);
+				console.log(ui.item.test);
+			},
+			focus : function(event, ui){ // 포커스 가면
+				return false; // 한글 에러 잡기용도로 사용
+			},
+			minLength: 1, // 최소 글자 수
+			autoFocus: true, // 첫번째 항목 자동 포커스 기본값 false
+			classes: {
+				"ui-autocomplete" : "highlight"
+			},
+			delay: 500, // 검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간
+			position:{
+				my : "right top", at: "right bottom"
+			},
+			close : function(event){ // 자동완성창 닫아질 때 호출
+				console.log(event);
+			}
+		}); // autocomplete
+	}); // function
+
+</script>
+
+<!-- 검색창 클릭 시 레이어 영역 설정 및 검색 랭킹-->
+<script th:inline="javascript">
+	$(document).ready(function(){
+		//검색창 클릭 시 검색 랭킹 레이어 열시
+		$('#search').click(function(e){
+			 e.stopPropagation();
+			 $('#searchRankLayer').show();
+		});
+		
+		// 검색 랭킹 레이어 바깥 클릭 시 닫기
+	    $(document).click(function() {
+	      $('#searchRankLayer').hide();
+	    });
+		
+		// 검색 랭킹 조회
+		$.ajax({
+			url: 'main/list/search/rank',
+			type: 'GET',
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				$('#searchRankLayer').find('tbody').empty();
+				$.each(data, function(index, value){
+					$('#searchRankLayer').find('tbody').append(
+						'<tr><td><a href="#" class="rank-word">' + value.bookPopwWord + '</td></tr>'
+					);
+				});
+			}
+		});
+		
+		// 검색 랭킹 단어 선택 시 검색창에 입력
+	    $('#searchRankLayer').on('click', '.rank-word', function(e){
+	        e.preventDefault();
+	        var selectedWord = $(this).text();
+	        $('#search').val(selectedWord);
+	        $('#searchRankLayer').hide();
+	    });
+		
+	}); //document
 </script>
 
 <script>
@@ -337,12 +432,25 @@ function fn_fileUploaded() {
 			<div class="content" id="tabs1">
 				<div class="search_select">
 					<select id="searchType" name="searchType">
-						<option value="">--선택--</option>
-						<option value="GOODS_ID">아이디</option>
-						<option value="GOODS_NAME">이름</option>
-						<option value="GOODS_PRICE">가격</option>
-					</select> <input type="text" name="keyword" value="" id="search"
-						placeholder="검색어를 입력하세요.">
+						<!-- <option value="">--통합검색--</option> -->
+						<option value="GOODS_NAME">도서명</option>
+						<option value="GOODS_ID">도서ID</option>
+						<option value="GOODS_PRICE">도서 가격</option>
+					</select> 
+						<div class="search_input">
+							<input type="text" name="keyword" value="" id="search" placeholder="검색어를 입력하세요." autocomplete="off">
+						</div>
+							<!-- 아무것도 입력 안할 시 검색 랭킹  -->
+							<div id ="searchRankLayer" style="display:none;">
+							 	<h2>인기 검색어</h2>
+							 	<table>
+							 		<tbody>
+							 			<tr th:each="ranking : ${searchBookRankList}">
+							 				<td th:text="${ranking.bookPopwWord}"></td>
+							 			</tr>
+							 		</tbody>
+							 	</table>
+							</div>
 					<button class="button color_sub" onclick="searchBook();">검색</button>
 					<button class="button color_sub4" onclick="rentBook();">대여</button>
 					<button type="button" onclick ="testPopUp()">성인인증</button> 

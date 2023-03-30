@@ -42,31 +42,26 @@
 
 
 	<!--유저 로그인 -->
-	<select id="loginUser"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
-		 SELECT ul.USER_NO,
-      ul.USER_ID,
-      ul.USER_NAME,
-      ul.USER_PASSWORD,
-      ul.USER_ADDRESS,
-      ua.user_no,
-      ua.user_auth,
-      uac.user_age_check_yn
+	<select id="loginUser" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
+	 SELECT ul.USER_NO,
+	      ul.USER_ID,
+	      ul.USER_NAME,
+	      ul.USER_PASSWORD,
+	      ul.USER_ADDRESS,
+	      ua.user_no,
+	      ua.user_auth,
+	      uac.user_age_check_yn
       FROM USER_LOGIN ul
-      left outer
-      join user_auth ua
-      on ul.user_no = ua.user_no
-      inner join edu.user_age_check uac 
-      on ul.user_no = uac.user_no
+       left outer join user_auth ua
+      	on ul.user_no = ua.user_no
+       inner join edu.user_age_check uac 
+      	on ul.user_no = uac.user_no
       WHERE USER_ID = #{userId}
 
 	</select>
 
 	<!-- 유저 번호로 정보 찾기 -->
-	<select id="findUserByUserNo"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="String">
+	<select id="findUserByUserNo" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="String">
 		SELECT *
 		FROM USER_LOGIN
 		WHERE USER_ID = #{userId}

@@ -20,10 +20,13 @@ import org.springframework.stereotype.Service;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
+import com.jincomp.jintest.web.jin.mapper.SearchMapper;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
+import com.jincomp.jintest.web.jin.vo.BookPopWord;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.SearchVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +42,7 @@ public class HomeService {
 	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
 	private final BookMapper bookMapper;
 	private final UserMapper userMapper;
+	private final SearchMapper searchMapper;
 	
 	private List<MainBookListDTO> addEventPrice(List<BookVO> bookList) {
 		List<MainBookListDTO> mainList = new ArrayList<>();
@@ -192,6 +196,127 @@ public class HomeService {
 		return result;
 	}	
 			
+	//성인 인증 
+	public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+	        
+	        logger.debug("{}", "성인인증 서비스 진입");
+	        
+	        HttpSession httpSession = request.getSession();
+	        //로그인 세션에서 No 값을 가져옴
+	        String sNum = (String) httpSession.getAttribute("userNum");
+	        //주민번호 뒷자리
+	        String backNum = userRegNo1;
+	        
+	      //주민번호 앞 뒷자리 합친 것
+	     String regNo = userVO.getUserRegNo()+backNum;
+	        
+	     userVO.setUserRegNo(regNo);
+	        
+	     logger.debug("로그인 세션 중 userNo : {}", sNum);
+		//내가 입력한 값 
+		String uName = userVO.getUserName();
+		String uNum1 = userVO.getUserRegNo();
+		
+		logger.debug("입력받은 이름 : {}", uName);
+		logger.debug("입력받은 주민번호 : {}",uNum1);
+		logger.debug("입력한 userRegNo1 : {}", userRegNo1);
+		
+		//이게 DB에서 이름 주민번호에 해당하는 정보
+		UserVO adultUser = userMapper.adult(userVO);
+		
+		
+		//여 아래 num을 쓸거에용. -> DB에서 가져온 데이터입니다.
+		String dNum = adultUser.getUserNo();
+		String dName = adultUser.getUserName();
+		String dCheck = adultUser.getUserAgeCheckYn();
+		
+//		UserVO result;
+		
+		logger.debug("DB에서 받은 전체 데이터 : {}", adultUser);
 
+		logger.debug("DB에서 받은 번호 : {}",dNum);
+		logger.debug("DB에서 받은 이름 : {}",dName);
+		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
+		
+		
 	
+		
+		if(adultUser != null) {
+	         
+	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
+	            
+	            String no = regNo.substring(0,2);
+	            logger.debug("주민번호 생년 : {}", no);
+	            
+	            Calendar now = Calendar.getInstance();
+	            int year = now.get(Calendar.YEAR);
+	            logger.debug("이번년도 : {}", year);
+	            
+	            String ye = String.valueOf(year).substring(2);
+	            logger.debug("이번년도 뒤2자리 : {}", ye);
+	            
+	            if((Integer.parseInt(ye) - Integer.parseInt(no) ) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
+	               
+	               userMapper.changeAdult(Integer.parseInt(sNum));
+	               
+	            }else { //19세 미만이면 
+	               
+	               return null;
+	            }
+	            
+	            //추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
+	            //이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
+	         }
+	         
+	      } 
+	      
+	      return adultUser;
+	   }	
+	
+	/**
+	 * 검색 단어 등록
+	 * @param bookPopWord
+	 * @return
+	 */
+	public int insertSearchBook(String bookPopularWord) {
+		
+		logger.debug("검색 단어 등록 서비스 진입");
+		
+		int result = searchMapper.insertSearchBook(bookPopularWord);
+		
+		if(result >= 1) {
+		
+			return result;
+		
+		} else {
+			
+			return -1;
+		}
+	}
+
+			
+	/**
+	 * 검색 자동 완성 기능
+	 * @param paramMap
+	 * @retur
+	 * @throws Exception
+	 */
+	public List<Map<String, Object>> autoComplete(Map<String, Object> paramMap) throws Exception{
+		
+		return searchMapper.autoComplete(paramMap);
+	}
+	
+	
+	/**
+	 * 검색 랭킹
+	 * @return
+	 */
+	public List<BookPopWord> getBookSearchRanking(){
+		
+		logger.debug("검색 랭킹 서비스 진입");
+		
+		List<BookPopWord> searchBookRankList = searchMapper.getBookSearchRanking();
+		
+		return searchBookRankList;
+	}
 }

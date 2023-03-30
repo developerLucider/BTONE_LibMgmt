@@ -1,5 +1,6 @@
 package com.jincomp.jintest.web.jin.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.common.error.BtoneException;
 import com.common.error.ErrorCode;
@@ -20,6 +24,7 @@ import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
+import com.jincomp.jintest.web.jin.vo.UserVO;
 
 
 
@@ -77,6 +82,44 @@ public class HomeController {
 	}
 	
 
+	
+	//성인인증 페이지 진입
+	@GetMapping("/adult")
+	public String showAdult(HttpServletRequest request,
+
+	HttpServletResponse response, Model model) throws Exception {
+		
+		return "/test/adult";
+	}
+	
+	
+	//페이지에서 인증
+	@PostMapping("/adult")
+	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		
+		logger.debug("{}", "깐트롤러 진입");
+		
+//		logger.debug("userRegNo1 : {}", userRegNo1);
+		
+		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
+		if(adultUser != null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+//			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
+			
+			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
+			
+			out.flush();
+		} else if(adultUser == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보를 확인해주세요.'); history.go(-1); </script>");
+			out.flush();
+			
+		}
+		return "/test/adult";
+	}
+		
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {
