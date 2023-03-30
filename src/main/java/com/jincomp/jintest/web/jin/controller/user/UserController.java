@@ -110,17 +110,7 @@ public class UserController {
 		return result;
 		
 	}
-	
-	//성인인증 페이지 진입
-		@GetMapping("/adult")
-		public String showAdult(HttpServletRequest request,
-
-		HttpServletResponse response, Model model) throws Exception {
-			
-
-			return "/user/adult";
-		}
-	
+		
 	
 	//페이지에서 인증
 	@PostMapping("/adult.do")
