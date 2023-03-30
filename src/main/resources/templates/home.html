@@ -8,10 +8,6 @@
 <title>BTONE_LIBRARY_MANAGEMENT</title>
 
 
-<!-- 자동완성 기능을 위한 제이쿼리 라이브러리 -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script th:inline="javascript">
 	$(() => {
 		$("#tabs").tabs();
@@ -39,7 +35,6 @@
 		}
 				
 	}
-	
 	
 	
 	function AllBookListEvent() {
@@ -384,23 +379,15 @@ function ImguploadCallback(data, state) {
 	$("#fileView").append(htmlBody);
 
 }
-$(() => {
-	//비동기 파일 폼전송
-	//var frm = $('#fileUploadForm');
-	//frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
-	
-});
 
 // 파일업로드 이벤트
 function fn_fileUploaded() {
-	console.log("업로드 실행");
 	//폼전송
 	var frm;
 	frm = $('#fileUploadForm');
 	frm.attr("method", "post");
 	frm.attr("action", "/upload/fileUpload.do");
-	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
-	frm.submit();
+	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정 및 ajax 실행 (submit 역할도 함)
 }
 </script>
 </head>
@@ -429,16 +416,16 @@ function fn_fileUploaded() {
 
 			<!-- home tab -->
 			<div class="content" id="tabs1">
-				<div class="search_select">
+				<div class="search_select search_input">
 					<select id="searchType" name="searchType">
 						<!-- <option value="">--통합검색--</option> -->
 						<option value="GOODS_NAME">도서명</option>
 						<option value="GOODS_ID">도서ID</option>
 						<option value="GOODS_PRICE">도서 가격</option>
 					</select> 
-						<div class="search_input">
+						<!--   <div class="search_input"> -->
 							<input type="text" name="keyword" value="" id="search" placeholder="검색어를 입력하세요." autocomplete="off">
-						</div>
+						<!--  </div> -->
 							<!-- 아무것도 입력 안할 시 검색 랭킹  -->
 							<div id ="searchRankLayer" style="display:none;">
 							 	<h2>인기 검색어</h2>

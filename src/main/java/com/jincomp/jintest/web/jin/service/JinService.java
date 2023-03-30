@@ -78,9 +78,15 @@ public class JinService {
 		log.debug("savedFileName     >>  "+savedFileName);
 	  
 		// 4. 파일 생성 
+		/** 
+		 * @author mskim
+		 */
 		File file1 = new File(uploadPath + savedFileName);
 	  
-		// 5. 서버로 전송 files.transferTo(file1);
+		// 5. 서버로 전송
+		files.transferTo(file1);
+		
+		
 		Map resultMap = new HashMap();
 		resultMap.put("originalFileName", originalFileName);
 		resultMap.put("filePathName", uploadPath + savedFileName);

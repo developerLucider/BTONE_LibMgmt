@@ -23,4 +23,4 @@ mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml
  
 file:
-  upload-location : src\main\resources\static\img
+  upload-location : src\main\resources\static\img\
