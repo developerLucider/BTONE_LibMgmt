@@ -28,7 +28,7 @@ public class FileController {
 	private JinService jinService;
 	private static final Logger log = LoggerFactory.getLogger(FileController.class);
 	
-	@Value("${file.upload-location}")
+	@Value("${spring.servlet.multipart.location}")
     String fileConfigPath;
 	
 	@ResponseBody

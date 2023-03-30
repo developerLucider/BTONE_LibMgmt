@@ -131,6 +131,7 @@ public class JinService {
 		return mapper;
 	}
 
+
 	@Value("${file.upload-location}")
     String fileConfigPath;
 
@@ -191,8 +192,6 @@ public class JinService {
 
 		return fileByte;
 	}
-
-
 
 }
 

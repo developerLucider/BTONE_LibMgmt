@@ -44,7 +44,11 @@ public class AdminController {
 	
 	//책등록
 	@GetMapping("/add/book")
-	public String adminAddBook() {
+	public String adminAddBook(ModelMap model) {
+		List<EventVO> event = this.eventIdList();
+		model.addAttribute("event", event);
+		
+		log.debug("event : {}", event);	
 		
 		return "/admin/book/addbook";
 	}

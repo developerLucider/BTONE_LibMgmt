@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.jincomp.jintest.web.jin.vo.JinTestVO;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.UserAgeCheckVo;
@@ -56,8 +57,14 @@ public interface UserMapper {
 	 * @author mskim
 	 * @param pvo
 	 */
+<<<<<<< Updated upstream
 
 	void updatePoint(PointVO pvo);
+
+=======
+	void updatePoint(PointVO pvo);	
+	
+>>>>>>> Stashed changes
 
 	//마이페이지의 사용자정보 조회
 	public UserLogin userPage(int userNo);
@@ -65,5 +72,7 @@ public interface UserMapper {
 	//마이페이지 사용자정보 수정하기
 
 	public int userUpdate(UserLogin userLoginVo);
+
+	public List<JinTestVO> getUserList();
 
 }

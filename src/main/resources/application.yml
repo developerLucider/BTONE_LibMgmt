@@ -20,8 +20,10 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+      enabled : true
+      location : C:\workspace\BTONE_LibMgmt\src\main\resources\static\img
   file:
-    upload-location: C:\workspace\BTONE_LibMgmt\src\main\resources\static\img
+    upload-location: 
     
 mybatis:
   configuration:

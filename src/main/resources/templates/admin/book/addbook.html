@@ -40,6 +40,57 @@
 		});
 	}
 </script>
+<script>
+//파일전송 후 실행할 콜백 함수
+function ImguploadCallback(data, state) {
+
+	if (state == "error") {
+		alert("이미지 전송중 예외가 발생하였습니다.\n관리자에게 문의해주세요.");
+		return false;
+	}
+
+	var list = data.list;
+	//var list = data;
+	var htmlBody = "";
+	htmlBody += " 	<h3>파일 다운로드</h3>";
+	htmlBody += " 	  <div id='filesDowload'>";
+	for (i = 0; i < list.length; i++) {
+
+		var item = list[i];
+		htmlBody += " 		<p>";
+		htmlBody += " 		<a href=/upload/fileDownload.do?filePath="
+				+ item["serverfileName"] + "&fileName="
+				+ item["originalFileName"] + ">" + item["originalFileName"]
+				+ " 파일다운로드" + (i + 1) + "</a>";
+		htmlBody += "        </p>";
+	}
+	htmlBody += " 	  </div>";
+
+	$("#fileView").append(htmlBody);
+
+}
+
+$(function() {
+	//비동기 파일 폼전송
+	var frm = $('#fileUploadForm');
+	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
+	frm.submit(function() {
+		return false;
+	});
+});
+ 
+// 파일업로드 이벤트
+function fn_fileUploaded() {
+
+	//폼전송
+	var frm;
+	frm = $('#fileUploadForm');
+	frm.attr("method", "post");
+	frm.attr("action", "/upload/fileUpload.do");
+	frm.submit();
+
+}
+</script>
 </head>
 <div layout:fragment="content">
 	<div class="content">
@@ -76,15 +127,22 @@
 								</select>
 								<!-- 할인 정책 적용 -->
 								<label for="eventSelect" class="form-label">할인적용</label> <select
-									class="form-select mb-3" aria-label="Default select example"
-									id="selectType">
-									<option selected value="">적용안함</option>
-									<option value="A">A</option>
-									<option value="B">B</option>
-									<option value="C">C</option>
-									<option value="D">D</option>
+								class="form-select mb-3" aria-label="Default select example"
+								id="selectType" th:field="${event}">
+								<option th:value= null th:text ="적용안함"></option>
+								<option th:each="event : ${event}" th:value="${event.eventId}" th:text="${event.eventId}">
+									
 								</select>
 								<div class="mb-3">
+									<label for="fileUploadForm" class="form-label">파일 업로드</label>
+									<form id="fileUploadForm" method="post" action="/upload/fileUpload.do" enctype="multipart/form-data">
+										단건 파일 : <input type="file" id="uploadFile" name="uploadFile"><br><br> 
+										다중 파일 : <input type="file" id="uploadFiles" name="uploadFiles" multiple="multiple"><br> <br>
+										<!-- <input type="submit" value="업로드"> -->
+										<!--   <input value="업로드" onclick="javascript:fn_fileUploaded();"> -->
+										<button class="button color_sub" onclick="fn_fileUploaded();">업로드</button>
+									</form>
+									 <div id="fileView"></div>
 									<label for="formFile" class="form-label">도서이미지</label> <input
 										class="form-control bg-dark" type="file" id="formFile">
 								</div>

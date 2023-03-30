@@ -149,5 +149,8 @@ public class UserController {
 	}
 	
 	
+<<<<<<< Updated upstream
 		
+=======
+>>>>>>> Stashed changes
 }

@@ -287,7 +287,9 @@ public class UserService {
 	//사용자 정보 조회
 	public UserLogin userPage( int userNo ) {
 		logger.debug("userNo : {}", userNo);
+		logger.debug("user : {}", userMapper.userPage(userNo));
 		
+
 		return userMapper.userPage(userNo);
 	}
 
@@ -313,6 +315,4 @@ public class UserService {
 	}
 	
 
-		
-		
 }
