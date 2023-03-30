@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jincomp.jintest.web.jin.dto.AdminAddBookDTO;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
@@ -45,7 +46,7 @@ public class UserRestController {
 	//아이디 중복체크하기
 	@ResponseBody
 	@RequestMapping(value="/idChk", method = RequestMethod.POST)
-	public Boolean idChk(UserLogin user) throws Exception {
+	public Boolean idChk(@RequestBody UserLogin user) throws Exception {
 		
 		Boolean result = userService.idChk(user);
 		logger.debug("{}" ,"중복체크 진입");
@@ -53,5 +54,17 @@ public class UserRestController {
 		return result;
 	}
 
+
+	//회원정보 수정
+	@RequestMapping(value = "/userUpdate.do")
+	public int userUpdate(@RequestBody UserLogin userLoginVo,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		logger.debug("{}" ,"회원수정 진입");
+		int user = userService.userUpdate(userLoginVo, request);
+		
+		logger.debug("vo : {}", userLoginVo);
+		return user;
+	}
 	
 }

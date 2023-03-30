@@ -187,10 +187,17 @@
   	SELECT * FROM USER_LOGIN UL WHERE USER_NO = #{userNo}
   </select>
   
-  <!-- 마이페이지 회원 정보 상세보기 -->
-  <select id="getUser" resultType="com.jincomp.jintest.web.jin.vo.UserLogin">
-  	SELECT * FROM USER_LOGIN UL WHERE USER_NO = #{userNo}
-  </select>
+  <!-- 마이페이지 회원 정보 수정하기 -->
+	<update id="userUpdate" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin">
+		UPDATE USER_LOGIN 
+		SET 
+			USER_ID = #{userId},
+			USER_PASSWORD = #{userPassword}, 
+			USER_NAME = #{userName}, 
+			USER_ADDRESS = #{userAddress}, 
+			USER_REG_NO = #{userRegNo}
+		WHERE USER_NO = #{userNo}
+	</update>
   
   
 </mapper>

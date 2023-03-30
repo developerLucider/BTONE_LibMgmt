@@ -56,12 +56,14 @@ public interface UserMapper {
 	 * @author mskim
 	 * @param pvo
 	 */
-	void updatePoint(PointVO pvo);	
 
-	//회원정보 상세보기
-	public UserLogin getUser(int userNo);
-	
+	void updatePoint(PointVO pvo);
+
 	//마이페이지의 사용자정보 조회
-	public UserLogin user(int userNo);
+	public UserLogin userPage(int userNo);
+
+	//마이페이지 사용자정보 수정하기
+
+	public int userUpdate(UserLogin userLoginVo);
 
 }

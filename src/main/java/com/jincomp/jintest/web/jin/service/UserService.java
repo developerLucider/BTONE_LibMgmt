@@ -288,20 +288,30 @@ public class UserService {
 	public UserLogin userPage( int userNo ) {
 		logger.debug("userNo : {}", userNo);
 		
-		return userMapper.user(userNo);
+		return userMapper.userPage(userNo);
 	}
-	
-	//회원정보 상세 가져오기
-	public UserLogin getUser(HttpServletRequest request, UserLogin user) {
+
+	//회원정보 수정
+	public int userUpdate(UserLogin userLoginVo, HttpServletRequest request) {//throws BtoneExeption
+		logger.debug("수정Vo : {}", userLoginVo);
 		HttpSession httpSession = request.getSession();
 		//로그인 세션에서 No 값을 가져옴
 		String userNo = (String) httpSession.getAttribute("userNum");
-		logger.debug("userNo : {}", userNo);
+		userLoginVo.setUserNo(Integer.parseInt(userNo)); //로그인VO와 세션vo 바꿔주기
 		
-		UserLogin mapper = userMapper.getUser(Integer.parseInt(userNo));
+		// 로그인VO에 가져온 비번
+		String pass = userLoginVo.getUserPassword(); 
+		String pwd = Base64Utils.base64Encoder(pass);
+		userLoginVo.setUserPassword(pwd);
+
+		logger.debug("비밀번호 : {}", pass);
+		logger.debug("암호화 비번 : {}", pwd);
+
+		int user = userMapper.userUpdate(userLoginVo);
 		
-		return mapper;
+		return user;
 	}
+	
 
 		
 		

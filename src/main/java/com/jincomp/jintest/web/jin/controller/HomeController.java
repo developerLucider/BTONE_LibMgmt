@@ -92,7 +92,6 @@ public class HomeController {
 		
 		
 		//사용자 정보 조회
-
 		UserLogin user =  userService.userPage(userNo);
 		logger.debug("user : {}", user);
 		
