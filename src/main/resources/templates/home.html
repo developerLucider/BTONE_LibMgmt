@@ -358,7 +358,7 @@ function rentBook() {
 <script>
 //파일전송 후 실행할 콜백 함수
 function ImguploadCallback(data, state) {
-
+	
 	if (state == "error") {
 		alert("이미지 전송중 예외가 발생하였습니다.\n관리자에게 문의해주세요.");
 		return false;
@@ -384,25 +384,23 @@ function ImguploadCallback(data, state) {
 	$("#fileView").append(htmlBody);
 
 }
-$(function() {
+$(() => {
 	//비동기 파일 폼전송
-	var frm = $('#fileUploadForm');
-	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
-	frm.submit(function() {
-		return false;
-	});
+	//var frm = $('#fileUploadForm');
+	//frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
+	
 });
 
 // 파일업로드 이벤트
 function fn_fileUploaded() {
-
+	console.log("업로드 실행");
 	//폼전송
 	var frm;
 	frm = $('#fileUploadForm');
 	frm.attr("method", "post");
 	frm.attr("action", "/upload/fileUpload.do");
+	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
 	frm.submit();
-
 }
 </script>
 </head>
@@ -413,7 +411,7 @@ function fn_fileUploaded() {
 			<table width="100%">
 				<tbody>
 					<tr>
-						<th style="width: 200px; text-align: left;">HOME</th>
+						<th style="width: 300px; text-align: left;">HOME</th>
 						<td>
 							<ul>
 								<li><a id="allList" href="#tabs1"
@@ -422,6 +420,7 @@ function fn_fileUploaded() {
 									onclick="AvailableBookEvent();">대여가능</a></li>
 								<li><button type="button" onclick='user_auth();'>관리자
 										등급 up</button></li>
+								<li><a id="testUpload" href="#tabs2">업로드테스트</a>
 							</ul>
 						</td>
 					</tr>
@@ -497,11 +496,19 @@ function fn_fileUploaded() {
 						</div>
 					</div>
 				</div>
+			</div>
 				<!-- tab2 -->
+			<div class="content" id="tabs2">
+				<form id="fileUploadForm" method="post" enctype="multipart/form-data">
+					파일 선택 : <input type="file" name="uploadFile">
+				<button class="button color_sub" onclick="fn_fileUploaded();">업로드</button>
+				</form>
+				<div id="fileView">
+				</div>
+			</div>	
 				<!--  orders tab  -->
 				<!-- tabs3 -->
 				<!-- tab4 -->
-			</div>
 		</div>
 	</div>
 	<!-- popup  -->
