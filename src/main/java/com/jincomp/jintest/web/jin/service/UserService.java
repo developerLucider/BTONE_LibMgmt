@@ -285,10 +285,10 @@ public class UserService {
 
 	
 	//사용자 정보 조회
-	public List<UserLogin> userPage( int userNo ) {
+	public UserLogin userPage( int userNo ) {
 		logger.debug("userNo : {}", userNo);
 		
-		return userMapper.userPage(userNo);
+		return userMapper.user(userNo);
 	}
 	
 	//회원정보 상세 가져오기

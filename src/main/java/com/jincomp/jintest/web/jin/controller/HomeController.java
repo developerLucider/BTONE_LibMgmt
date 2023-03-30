@@ -84,10 +84,12 @@ public class HomeController {
 		
 		
 		//사용자 정보 조회
-		List<UserLogin> user =  userService.userPage( userNo);
+
+		UserLogin user =  userService.userPage(userNo);
 		logger.debug("user : {}", user);
 		
-		model.addAttribute("user", user);
+		model.addAttribute("user :{} ", user);
+
 
 		return "/user/mypage"; // mypage 폴더의 mypage화면으로 이동.
 	}

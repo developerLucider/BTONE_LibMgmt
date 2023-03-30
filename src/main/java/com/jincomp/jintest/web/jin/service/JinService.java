@@ -19,7 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jincomp.jintest.web.jin.mapper.JinMapper;
+<<<<<<< Updated upstream
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
+=======
+>>>>>>> Stashed changes
 import com.jincomp.jintest.web.jin.vo.JinTestVO;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +37,11 @@ public class JinService {
 
 	private static final Logger log = LoggerFactory.getLogger(JinService.class);
 
+<<<<<<< Updated upstream
 	private final UserMapper jinMapper;
+=======
+	private final JinMapper jinMapper;
+>>>>>>> Stashed changes
 
 
 	public List<JinTestVO> getUserList() {

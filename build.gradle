@@ -38,17 +38,27 @@ dependencies {
     //스웨거 설정
     //implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	//implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-// Swagger
+	// Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-  //thymeleaf 설정
+  	//thymeleaf 설정
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'   //layout
+<<<<<<< Updated upstream
 
 	implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'commons-io:commons-io:2.6'    
+=======
+    
+    //file
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'commons-io:commons-io:2.6'
+    
+>>>>>>> Stashed changes
 }
 
 tasks.named('test') {
