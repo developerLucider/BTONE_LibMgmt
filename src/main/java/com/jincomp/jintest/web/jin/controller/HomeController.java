@@ -13,13 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.common.error.BtoneException;
+import com.common.error.ErrorCode;
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
-
 import com.jincomp.jintest.web.jin.vo.UserLogin;
-import com.jincomp.jintest.web.jin.vo.UserVO;
 
 
 
@@ -45,6 +45,14 @@ public class HomeController {
 		
 
 		model.addAttribute("list", list);
+		
+		//exception test 중
+		/*
+		 * throw new BtoneException(ErrorCode.NOT_SUPPORTED_HTTP_METHOD); try { throw
+		 * new BtoneException(ErrorCode.NOT_SUPPORTED_HTTP_METHOD); }
+		 * catch(BtoneException e) { logger.error(e.getMessage());
+		 * model.addAttribute("errorCode", e.getErrorCode()); return "error/error"; }
+		 */
 
 		return "home"; // home.html로 이동
 	}
