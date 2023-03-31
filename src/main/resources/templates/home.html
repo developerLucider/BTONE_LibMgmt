@@ -379,14 +379,14 @@ function ImguploadCallback(data, state) {
 	$("#fileView").append(htmlBody);
 
 }
-$(function() {
-	//비동기 파일 폼전송
+/*$(function() {
+	비동기 파일 폼전송
 	var frm = $('#fileUploadForm');
-	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
 	frm.submit(function() {
 		return false;
 	});
 });
+*/
 
 // 파일업로드 이벤트
 function fn_fileUploaded() {
@@ -396,7 +396,8 @@ function fn_fileUploaded() {
 	frm = $('#fileUploadForm');
 	frm.attr("method", "post");
 	frm.attr("action", "/upload/fileUpload.do");
-	frm.submit();
+	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
+	
 
 }
 </script>
@@ -415,8 +416,8 @@ function fn_fileUploaded() {
 									onclick="AllBookListEvent();">전체조회</a></li>
 								<li><a id="rentList" href="#tabs1"
 									onclick="AvailableBookEvent();">대여가능</a></li>
-								<li><button type="button" onclick='user_auth();'>관리자
-										등급 up</button></li>
+								<li><a href="#tabs2" style="width: 70px"> 파일 업로드</a></li>
+								<li><button type="button" onclick='user_auth();'>관리자 등급 up</button></li>
 							</ul>
 						</td>
 					</tr>
@@ -490,8 +491,21 @@ function fn_fileUploaded() {
 						</div>
 					</div>
 				</div>
+			</div>
 				<!-- tab2 -->
-				<!--  orders tab  -->
+				<div id="tabs2">
+				<div class="content">
+					<h2>파일 업로드</h2>
+					<form id="fileUploadForm" method="post" enctype="multipart/form-data"> 
+					<br>파일 선택 :
+						<input type="file" name="uploadFile"><br>
+					<br> 다중 파일 : 
+						<input type="file" id="uploadFiles" name="uploadFiles" multiple="multiple"><br>
+					<br><button class="button color_sub" onclick="fn_fileUploaded();">업로드</button><br/>
+					</form>
+					<div id="fileView"></div>
+				</div>
+					<!--  orders tab  -->
 				<!-- tabs3 -->
 				<!-- tab4 -->
 			</div>

@@ -20,6 +20,10 @@ public interface BookMapper {
 	
 	int addRentBook(RentVO rentVo);
 	
+
 	/* 도서 상세 보기 */
 	BookVO detailBook(String goodsId);
+
+	
+
 }

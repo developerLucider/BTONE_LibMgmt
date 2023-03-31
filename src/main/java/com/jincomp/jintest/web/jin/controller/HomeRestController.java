@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.service.HomeService;
 import com.jincomp.jintest.web.jin.service.UserService;
