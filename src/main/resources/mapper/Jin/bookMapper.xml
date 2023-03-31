@@ -87,10 +87,24 @@
 	
 	<!-- 도서 상세보기 -->
 	<select id="detailBook" resultType="com.jincomp.jintest.web.jin.vo.BookVO" parameterType="String">
-		select b.goods_name, b.goods_price, bc.goods_quantity  
-		from edu.books b 
-		 inner join edu.books_count bc 
-	  	   on b.goods_id = bc.goods_id
+		select b.goods_id, b.goods_name, b.goods_price,
+		bco.USER_NO, bco.GOODS_ID,
+		bCount.goods_quantity,
+		bac.goods_age_limit,
+		ifnull(bco.START_DATE, "9999-09-09") as START_DATE , ifnull(bco.END_DATE, "9999-09-09") as END_DATE,
+		e.EVENT_ID,	e.FIX_DISCOUNT,
+		ifnull(e.RATE_STR_DAY, "9999-09-09") as RATE_STR_DAY, ifnull(e.RATE_END_DAY, "9999-09-09") as RATE_END_DAY,	e.RATE
+		from books b
+		LEFT OUTER JOIN BOOKS_CHECK_OUT bco
+		ON b.GOODS_ID = bco.GOODS_ID
+		left outer join books_event_info ein
+		on b.goods_id = ein.goods_id
+		LEFT OUTER JOIN EVENT e
+		ON ein.EVENT_ID= e.EVENT_ID
+		inner join books_count bCount
+		On b.GOODS_ID = bCount.goods_id
+		inner join books_age_check bac
+		on b.goods_id = bac.goods_id
 		where b.goods_id = #{goodsId};
 	</select>
 </mapper>
