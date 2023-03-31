@@ -16,6 +16,12 @@ spring:
     
   thymeleaf:
      cache : false
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  file:
+    upload-location: C:\workspace\BTONE_LibMgmt\src\main\resources\static\img
     
 mybatis:
   configuration:
