@@ -307,6 +307,7 @@ public class UserService {
 		logger.debug("비밀번호 : {}", pass);
 		logger.debug("암호화 비번 : {}", pwd);
 
+		
 		int user = userMapper.userUpdate(userLoginVo);
 		
 		return user;
