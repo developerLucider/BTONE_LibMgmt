@@ -163,7 +163,7 @@
 		from USER_LOGIN as a
 		inner join USER_AGE_CHECK as b 
 		on a.USER_NO = b.USER_NO 
-		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+		where a.USER_NO = #{userNo}
 	</select>
 	
 	<update id="changeAdult">

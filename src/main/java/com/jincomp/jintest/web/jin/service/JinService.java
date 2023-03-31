@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
 
 import com.jincomp.jintest.web.jin.vo.JinTestVO;
+import com.jincomp.jintest.web.jin.mapper.AdminMapper;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
@@ -40,15 +41,15 @@ public class JinService {
 	private static final Logger log = LoggerFactory.getLogger(JinService.class);
 
 
-	private final UserMapper jinMapper;
+	private final AdminMapper adminMapper;
 
 
-	public List<JinTestVO> getUserList() {
-		log.debug("JinService 진입>");
-		List<JinTestVO> mapper = jinMapper.getUserList();
-
-		return mapper;
-	}
+//	public List<fileVO> getUserList() {
+//		log.debug("JinService 진입>");
+//		List<fileVO> mapper = adminMapper.getUserList();
+//
+//		return mapper;
+//	}
 
 	private final BookMapper bookMapper;
 
