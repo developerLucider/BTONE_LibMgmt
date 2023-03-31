@@ -45,14 +45,12 @@ public class UserController {
 
 		// 로그인 정보 가져오기
 	 	UserVO loginUser = userService.loginUser(usrVo);
-
 	    
 	 	// 로그인 정보 세션에 담음.
  		HttpSession httpSession = request.getSession();
  		
  		if( loginUser != null) {
  			// 세션에 로그인 정보 담기
-
  		   httpSession.setAttribute("loginUser", loginUser);
  		   httpSession.setAttribute("userAuth", loginUser.getAuthVO().getUserAuth());   // 등급만 따로 추가 (소진)
  		   httpSession.setAttribute("userNum", loginUser.getUserNo());
@@ -74,7 +72,6 @@ public class UserController {
 	}
 	/**
 	 * 로그아웃
-	 * 
 	 * @param httpSession
 	 * @return
 	 */
@@ -112,23 +109,17 @@ public class UserController {
 	}
 	
 	//성인인증 페이지 진입
-		@GetMapping("/adult")
-		public String showAdult(HttpServletRequest request,
-
-		HttpServletResponse response, Model model) throws Exception {
-			
-
-			return "/user/adult";
-		}
-	
-	
+	@GetMapping("/adult")
+	public String showAdult(HttpServletRequest request,HttpServletResponse response, Model model) throws Exception {
+		
+		return "/user/adult";
+	}
+		
 	//페이지에서 인증
 	@PostMapping("/adult.do")
 	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		
 		log.debug("{}", "깐트롤러 진입");
-		
-//		logger.debug("userRegNo1 : {}", userRegNo1);
 		
 		UserVO adultUser = userService.adult(userVO, request, userRegNo1);
 		if(adultUser != null) {
@@ -146,8 +137,5 @@ public class UserController {
 		}
 
 		return "/user/adult";
-	}
-	
-	
-		
+	}		
 }

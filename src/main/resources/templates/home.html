@@ -7,11 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
 
-
-<!-- 자동완성 기능을 위한 제이쿼리 라이브러리 -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script th:inline="javascript">
 	$(() => {
 		$("#tabs").tabs();
@@ -430,16 +425,15 @@ function fn_fileUploaded() {
 
 			<!-- home tab -->
 			<div class="content" id="tabs1">
-				<div class="search_select">
+				<div class="search_select search_input">
 					<select id="searchType" name="searchType">
 						<!-- <option value="">--통합검색--</option> -->
 						<option value="GOODS_NAME">도서명</option>
 						<option value="GOODS_ID">도서ID</option>
 						<option value="GOODS_PRICE">도서 가격</option>
 					</select> 
-						<div class="search_input">
-							<input type="text" name="keyword" value="" id="search" placeholder="검색어를 입력하세요." autocomplete="off">
-						</div>
+						<input type="text" name="keyword" value="" id="search" placeholder="검색어를 입력하세요." autocomplete="off">
+						
 							<!-- 아무것도 입력 안할 시 검색 랭킹  -->
 							<div id ="searchRankLayer" style="display:none;">
 							 	<h2>인기 검색어</h2>
@@ -474,18 +468,17 @@ function fn_fileUploaded() {
 								</thead>
 								<tbody class="table" id="tableBody">
 									<tr th:each="list : ${list}">
-										<th width='20px'><input type="checkbox" name="check"
-											th:value="${list.goodsId}"></th>
+										<th width='20px'><input type="checkbox" name="check" th:value="${list.goodsId}"></th>
 										<th width='50px' th:text="${listStat.count}"></th>
 										<!-- 반복상태 추적해주는  status변수 사용. list이름+Stat로 접근 -->
-										<th width='50px' th:text="${list.goodsId}"></th>
-										<th width='200px' th:text="${list.goodsName}"></th>
+										<th width='50px'  th:text="${list.goodsId}"></th>
+										<th width='200px'><a th:onclick="|location.href='@{/detail/book(goodsId=${list.goodsId})}'|" th:text="${list.goodsName}"></a></th>
 										<th width='200px' th:text="${list.goodsPrice}"></th>
 										<th width='100px' th:text="${list.goodsDiscountPrice}"></th>
 										<th width='100px' th:text="${list.eventStrDate}"></th>
 										<th width='100px' th:text="${list.eventEndDate}"></th>
 										<th width='50px' th:text="${list.goodsQuantity}"></th>
-										<th width='50px' th:switch="${list.goodsAgeLimit}">
+										<th width='50px' th:switch="${list.goodsAgeLimit}">				
 											<span th:case="y">성인이용가</span>
 											<span th:case="n">전체이용가</span>
 											<span th:case="*">미분류</span>

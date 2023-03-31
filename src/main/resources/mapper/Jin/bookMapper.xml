@@ -85,4 +85,12 @@
 		values(#{userNo}, #{goodsId}, #{startDate}, #{endDate})
 	</insert>
 	
+	<!-- 도서 상세보기 -->
+	<select id="detailBook" resultType="com.jincomp.jintest.web.jin.vo.BookVO" parameterType="String">
+		select b.goods_name, b.goods_price, bc.goods_quantity  
+		from edu.books b 
+		 inner join edu.books_count bc 
+	  	   on b.goods_id = bc.goods_id
+		where b.goods_id = #{goodsId};
+	</select>
 </mapper>
