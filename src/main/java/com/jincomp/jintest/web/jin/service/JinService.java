@@ -78,15 +78,21 @@ public class JinService {
 		log.debug("savedFileName     >>  "+savedFileName);
 	  
 		// 4. 파일 생성 
-		/** 
-		 * @author mskim
-		 */
+		
 		File file1 = new File(uploadPath + savedFileName);
 	  
 		// 5. 서버로 전송
-		files.transferTo(file1);
+		files.transferTo(file1);	// 저장 위치에 생성파일 저장
 		
+		/** 
+		 * @author mskim
+		 */
+		// TODO: id는 controller에서 부터 정보를 받아올 것
+		UploadVO upload = new UploadVO("A1", originalFileName, savedFileName, uploadPath);	// 정보를 담은 객체 생성
 		
+		testMapper.insertImage(upload);
+		
+		// -----------------------------
 		Map resultMap = new HashMap();
 		resultMap.put("originalFileName", originalFileName);
 		resultMap.put("filePathName", uploadPath + savedFileName);

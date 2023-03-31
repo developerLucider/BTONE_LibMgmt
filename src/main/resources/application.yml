@@ -23,4 +23,7 @@ mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml
  
 file:
-  upload-location : src\main\resources\static\img\
+   upload-location : src\main\resources\static\img\
+   #서버에 올릴 이미지파일을 상위 디렉토리로 올릴수도 있습니다.
+   #upload-location : ..\..\
+    

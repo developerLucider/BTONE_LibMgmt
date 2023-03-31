@@ -13,5 +13,7 @@ import lombok.Setter;
 @Setter
 public class UploadVO {
 	private String goodsId;
-	private String goodsImageFileName;
+	private String imageOriginalName;
+	private String imageSavedName;
+	private String imagePath;
 }

@@ -15,6 +15,6 @@ import com.jincomp.jintest.web.jin.vo.UserVO;
 public interface TestMapper {
 	
 	List<UploadVO> getImageList();
-
 	
+	void insertImage(UploadVO image);
 }
