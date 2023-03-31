@@ -6,17 +6,70 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, tr {
+	font-size : 120%;
+	
+	
+}
+
+
+
+</style>
 
 <script th:inline="javascript">
+	
+	function goBack() {
+		window.history.back();
+		
+	}
+
+
 
 </script>
 </head>
 
 <div layout:fragment="content">
 	<div class="container">
-		<div id = "bookInfo" >
+						<div>
+							<table style="width:35%">
+								<tbody class="table table-hover text-nowrap" >
+									<tr th:each="book : ${book}">
+										<tr style="height:35px">
+											<th>ID</th>
+											<th th:text="${book.goodsId}"></th>
+										</tr>
+										<tr style="height:35px">
+											<th>이름</th>
+											<th th:text="${book.goodsName}"></th>
+										</tr>
+										<tr style="height:35px">
+											<th>내용</th>
+											<th>내용 DB가 있다면 여기 연결하면 됩니다~</th>
+										</tr>
+										<tr style="height:35px">
+											<th>가격</th>
+											<th th:text="${book.goodsPrice}"></th>
+										</tr>
+										<tr style="height:35px">
+											<th>수량</th>
+											<th th:text="${book.goodsQuantity}"></th>
+										</tr>
+								</tbody>
+							</table>
+							<br/><br/>
+							<div>
+							<input type="button" value="뒤로가기" onclick ="goBack();"/>
+							</div>
+						</div>
 		
-		</div>
+		
+		
+		
 	</div><!-- container -->
 </div><!-- content -->
 

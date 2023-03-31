@@ -1,6 +1,5 @@
 package com.jincomp.jintest.web.jin.controller;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
@@ -24,7 +22,6 @@ import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
-import com.jincomp.jintest.web.jin.vo.UserVO;
 
 @Controller
 public class HomeController {
@@ -157,6 +154,8 @@ public class HomeController {
 		logger.debug("도서 상세보기 컨트롤러 진입");
 		
 		BookVO detailBook = bookService.detailBook(goodsId);
+		
+		logger.debug("쿼리를 타서 원하는 값이 잘 담겼나? : {}", detailBook);
 		
 		model.addAttribute("book", detailBook);
 		
