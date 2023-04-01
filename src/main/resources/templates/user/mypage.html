@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:th="http://www.thymeleaf.org"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{layout/default}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
-<script th:inline="javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:inline="javascript"
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:inline="javascript">
-<<<<<<< Updated upstream
 	$(() => {
 		$("#tabs").tabs();
 	});
@@ -63,145 +63,66 @@
 	      }
 		}
 	
-=======
-   $(() => {
-      $("#tabs").tabs();
-   });
-   
-   function update() {
-      
-      var vo = {
-         "userName" : $("#userName").val(),
-            "userId" : $("#userId").val(),
-            "userPassword" : $("#userPassword").val(),
-            "userRegNo" : $("#userRegNo").val(),
-            "userAddress" : $("Address").val() + $("#userAddress").val()
-      };
-      console.log(JSON.stringify(vo));
-      
-      var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])[a-z0-9$@!%*#^?&]*$/;
-         var pw = $("#userPassword").val();
-         var pw2 = $("#password2").val();
-
-         console.log(reg.test(pw)); //true 반환
-         
-         if(!reg.test(pw)) { //정규식 조건문이 맞지않거나, 
-            alert('비밀번호는 8자 이상이며 숫자/영소문자/특수문자를 모두 1개이상 포함해야 합니다.');
-            
-         }else if(pw != pw2){ //패스워드,패스워드2가 같지않다면 
-            alert('비밀번호가 같지 않습니다.');
-            
-         }else if(reg.test(pw) || pw == pw2){
-
-            $.ajax({
-              url : "/main/userUpdate.do",
-               dataType : "json",
-               type : "post",
-            contentType : "application/json",
-                
-               data : JSON.stringify(vo),
-                  
-                  
-               success : function(result) {  //아래와 같은 데이터 형식으로 가져올거임!
-                   if(result < 0){
-                     alert('수정실패');
-                  }
-                   else {
-                      alert('수정완료!');
-                      location.href="/";
-                  }
-                },
-                error : function(result) {
-                  console.log(result);
-               }
-            });
-         }
-      }
-   
->>>>>>> Stashed changes
 </script>
 </head>
 <div layout:fragment="content">
-   <div class="container">
-      <div id="tabs">
-         <table width="100%">
-<<<<<<< Updated upstream
-			<tbody>
-				<tr>
-					<th style="width: 200px; text-align: left;">HOME</th>
-					<td>
-						<ul>
-							<li><a id="allList" href="#tabs1" style="width: 70px;"
-								onclick="AllBookListEvent();">사용자조회</a></li>
-							<li><a id="rentList" href="#tabs2" style="width: 70px;"
-								onclick="AvailableBookEvent();">주문내역</a></li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-=======
-         <tbody>
-            <tr>
-               <th style="width: 200px; text-align: left;">HOME</th>
-               <td>
-                  <ul>
-                     <li><a id="allList" href="#tabs1" style="width: 70px;"
-                        onclick="AllBookListEvent();">사용자조회</a></li>
-                     <li><a id="rentList" href="#tabs2" style="width: 70px;"
-                        onclick="AvailableBookEvent();">주문내역</a></li>
-                  </ul>
-               </td>
-            </tr>
-         </tbody>
-      </table>
->>>>>>> Stashed changes
-        <div class="" id="tabs1">
-            <h1 style="text-align: center">사용자 정보</h1>
-            <div class="content fixedTable">
-                  <!-- 해당 페이지 기능별로 탭 나눠쓰시면됩니다.
+	<div class="container">
+		<div id="tabs">
+			<table width="100%">
+				<tbody>
+					<tr>
+						<th style="width: 200px; text-align: left;">HOME</th>
+						<td>
+							<ul>
+								<li><a id="allList" href="#tabs1" style="width: 70px;"
+									onclick="AllBookListEvent();">사용자조회</a></li>
+								<li><a id="rentList" href="#tabs2" style="width: 70px;"
+									onclick="AvailableBookEvent();">주문내역</a></li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="" id="tabs1">
+				<h1 style="text-align: center">사용자 정보</h1>
+				<div class="content fixedTable">
+					<!-- 해당 페이지 기능별로 탭 나눠쓰시면됩니다.
                    header footer가 content 기준으로 사이즈가 잡혀있기때문에 구현할 기능들은 content내에서 구현해주세요-->
-                  <div class="fixedBox"
-                     style="overflow-x: hidden; height: 500px; width: 800px; margin: 0 auto;">
-                     <table>
-                        <tr th:each="user : ${user}">
-                           <td class="text">아이디</td>
-                           <td class="line">
-                           <input type="text" width="400px" 
-                           name="userId" id="userId" th:value="${user.userId}" disabled/></td>
-                        </tr>
-                        <tr>
-                           <td class="line pt">비밀번호</td>
-                           <td class="line">
-                           <input type="password" id="userPassword"
-                              name="userPassword" th:value="${user.userPassword}"/>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="line pt">비밀번호 확인</td>
-                           <td class="line">
-                           <input type="password" name="password2"
-                              id="password2" placeholder="비밀번호 확인" /></td>
-                        </tr>
-                        <tr>
-                           <td class="line pt">이름</td>
-                           <td class="line">
-                           <input type="text" id="userName"
-                              name="userName" th:value="${user.userName}" />
-                            </td>
-                        </tr>
-                        <tr>
-                           <td class="line pt">주민번호</td>
-                           <td class="line">
-                           <input type="text" id="userRegNo" name="userRegNo" th:value="${user.userRegNo}" maxlength="13" minlength="13"/>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class="line pt">주소</td>
-                           <td class="line"><input type="text" id="Address"
-                              name="Address" th:value="${user.userAddress}"  /></td>
-                        </tr>
-                        <script th:inline="javascript">
+					<div class="fixedBox"
+						style="overflow-x: hidden; height: 500px; width: 800px; margin: 0 auto;">
+						<table>
+							<tr th:each="user : ${user}">
+								<td class="text">아이디</td>
+								<td class="line"><input type="text" width="400px"
+									name="userId" id="userId" th:value="${user.userId}" disabled /></td>
+							</tr>
+							<tr>
+								<td class="line pt">비밀번호</td>
+								<td class="line"><input type="password" id="userPassword"
+									name="userPassword" th:value="${user.userPassword}" /></td>
+							</tr>
+							<tr>
+								<td class="line pt">비밀번호 확인</td>
+								<td class="line"><input type="password" name="password2"
+									id="password2" placeholder="비밀번호 확인" /></td>
+							</tr>
+							<tr>
+								<td class="line pt">이름</td>
+								<td class="line"><input type="text" id="userName"
+									name="userName" th:value="${user.userName}" /></td>
+							</tr>
+							<tr>
+								<td class="line pt">주민번호</td>
+								<td class="line"><input type="text" id="userRegNo"
+									name="userRegNo" th:value="${user.userRegNo}" maxlength="13"
+									minlength="13" /></td>
+							</tr>
+							<tr>
+								<td class="line pt">주소</td>
+								<td class="line"><input type="text" id="Address"
+									name="Address" th:value="${user.userAddress}" /></td>
+							</tr>
+							<script th:inline="javascript">
                            window.onload = function(){
                                document.getElementById("Address").addEventListener("click", function(){ //주소입력칸을 클릭하면
                                    //카카오 지도 발생
@@ -214,57 +135,58 @@
                                });
                            }
                      </script>
-                        <tr>
-                           <td class="line pt">상세주소</td>
-                           <td class="line"><input type="text" id="userAddress"
-                              name="userAddress" placeholder="상세주소" /></td>
-                        </tr>
-                        <tr>
-                           <td><button class="button btn-secondary" onclick="location.href='/'">취소</button></td>
-                           <td><button class="button btn-primary" onclick="update();">정보수정</button></td>
-                        </tr>
-                     </table>
-                     
-                  </div>
-               </div>
+							<tr>
+								<td class="line pt">상세주소</td>
+								<td class="line"><input type="text" id="userAddress"
+									name="userAddress" placeholder="상세주소" /></td>
+							</tr>
+							<tr>
+								<td><button class="button btn-secondary"
+										onclick="location.href='/'">취소</button></td>
+								<td><button class="button btn-primary" onclick="update();">정보수정</button></td>
+							</tr>
+						</table>
 
-         </div>
-         <!-- <!-- tab2 -->
-         <div class="" id="tabs2">
-            <h1 style="text-align: center">주문 내역</h1>
-            <div class="content fixedTable">
-               <div class="fixedBox">
-                  <table>
-                     <thead id="tableHead">
-                        <tr>
-                           <th width='20px'></th>
-                           <th width='50px'>No</th>
-                           <th width='50px'>ID</th>
-                           <th width='200px'>책이름</th>
-                           <th width='200px'>가격</th>
-                           <th width='100px'>결제일</th>
-                           <th width='100px'>반납일</th>
-                        </tr>
-                     </thead>
-                     <tbody class="table" id="tableBody">
-                        <tr th:each="list : ${list}">
-                           <th width='20px'><input type="checkbox" name="check"
-                              th:value="${list.orderId}"></th>
-                           <th width='50px' th:text="${listStat.count}"></th>
-                           <th width='50px' th:text="${list.bookVo.goodsId}"></th>
-                           <th width='200px' th:text="${list.bookVo.goodsName}"></th>
-                           <th width='200px' th:text="${list.orderPrice}"></th>
-                           <th width='100px' th:text="${list.orderDate}"></th>
-                           <th width='100px' th:text="${list.orderDate}+7"></th>
-                           
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-            </div>
+					</div>
+				</div>
 
-         </div>
-      </div>
-   </div>
+			</div>
+			<!-- <!-- tab2 -->
+			<div class="" id="tabs2">
+				<h1 style="text-align: center">주문 내역</h1>
+				<div class="content fixedTable">
+					<div class="fixedBox">
+						<table>
+							<thead id="tableHead">
+								<tr>
+									<th width='20px'></th>
+									<th width='50px'>No</th>
+									<th width='50px'>ID</th>
+									<th width='200px'>책이름</th>
+									<th width='200px'>가격</th>
+									<th width='100px'>결제일</th>
+									<th width='100px'>반납일</th>
+								</tr>
+							</thead>
+							<tbody class="table" id="tableBody">
+								<tr th:each="list : ${list}">
+									<th width='20px'><input type="checkbox" name="check"
+										th:value="${list.orderId}"></th>
+									<th width='50px' th:text="${listStat.count}"></th>
+									<th width='50px' th:text="${list.bookVo.goodsId}"></th>
+									<th width='200px' th:text="${list.bookVo.goodsName}"></th>
+									<th width='200px' th:text="${list.orderPrice}"></th>
+									<th width='100px' th:text="${list.orderDate}"></th>
+									<th width='100px' th:text="${list.orderDate}+7"></th>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </div>
 </html>

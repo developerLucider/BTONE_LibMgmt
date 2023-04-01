@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/default}">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
@@ -32,24 +30,24 @@ input {
 </script>
 </head>
 <body>
-	<div layout:fragment="content">
-		<div class="content">
-			<div class="/adult/action">
-				<h3>성인 인증</h3>
-				<form action="/adult.do" method="post">
-					<input type="hidden" id="userNo" name="userNo" value=""><br>
-					<label for="userName">이름:</label> <input type="text" id="userName"
-						name="userName"><br> <label for="userRegNo">주민등록번호:</label>
-					<input class="inputs" type="text" id="userRegNo" name="userRegNo"
-						maxlength="6"> - <input class="inputs" type="password"
-						id="userRegNo1" name="userRegNo1" maxlength="7">
-					<button type="submit">인증</button>
 
-				</form>
-				<!-- ${msg} -->
-			</div>
+	<div class="content">
+		<div class="/adult/action">
+			<h3>성인 인증</h3>
+			<form action="/adult.do" method="post">
+				<input type="hidden" id="userNo" name="userNo" value=""><br>
+				<label for="userName">이름:</label> <input type="text" id="userName"
+					name="userName"><br> <label for="userRegNo">주민등록번호:</label>
+				<input class="inputs" type="text" id="userRegNo" name="userRegNo"
+					maxlength="6"> - <input class="inputs" type="password"
+					id="userRegNo1" name="userRegNo1" maxlength="7">
+				<button type="submit">인증</button>
+
+			</form>
+			<!-- ${msg} -->
 		</div>
-		<!-- content -->
 	</div>
+	<!-- content -->
+
 </body>
 </html>

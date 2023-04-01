@@ -2,7 +2,6 @@ package com.jincomp.jintest.web.jin.controller.user;
 
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,17 +14,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jincomp.jintest.web.jin.controller.HomeController;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
 import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -109,26 +105,16 @@ public class UserController {
 		
 		return result;
 		
-	}
-	
-	//성인인증 페이지 진입
-		@GetMapping("/adult")
-		public String showAdult(HttpServletRequest request,
-
-		HttpServletResponse response, Model model) throws Exception {
-			
-
-			return "/user/adult";
-		}
-	
-	
+	}	
 	//페이지에서 인증
 	@PostMapping("/adult.do")
 	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		
 		log.debug("{}", "깐트롤러 진입");
 		
-//		logger.debug("userRegNo1 : {}", userRegNo1);
+		log.debug("userRegNo1 : {}", userRegNo1);
+		log.debug("userVO : {}",userVO );
+		
 		
 		UserVO adultUser = userService.adult(userVO, request, userRegNo1);
 		if(adultUser != null) {
@@ -149,8 +135,5 @@ public class UserController {
 	}
 	
 	
-<<<<<<< Updated upstream
-		
-=======
->>>>>>> Stashed changes
+
 }

@@ -17,10 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.jincomp.jintest.web.jin.service.JinService;
+
 
 @Controller
 public class FileController {
@@ -28,37 +31,45 @@ public class FileController {
 	private JinService jinService;
 	private static final Logger log = LoggerFactory.getLogger(FileController.class);
 	
-	@Value("${spring.servlet.multipart.location}")
+	@Value("${file.upload-location}")
     String fileConfigPath;
 	
 	@ResponseBody
-	@PostMapping("/upload/fileUpload.do")
+	@PostMapping(value= "/upload/fileUpload.do")
 	public Map fileUpload(@RequestParam(value="uploadFile", required = false) MultipartFile file,
 			@RequestParam(value="uploadFiles", required = false) List<MultipartFile> files, ModelMap model) throws IOException {
 
+		log.debug("fileName : {}", file.getOriginalFilename());
+		log.debug("files : {}", files.toString());
+		
+		
 		List<Map> resultListMap = new ArrayList<Map>();
+		
 		if (files != null) {
+
 			// 다건처리
 			for (MultipartFile multipartFile : files) {
 				Map fileMap = new HashMap();
 				fileMap = jinService.saveFile(multipartFile);
 
-				if (!fileMap.isEmpty())
+				if (fileMap != null)
 					resultListMap.add(fileMap);
 			}
 		}
 
 		if (file != null) {
+			
 			Map fileMap = new HashMap();
 			// 단건
 			fileMap = jinService.saveFile(file);
 			if (!fileMap.isEmpty())
 				resultListMap.add(fileMap);
+			
 		}
-
-		 Map resultMap = new HashMap();
-
-	       resultMap.put("list", resultListMap);
+		
+		Map resultMap = new HashMap();
+		resultMap.put("list", resultListMap);
+	       
 
 		return resultMap;
 	}

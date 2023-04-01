@@ -7,9 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BTONE_LIBRARY_MANAGEMENT</title>
 <script th:inline="javascript">
-	$(() => {
-		$("#tabs").tabs();
-	});
+	
 </script>
 </head>
 <div layout:fragment="content">
@@ -32,7 +30,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="list : ${rentList}">
+									<tr th:each="list : ${list}">
 										<th scope="row" th:text="${listStat.count}"></th>
 										<td th:text="${list.userName}"></td>
 										<td th:text="${list.goodsName}"></td>
