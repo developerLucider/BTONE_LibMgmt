@@ -2,6 +2,7 @@ package com.jincomp.jintest.web.jin.controller;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,8 +83,6 @@ public class HomeController {
 		return "/user/login";
 	}
 	
-
-		
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {

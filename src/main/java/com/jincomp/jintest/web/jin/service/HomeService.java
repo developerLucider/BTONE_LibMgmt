@@ -208,7 +208,13 @@ public class HomeService {
 		logger.debug("검색 단어 등록 서비스 진입");
 		
 		int result = searchMapper.insertSearchBook(bookPopularWord);
-		
+
+		HttpSession httpSession = request.getSession();
+		//로그인 세션에서 No 값을 가져옴
+		String sNum = (String) httpSession.getAttribute("userNo");
+		//주민번호 뒷자리
+		String backNum = userRegNo1;
+
 		if(result >= 1) {
 		
 			return result;
