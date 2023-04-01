@@ -59,6 +59,12 @@ th, tr {
 											<th>수량</th>
 											<th th:text="${book.goodsQuantity}"></th>
 										</tr>
+										<tr style="height:35px">
+											<th>사진</th>
+											<!-- 사진 경로는 찾았고 -->
+											<th> <img th:src = "|/img/${book.imageSavedName}|" /></th>
+																						
+										</tr>
 								</tbody>
 							</table>
 							<br/><br/>

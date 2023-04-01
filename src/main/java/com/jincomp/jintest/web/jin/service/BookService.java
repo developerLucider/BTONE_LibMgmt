@@ -28,6 +28,8 @@ public class BookService {
 		
 		BookVO detailBook = bookMapper.detailBook(goodsId);
 		
+		logger.debug("detailBook : {}", detailBook);
+		
 		return detailBook;
 	}
 }

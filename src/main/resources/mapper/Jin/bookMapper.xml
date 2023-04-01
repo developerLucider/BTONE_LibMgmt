@@ -93,7 +93,10 @@
 		bac.goods_age_limit,
 		ifnull(bco.START_DATE, "9999-09-09") as START_DATE , ifnull(bco.END_DATE, "9999-09-09") as END_DATE,
 		e.EVENT_ID,	e.FIX_DISCOUNT,
-		ifnull(e.RATE_STR_DAY, "9999-09-09") as RATE_STR_DAY, ifnull(e.RATE_END_DAY, "9999-09-09") as RATE_END_DAY,	e.RATE
+		ifnull(e.RATE_STR_DAY, "9999-09-09") as RATE_STR_DAY, ifnull(e.RATE_END_DAY, "9999-09-09") as RATE_END_DAY
+		, e.RATE
+		, bi.image_original_name 
+		, bi.image_saved_name 
 		from books b
 		LEFT OUTER JOIN BOOKS_CHECK_OUT bco
 		ON b.GOODS_ID = bco.GOODS_ID
@@ -105,6 +108,9 @@
 		On b.GOODS_ID = bCount.goods_id
 		inner join books_age_check bac
 		on b.goods_id = bac.goods_id
-		where b.goods_id = #{goodsId};
+		left outer join books_image bi
+		on b.goods_id = bi.goods_id 
+		where b.goods_id = #{goodsId}
+
 	</select>
 </mapper>
