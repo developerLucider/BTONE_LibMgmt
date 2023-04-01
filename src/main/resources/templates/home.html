@@ -209,8 +209,11 @@ function rentBook() {
 		// 수량 예외처리
 		var chkQuan = false;
 		for(var idx in rentBookQuantity) {	// 수량 리스트에 대해 0인 항목이 하나라도 있으면 ajax를 타지않도록함
-			if(idx == 0) {
+			if(rentBookQuantity[idx] == '0') {
 				chkQuan = true;
+				console.log(rentBookQuantity);
+				console.log(idx);
+				console.log("수량 0 체크 테스트");
 			}
 		}
 		
@@ -452,7 +455,7 @@ function fn_fileUploaded() {
 					<button type="button" onclick ="testPopUp()">성인인증</button> 
 					<div class="fixedTable">
 						<div class="fixedBox">
-							<table>
+							<table id="table">
 								<thead id="tableHead">
 									<tr>
 										<th width='20px'></th>
