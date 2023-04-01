@@ -12,7 +12,6 @@
 
 <title>ADMIN PAGE</title>
 
-
 <!-- Favicon -->
 <link href="/img/favicon.ico" rel="icon">
 
@@ -286,7 +285,6 @@
                 </div>
             </div>
             <!-- Sales Chart End -->
-
 		</div> <!-- content  -->
 	</div> <!-- container-fluid position-relative d-flex p-0 -->
 		

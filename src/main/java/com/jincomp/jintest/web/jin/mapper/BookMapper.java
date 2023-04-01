@@ -18,7 +18,12 @@ public interface BookMapper {
 	
 	List<RentVO> getRentList();
 	
-	
 	int addRentBook(RentVO rentVo);
 	
+
+	/* 도서 상세 보기 */
+	BookVO detailBook(String goodsId);
+
+	
+
 }

@@ -1,17 +1,15 @@
+
 package com.jincomp.jintest.web.jin.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,10 +20,13 @@ import org.springframework.stereotype.Service;
 
 import com.jincomp.jintest.web.jin.dto.MainBookListDTO;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
+import com.jincomp.jintest.web.jin.mapper.SearchMapper;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
+import com.jincomp.jintest.web.jin.vo.BookPopWord;
 import com.jincomp.jintest.web.jin.vo.BookVO;
 import com.jincomp.jintest.web.jin.vo.PointVO;
 import com.jincomp.jintest.web.jin.vo.RentVO;
+import com.jincomp.jintest.web.jin.vo.SearchVO;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class HomeService {
 	private static final Logger logger = LoggerFactory.getLogger(HomeService.class);
 	private final BookMapper bookMapper;
 	private final UserMapper userMapper;
+	private final SearchMapper searchMapper;
 	
 	private List<MainBookListDTO> addEventPrice(List<BookVO> bookList) {
 		List<MainBookListDTO> mainList = new ArrayList<>();
@@ -112,9 +114,8 @@ public class HomeService {
 	
 	public Map<String, List<String>> rentBooks(List<String> rentList,
 											 	List<String> rentPriceList,
-			/*
-			 * List<String> rentBookQuantityList, List<String> rentBookAgeLimitList,
-			 */
+											 	List<String> rentBookQuantityList,
+											 	List<String> rentBookAgeLimitList,
 											 	int userNo) {
 		Map<String, List<String>> result = new HashMap<>();
 		
@@ -132,23 +133,22 @@ public class HomeService {
 			
 			logger.debug("대여한 책 리스트 : {}", rentBookList);
 			
-			// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음
-			boolean flag = true;
+			
 			for(RentVO rentBook : rentBookList) {
+				// 해당 책이 이미 빌려가졌다면 해당 책의 ID를 넘기고 다음 goodsId로 바로 뛰어넘음		
 				if(rentBook.getGoodsId().equals(goodsId)) {
 					failResult.add(rentBook.getGoodsId());
-//					continue rentList;
-					flag = false;
+					continue rentList;
 				}
 			}
-//			Optional.ofNullable(rentBookList).ifPresent();
+			//Otional.ofNullable(rentBookList).ifPresent();
 			List<RentVO> failResult2 = rentBookList.stream().filter(t -> t.getGoodsId().equals(goodsId)).collect(Collectors.toList());
 			
 			RentVO rentVo= RentVO.builder()
 					.goodsId(goodsId)
 					.userNo(userNo).build();
-//			rentVo.setGoodsId(goodsId);
-//			rentVo.setUserNo(userNo);
+			//rentVo.setGoodsId(goodsId);
+			//rentVo.setUserNo(userNo);
 			
 			String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			String endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -194,68 +194,60 @@ public class HomeService {
 		//-----------------------------------------------------
 		
 		return result;
-	}
+	}	
+			
 	
-
-
 	
-		//성인 인증 
-		public UserVO adult(UserVO userVO, HttpServletRequest request, String userRegNo1) {
+	/**
+	 * 검색 단어 등록
+	 * @param bookPopWord
+	 * @return
+	 */
+	public int insertSearchBook(String bookPopularWord) {
 		
-		logger.debug("{}", "성인인증 서비스 진입");
+		logger.debug("검색 단어 등록 서비스 진입");
 		
+		int result = searchMapper.insertSearchBook(bookPopularWord);
+
 		HttpSession httpSession = request.getSession();
 		//로그인 세션에서 No 값을 가져옴
 		String sNum = (String) httpSession.getAttribute("userNo");
 		//주민번호 뒷자리
 		String backNum = userRegNo1;
-		
-		//주민번호 앞 뒷자리 합친 것
-		String regNo = userVO.getUserRegNo()+backNum;
-		
-		userVO.setUserRegNo(regNo);
-		
-		logger.debug("로그인 세션 중 userNo : {}", sNum);
 
-		//내가 입력한 값 
-		String uName = userVO.getUserName();
-		String uNum1 = userVO.getUserRegNo();
+		if(result >= 1) {
 		
-		logger.debug("입력받은 이름 : {}", uName);
-		logger.debug("입력받은 주민번호 : {}",uNum1);
-		logger.debug("입력한 userRegNo1 : {}", userRegNo1);
+			return result;
 		
-		//이게 DB에서 이름 주민번호에 해당하는 정보
-		UserVO adultUser = userMapper.adult(userVO);
-		
-		
-		//여 아래 num을 쓸거에용. -> DB에서 가져온 데이터입니다.
-		String dNum = adultUser.getUserNo();
-		String dName = adultUser.getUserName();
-		String dCheck = adultUser.getUserAgeCheckYn();
-		
-//		UserVO result;
-		
-		logger.debug("DB에서 받은 전체 데이터 : {}", adultUser);
+		} else {
+			
+			return -1;
+		}
+	}
 
-		logger.debug("DB에서 받은 번호 : {}",dNum);
-		logger.debug("DB에서 받은 이름 : {}",dName);
-		logger.debug("DB에서 받은 현재 인증상태 : {}",dCheck);
+			
+	/**
+	 * 검색 자동 완성 기능
+	 * @param paramMap
+	 * @retur
+	 * @throws Exception
+	 */
+	public List<Map<String, Object>> autoComplete(Map<String, Object> paramMap) throws Exception{
 		
-			
-		if(adultUser != null) {
-			
-			if(sNum.equals(dNum)) {
-				
-				userMapper.changeAdult(Integer.parseInt(sNum));
-				
-				//추가해야하는 것 : 빈칸일때, 틀린 값일때(빈칸과 같을수있다), 
-				//이미 인증이 되었을 경우 dCheck.equals("y") 일단 이정도? 
-			}
-			
-		} 
-		
-		return adultUser;
+		return searchMapper.autoComplete(paramMap);
 	}
 	
+	
+	/**
+	 * 검색 랭킹
+	 * @return
+	 */
+	public List<BookPopWord> getBookSearchRanking(){
+		
+		logger.debug("검색 랭킹 서비스 진입");
+		
+		List<BookPopWord> searchBookRankList = searchMapper.getBookSearchRanking();
+		
+		return searchBookRankList;
+	}
 }

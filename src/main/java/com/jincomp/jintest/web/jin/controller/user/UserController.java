@@ -1,5 +1,8 @@
 package com.jincomp.jintest.web.jin.controller.user;
 
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jincomp.jintest.web.jin.controller.HomeController;
 import com.jincomp.jintest.web.jin.service.UserService;
 import com.jincomp.jintest.web.jin.vo.UserAuthVO;
+import com.jincomp.jintest.web.jin.vo.UserLogin;
 import com.jincomp.jintest.web.jin.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -41,16 +45,15 @@ public class UserController {
 
 		// 로그인 정보 가져오기
 	 	UserVO loginUser = userService.loginUser(usrVo);
-
 	    
 	 	// 로그인 정보 세션에 담음.
  		HttpSession httpSession = request.getSession();
  		
  		if( loginUser != null) {
  			// 세션에 로그인 정보 담기
-
  		   httpSession.setAttribute("loginUser", loginUser);
  		   httpSession.setAttribute("userAuth", loginUser.getAuthVO().getUserAuth());   // 등급만 따로 추가 (소진)
+
  		   httpSession.setAttribute("userNo", loginUser.getUserNo());
  		   httpSession.setAttribute("userAgeCheckYn", loginUser.getUserAgeCheckYn());
  		   
@@ -65,9 +68,9 @@ public class UserController {
 		  log.debug("유저번호 : {}", uno);
 		  //log.debug("로그인유저정보 : {}", lu);
 		 
-
  			
  			log.debug("잠시 자리 빌립니다. : {}", yN);
+ 			
  		   
  			return "redirect:/";
  			
@@ -80,7 +83,6 @@ public class UserController {
 	}
 	/**
 	 * 로그아웃
-	 * 
 	 * @param httpSession
 	 * @return
 	 */
@@ -110,14 +112,41 @@ public class UserController {
 		log.debug("{}", authVO.getUserAuth());
 		
 		//세션에 다시 넣기
-		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
-			
-		// 세션도 admin 업데이트
-		loginUser.getAuthVO().setUserAuth(authVO.getUserAuth());
-					
+		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");	
+		// 세션도 admin 업데이트				
+		
 		return result;
+		
 	}
 	
-	
-	
+	//성인인증 페이지 진입
+	@GetMapping("/adult")
+	public String showAdult(HttpServletRequest request,HttpServletResponse response, Model model) throws Exception {
+		
+		return "/user/adult";
+	}
+		
+	//페이지에서 인증
+	@PostMapping("/adult.do")
+	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		
+		log.debug("{}", "깐트롤러 진입");
+		
+		UserVO adultUser = userService.adult(userVO, request, userRegNo1);
+		if(adultUser != null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			//이거 잘 됩니다. alert 확인 시 팝업 닫고 부모페이지 새로고침
+			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
+			
+		} else if(adultUser == null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보를 확인해주세요.'); history.go(-1); </script>");
+			out.flush();			
+		}
+
+		return "/user/adult";
+	}		
 }

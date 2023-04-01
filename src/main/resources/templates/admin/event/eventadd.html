@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BTONE_LIBRARY_MANAGEMENT</title>
+
+<script th:inline="javascript">
+
+function fn_addEvent() { // 등록버튼 눌렀을때 
+	var sale = $("input[name=sale]:checked").val();
+
+console.log("할인 종류 : ",sale);
+
+	var info = {
+		"eventId" : $("#eventId").val(),
+		[sale] : $("#sale").val(),      //키값 동적 할당할때 []로 감싸기 
+		"rateStrDay" : $("#eventStart").val(),
+		"rateEndDay" : $("#eventEnd").val()
+	}
+	console.log("등록 이벤트 정보 : ", info);
+	
+	$.ajax({
+		url : "add/addEvent.do",
+		type : "POST",
+		contentType :"application/json",
+		dataType:"text",
+		data: JSON.stringify(info),
+		success :function(data){
+			alert(data);
+			window.location.href="/admin/event/add"
+		},
+		error : function(error){
+			alert(error);
+		}
+	});
+};
+
+</script>
+</head>
+<div layout:fragment="content">
+	<div class="content">		<!-- Form Start -->
+		<div class="container-fluid pt-4 px-4">
+			<div class="row g-4">
+				<!-- <div class="col-sm-12 col-xl-6"> -->
+				<div class="col-12">
+					<div class="bg-secondary rounded h-100 p-4">
+						<h6 class="mb-4">이벤트 등록</h6>
+
+						<form id="eventInfo" name="eventInfo" method="post">
+							<div class="mb-3">
+								<label for="eventId" class="form-label">이벤트명</label> <input
+									type="text" class="form-control" id="eventId">
+							</div>
+							<!-- 할인 정책 적용 -->
+							<label for="eventSelect" class="form-label">분류</label> <br>
+							<input type="radio" name="sale" value="fixDiscount">고정 할인
+							&nbsp;&nbsp;&nbsp; <input type="radio" name="sale" value="rate">비율
+							할인 <input type="text" class="form-control" id="sale">
+
+							<!-- 추후에 달력으로 바꾸는게 좋아보임. -->
+							<div class="mb-3">
+								<label for="eventStart" class="form-label">할인시작일</label> <input
+									type="text" class="form-control" id="eventStart"
+									placeholder="형식(YYYY-mm-DD)">
+							</div>
+							<div class="mb-3">
+								<label for="eventEnd" class="form-label">할인마지막일</label> <input
+									type="text" class="form-control" id="eventEnd"
+									placeholder="형식(YYYY-mm-DD)">
+							</div>
+						</form>
+						<button type="button" class="btn btn-primary"
+							onclick="fn_addEvent();" id="submit">등록</button>
+						<button type="button" class="btn btn-primary" id="reset">취소</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Form End -->
+	</div>
+	<!-- Content End -->
+
+	<!-- <!-- Back to Top -->
+	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+		class="bi bi-arrow-up"></i></a>
+</div>
+</html>

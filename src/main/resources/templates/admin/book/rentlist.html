@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BTONE_LIBRARY_MANAGEMENT</title>
+<script th:inline="javascript">
+	$(() => {
+		$("#tabs").tabs();
+	});
+</script>
+</head>
+<div layout:fragment="content">
+	<div class="content">
+		<!-- Table Start -->
+		<div class="container-fluid pt-4 px-4">
+			<div class="row g-4">
+				<div class="col-12">
+					<div class="bg-secondary rounded h-100 p-4">
+						<h6 class="mb-4">대여현황목록</h6>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">번호</th>
+										<th scope="col">유저이름</th>
+										<th scope="col">도서제목</th>
+										<th scope="col">대여시작일</th>
+										<th scope="col">대여반납일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="list : ${rentList}">
+										<th scope="row" th:text="${listStat.count}"></th>
+										<td th:text="${list.userName}"></td>
+										<td th:text="${list.goodsName}"></td>
+										<td th:text="${list.startDate}"></td>
+										<td th:text="${list.endDate}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Table End -->
+	</div>
+	<!-- Content layout End -->
+
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+		class="bi bi-arrow-up"></i></a>
+</div>
+
+</html>

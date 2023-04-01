@@ -10,6 +10,20 @@
 	$(() => {
 		$("#tabs").tabs();
 	});
+	
+	
+	function autoUser(){
+		document.getElementById("userId").value ="userAutoId";
+		document.getElementById("userPassword").value = "!@!@tlstmd12";
+		document.getElementById("myBtn").click();
+	}
+	
+	function autoAdmin(){
+		document.getElementById("userId").value ="adminAutoId";
+		document.getElementById("userPassword").value = "!@!@tlstmd12";
+		document.getElementById("myBtn").click();
+	}
+	
 </script>
 <style>
 
@@ -81,10 +95,18 @@ input:focus, input:not(:placeholder-shown) {
 						</div>
 						<br>
 						<div>
-							<button type="submit">로그인</button>
+							<button id="myBtn" type="submit">로그인</button>
 							<button type="button" onclick="location.href='/'" >취소</button>
 						</div>
 					</form>
+					<br/>
+					
+						<div>
+							<button onclick="autoUser()">유저</button>
+							<button onclick="autoAdmin()">어드민</button>
+						</div>
+					
+					
 				</div>
 			</div>
 			<!-- content -->

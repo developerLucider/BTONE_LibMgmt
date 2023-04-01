@@ -31,4 +31,6 @@ public class BookVO {
 	 */
 	private int goodsQuantity;
 	private String goodsAgeLimit;
+	private String imageOriginalName;
+	private String imageSavedName;
 }

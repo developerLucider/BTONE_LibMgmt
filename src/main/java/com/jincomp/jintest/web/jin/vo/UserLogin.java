@@ -20,7 +20,7 @@ public class UserLogin implements Serializable {
 
    public static final long serialVersionUID = 1L;
    
-//   private int userNo;
+   private int userNo;
    private String userName;
    private String userId;
    private String userPassword;

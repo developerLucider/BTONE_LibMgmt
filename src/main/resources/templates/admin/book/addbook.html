@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/adminDefault}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BTONE_LIBRARY_MANAGEMENT</title>
+
+<script th:inline="javascript">
+	function addbook() {
+
+		var vo = {
+			goodsId : $("#goodsId").val(),
+			goodsName : $("#goodsName").val(),
+			goodsPrice : $("#goodsPrice").val(),
+			goodsQuantity : $("#goodsQuantity").val(),
+			eventId : $("#selectType option:selected").val(),
+			goodsAgeLimit : $("#goodsAgeLimit option:selected").val()
+		};
+
+		var eventId = $("#selectType option:selected").val();
+
+		console.log("이벤트 id", eventId);
+		console.log(JSON.stringify(vo));
+
+		//"eventId" : $("#searchType option:selected").val() //select 태그
+		$.ajax({
+			url : "/admin/add/book.do",
+			/* dataType : "json", */
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(vo),
+
+			success : function() { //아래와 같은 데이터 형식으로 가져올거임!
+				console.log("도서등록 성공");
+				alert('도서등록 완료!.');
+			}
+
+		});
+	}
+
+</script>
+
+
+<script>
+//파일전송 후 실행할 콜백 함수
+function ImguploadCallback(data, state) {
+
+	if (state == "error") {
+		alert("이미지 전송중 예외가 발생하였습니다.\n관리자에게 문의해주세요.");
+		return false;
+	}
+
+	var list = data.list;
+	//var list = data;
+	var htmlBody = "";
+	htmlBody += " 	<h3>파일 다운로드</h3>";
+	htmlBody += " 	  <div id='filesDowload'>";
+	for (i = 0; i < list.length; i++) {
+
+		var item = list[i];
+		htmlBody += " 		<p>";
+		htmlBody += " 		<a href=/upload/fileDownload.do?filePath="
+				+ item["serverfileName"] + "&fileName="
+				+ item["originalFileName"] + ">" + item["originalFileName"]
+				+ " 파일다운로드" + (i + 1) + "</a>";
+		htmlBody += "        </p>";
+	}
+	htmlBody += " 	  </div>";
+
+	$("#fileView").append(htmlBody);
+
+}
+/*$(function() {
+	비동기 파일 폼전송
+	var frm = $('#fileUploadForm');
+	frm.submit(function() {
+		return false;
+	});
+});
+*/
+
+// 파일업로드 이벤트
+function fn_fileUploaded() {
+
+	//폼전송
+	var frm;
+	frm = $('#fileUploadForm');
+	frm.attr("method", "post");
+	frm.attr("action", "/upload/fileUpload.do");
+	frm.ajaxForm(ImguploadCallback); //파일전송 후 실행할 콜백함수 지정
+	
+
+}
+</script>
+
+</head>
+<div layout:fragment="content">
+	<div class="content">
+		<div class="container-fluid position-relative d-flex p-0">
+			<!-- Form Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="row g-4">
+					<!-- <div class="col-sm-12 col-xl-6"> -->
+					<div class="col-12">
+						<div class="bg-secondary rounded h-100 p-4">
+							<h6 class="mb-4">도서 등록</h6>
+							<form>
+								<div class="mb-3">
+									<label for="goodsId" class="form-label">도서ID</label> <input
+										type="text" class="form-control" id="goodsId" required="required">
+								</div>
+								<div class="mb-3">
+									<label for="goodsName" class="form-label">도서제목</label> <input
+										type="text" class="form-control" id="goodsName">
+								</div>
+								<div class="mb-3">
+									<label for="goodsPrice" class="form-label">대여가격</label> <input
+										type="text" class="form-control" id="goodsPrice">
+								</div>
+								<div class="mb-3">
+									<label for="goodsPrice" class="form-label">수량</label> <input
+										type="text" class="form-control" id="goodsQuantity">
+								</div>
+								<label for="eventSelect" class="form-label">관람등급</label> <select
+									class="form-select mb-3" aria-label="Default select example"
+									id="goodsAgeLimit">
+									<option value="y">19세 이상</option>
+									<option value="n">19세 미만</option>
+								</select>
+								<!-- 할인 정책 적용 -->
+								<label for="eventSelect" class="form-label">할인적용</label> <select
+									class="form-select mb-3" aria-label="Default select example"
+									id="selectType">
+									<option selected value="">적용안함</option>
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
+								<div class="mb-3">
+									<form id="fileUploadForm" method="post" enctype="multipart/form-data"> 
+									<label for="formFile" class="form-label">도서이미지</label> 
+										<br><input class="form-control bg-dark" type="file" name="uploadFile"><br>
+										<input  class="form-control bg-dark"type="file" id="uploadFiles" name="uploadFiles" multiple="multiple">
+										<br><button class="btn btn-primary" onclick="fn_fileUploaded();">업로드</button><br/>
+									</form>
+									<div id="fileView"></div>
+								</div>
+
+								<button type="button" class="btn btn-primary"
+									onclick="addbook();">등록</button>
+								<button type="button" class="btn btn-primary">취소</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Form End -->
+		</div>
+		<!-- Content End -->
+		<!-- <!-- Back to Top -->
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+			class="bi bi-arrow-up"></i></a>
+	</div>
+	<!-- container-fluid position-relative d-flex p-0 -->
+</div>
+</html>

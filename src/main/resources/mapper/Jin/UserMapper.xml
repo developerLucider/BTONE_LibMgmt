@@ -20,6 +20,7 @@
 		<result column="USER_NAME" property="userName" />
 		<result column="USER_ID" property="userId" />
 		<result column="USER_PASSWORD" property="userPassword" />
+		<result column="USER_AGE_CHECK_YN" property="userAgeCheckYn" />
 		<collection property="authVO" resultMap="auth" />
 		<collection property="userAgeVO" resultMap="UserAgeCheckVo" />
 	</resultMap>
@@ -28,8 +29,8 @@
 		<result column="ORDER_ID" property="orderId"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
 		<result column="ORDER_DATE" property="orderDate"/>
-		<collection property="UserVO" resultMap="user" />
-		<collection property="BookVO" resultMap="book" />
+		<collection property="userVo" resultMap="user" />
+		<collection property="bookVo" resultMap="book" />
 	
 	</resultMap>
 	
@@ -41,27 +42,26 @@
 
 
 	<!--유저 로그인 -->
-	<select id="loginUser"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
-		SELECT ul.USER_NO,
-		ul.USER_ID,
-		ul.USER_NAME,
-		ul.USER_PASSWORD,
-		ul.USER_ADDRESS,
-		ua.user_no,
-		ua.user_auth
-		FROM USER_LOGIN ul
-		left outer
-		join user_auth ua
-		on ul.user_no = ua.user_no
-		WHERE USER_ID = #{userId}
+	<select id="loginUser" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="com.jincomp.jintest.web.jin.vo.UserVO" resultMap="user">
+	 SELECT ul.USER_NO,
+	      ul.USER_ID,
+	      ul.USER_NAME,
+	      ul.USER_PASSWORD,
+	      ul.USER_ADDRESS,
+	      ua.user_no,
+	      ua.user_auth,
+	      uac.user_age_check_yn
+      FROM USER_LOGIN ul
+       left outer join user_auth ua
+      	on ul.user_no = ua.user_no
+       inner join edu.user_age_check uac 
+      	on ul.user_no = uac.user_no
+      WHERE USER_ID = #{userId}
+
 	</select>
 
 	<!-- 유저 번호로 정보 찾기 -->
-	<select id="findUserByUserNo"
-		resultType="com.jincomp.jintest.web.jin.vo.UserVO"
-		parameterType="String">
+	<select id="findUserByUserNo" resultType="com.jincomp.jintest.web.jin.vo.UserVO" parameterType="String">
 		SELECT *
 		FROM USER_LOGIN
 		WHERE USER_ID = #{userId}
@@ -163,7 +163,7 @@
 		from USER_LOGIN as a
 		inner join USER_AGE_CHECK as b 
 		on a.USER_NO = b.USER_NO 
-		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+		where a.USER_NO = #{userNo}
 	</select>
 	
 	<update id="changeAdult">
@@ -176,5 +176,23 @@
 		where a.USER_NO = #{userNo}
 	
 	</update>
+  
+  <!-- 마이페이지 사용자 정보 조회 -->
+  <select id="userPage" resultType="com.jincomp.jintest.web.jin.vo.UserLogin">
+  	SELECT * FROM USER_LOGIN UL WHERE USER_NO = #{userNo}
+  </select>
+  
+  <!-- 마이페이지 회원 정보 수정하기 -->
+	<update id="userUpdate" parameterType="com.jincomp.jintest.web.jin.vo.UserLogin">
+		UPDATE USER_LOGIN 
+		SET 
+			USER_ID = #{userId},
+			USER_PASSWORD = #{userPassword}, 
+			USER_NAME = #{userName}, 
+			USER_ADDRESS = #{userAddress}, 
+			USER_REG_NO = #{userRegNo}
+		WHERE USER_NO = #{userNo}
+	</update>
+  
   
 </mapper>

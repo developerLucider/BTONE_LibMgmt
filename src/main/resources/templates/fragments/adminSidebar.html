@@ -6,16 +6,6 @@
 <title>Insert title here</title>
 </head>
 <div th:fragment="adminSidebar">
-	<!-- 리로드 아이콘 Start -->
-	<div id="spinner"
-		class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-		<div class="spinner-border text-primary"
-			style="width: 3rem; height: 3rem;" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
-	</div>
-	<!-- 리로드 아이콘 End -->
-
 	<!-- 사이드바 Start -->
 	<div class="sidebar pe-4 pb-3">
 		<nav class="navbar bg-secondary navbar-dark">
@@ -47,8 +37,8 @@
 					<a href="#" class="nav-link dropdown-toggle"
 						data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>도서관리</a>
 					<div class="dropdown-menu bg-transparent border-0">
-						<a href="/admin/add/book" class="dropdown-item">도서등록</a> <a
-							href="/admin/list/books" class="dropdown-item">도서전체조회</a> <a
+						<a href="/admin/list/books" class="dropdown-item">도서전체조회</a> <a
+							href="/admin/add/book" class="dropdown-item">도서등록</a> <a
 							href="/admin/books/rent" class="dropdown-item">대여현황</a>
 					</div>
 				</div>
@@ -58,8 +48,8 @@
 						data-bs-toggle="dropdown"> <i class="fa fa-laptop me-2"></i>이벤트관리
 					</a>
 					<div class="dropdown-menu bg-transparent border-0">
-						<a href="/admin/event/add" class="dropdown-item">이벤트등록</a> <a
-							href="/admin/event/list" class="dropdown-item">이벤트조회</a>
+						<a href="/admin/event/list" class="dropdown-item">이벤트조회</a> <a
+							href="/admin/event/add" class="dropdown-item">이벤트등록</a>
 					</div>
 				</div>
 
@@ -69,7 +59,7 @@
 						data-bs-toggle="dropdown"> <i class="fa fa-laptop me-2"></i>유저관리
 					</a>
 					<div class="dropdown-menu bg-transparent border-0">
-						<a href="/admin/user/list" class="dropdown-item">유저정보</a>
+						<a href="/admin/member/adminList" class="dropdown-item">유저정보</a>
 					</div>
 				</div>
 				<!-- <a href="/admin/chart.html" class="nav-item nav-link"><i

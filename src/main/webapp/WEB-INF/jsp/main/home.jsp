@@ -188,7 +188,7 @@ function rentBook() {
 		
 		if(userNo === "") {
 			alert("로그인 후 이용 가능 합니다.");
-			location.href = "/login";
+			location.href = "/login";  
 		} else {
 			
 			$.ajax({
@@ -196,7 +196,7 @@ function rentBook() {
 				type : "post",
 				data : {
 					"rentBookPriceList" : rentBookPriceList,
-					"rentBookList" : rentBookList,
+					"rentBookList" : rentBookList, 
 					//"rentBookQuantityList" : rentBookQuantity,
 					//"rentBookAgeLimitList" : rentBookAgeLimit,
 					"userNo" : userNo 
@@ -265,7 +265,7 @@ function rentBook() {
                         placeholder="검색어를 입력하세요.">
                      <button class="button color_sub" onclick="searchBook();">검색</button>
                      <button class="button color_sub4" onclick="rentBook();">대여</button>
-					 <a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a>
+					 <!-- <a href = "http://localhost:8080/adult" target="_blacnk">인증 테스트</a> -->
 				</div>	 
 
 				<div class="fixedTable">
