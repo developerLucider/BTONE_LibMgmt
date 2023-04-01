@@ -63,7 +63,6 @@ public interface UserMapper {
 	public UserLogin userPage(int userNo);
 
 	//마이페이지 사용자정보 수정하기
-
 	public int userUpdate(UserLogin userLoginVo);
 
 }

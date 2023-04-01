@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.common.Base64Utils;
+import com.common.Utils;
 import com.jincomp.jintest.web.jin.dto.OrderDTO;
 import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.OrderVO;
@@ -222,8 +223,11 @@ public class UserService {
 		String regNo = userVO.getUserRegNo()+backNum;
 		
 		userVO.setUserRegNo(regNo);
+		userVO.setUserNo(sNum);
 		
 		logger.debug("로그인 세션 중 userNo : {}", sNum);
+		logger.debug("로그인 세션 중 userNo : {}", Integer.parseInt(sNum));
+		logger.debug("userVO : {}", userVO);
 
 		//내가 입력한 값 
 		String uName = userVO.getUserName();
@@ -255,17 +259,7 @@ public class UserService {
 	         
 	         if(sNum.equals(dNum)) {// dbnum와 로그인 세션에서 No가 같을 때
 	            
-	            String no = regNo.substring(0,2);
-	            logger.debug("주민번호 생년 : {}", no);
-	            
-	            Calendar now = Calendar.getInstance();
-	            int year = now.get(Calendar.YEAR);
-	            logger.debug("이번년도 : {}", year);
-	            
-	            String ye = String.valueOf(year).substring(2);
-	            logger.debug("이번년도 뒤2자리 : {}", ye);
-	            
-	            if((Integer.parseInt(ye) - Integer.parseInt(no) ) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
+	            if(Utils.adultCertification(userVO.getUserRegNo(), backNum) >= 19 ) { //19세 이상이면 (regNo의 앞 2자리 - 이번년도) = 19 이상일때
 	               
 	               userMapper.changeAdult(Integer.parseInt(sNum));
 	               
@@ -307,6 +301,7 @@ public class UserService {
 		logger.debug("비밀번호 : {}", pass);
 		logger.debug("암호화 비번 : {}", pwd);
 
+		
 		int user = userMapper.userUpdate(userLoginVo);
 		
 		return user;

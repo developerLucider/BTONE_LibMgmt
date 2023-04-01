@@ -163,7 +163,7 @@
 		from USER_LOGIN as a
 		inner join USER_AGE_CHECK as b 
 		on a.USER_NO = b.USER_NO 
-		where USER_NAME = #{userName} and user_reg_no = #{userRegNo}
+		where a.USER_NO = #{userNo}
 	</select>
 	
 	<update id="changeAdult">
@@ -178,7 +178,7 @@
 	</update>
   
   <!-- 마이페이지 사용자 정보 조회 -->
-  <select id="user" resultType="com.jincomp.jintest.web.jin.vo.UserLogin">
+  <select id="userPage" resultType="com.jincomp.jintest.web.jin.vo.UserLogin">
   	SELECT * FROM USER_LOGIN UL WHERE USER_NO = #{userNo}
   </select>
   

@@ -53,10 +53,21 @@ public class UserController {
  			// 세션에 로그인 정보 담기
  		   httpSession.setAttribute("loginUser", loginUser);
  		   httpSession.setAttribute("userAuth", loginUser.getAuthVO().getUserAuth());   // 등급만 따로 추가 (소진)
- 		   httpSession.setAttribute("userNum", loginUser.getUserNo());
+
+ 		   httpSession.setAttribute("userNo", loginUser.getUserNo());
  		   httpSession.setAttribute("userAgeCheckYn", loginUser.getUserAgeCheckYn());
  		   
  			String yN = (String) httpSession.getAttribute("userAgeCheckYn");
+
+			
+			  
+		  String uno = (String) httpSession.getAttribute("userNo");
+		  //String lu = (String) httpSession.getAttribute("loginUser");
+		  
+		  
+		  log.debug("유저번호 : {}", uno);
+		  //log.debug("로그인유저정보 : {}", lu);
+		 
  			
  			log.debug("잠시 자리 빌립니다. : {}", yN);
  			

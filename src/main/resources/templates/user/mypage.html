@@ -63,23 +63,8 @@
 		}
 	
 </script>
-<style>
-.fixedBox ul{
-align: center;
-}
-
-.fixedBox ul li label{
-width :100px;
-height : 15px; 
-}
-
-.fixedBox ul li{
-text-align : center;
-}
-</style>
 </head>
 <div layout:fragment="content">
-<<<<<<< Updated upstream
    <div class="container">
       <div id="tabs">
          <table width="100%">
@@ -207,80 +192,5 @@ text-align : center;
          </div>
       </div>
    </div>
-=======
-	<div class="container">
-		<div id="tabs">
-			<table width="100%">
-				<tbody>
-					<tr>
-						<td>
-							<ul>
-								<li style="width: 90px;"><a id="allList" href="#tabs1"
-									onclick="AllBookListEvent();">주문내역</a></li>
-								<li style="width: 90px;"><a id="rentList" href="tabs2">사용자
-										정보</a></li>
-							</ul>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="" id="tabs1">
-				<h1 style="text-align: center">사용자 정보</h1>
-				<div class="content fixedTable">
-					<div class="fixedBox">
-						<ul th:each="user : ${user}">
-							<li th:text="${userList.userNo}"><label>등록번호</label></li>
-							<li th:text="${userList.userId}"><label>ID</label></li>
-							<li th:text="${userList.userName}"><label>이름</label></li>
-							<li th:text="${userList.userPassword}"><label>비밀번호</label></li>
-							<li th:text="${userList.userAddress}"><label>주소</label></li>
-							<li th:text="${userList.userRegNo}"><label>주민등록번호</label></li>
-							<li><button class="button color_sub" value="수정하기"></button></li>
-						</ul>						
-					</div>
-				</div>
-
-			</div>
-			<!-- <!-- tab2 -->
-			<div class="" id="tabs2">
-				<h1 style="text-align: center">주문 내역</h1>
-				<div class="content fixedTable">
-					<div class="fixedBox">
-						<ul>
-							<li><label></label></li>
-						</ul>
-
-						<table>
-							<thead id="tableHead">
-								<tr>
-									<th width='20px'></th>
-									<th width='50px'>No</th>
-									<th width='50px'>ID</th>
-									<th width='200px'>책이름</th>
-									<th width='200px'>가격</th>
-									<th width='100px'>결제일</th>
-									<th width='100px'>반납일</th>
-								</tr>
-							</thead>
-							<tbody class="table" id="tableBody">
-								<tr th:each="list : ${list}">
-									<th width='20px'><input type="checkbox" name="check"
-										th:value="${list.orderId}"></th>
-									<th width='50px' th:text="${listStat.count}"></th>
-									<th width='50px' th:text="${list.bookVo.goodsId}"></th>
-									<th width='200px' th:text="${list.bookVo.goodsName}"></th>
-									<th width='200px' th:text="${list.orderPrice}"></th>
-									<th width='100px' th:text="${list.orderDate}"></th>
-									<th width='100px' th:text="${list.orderDate}+7"></th>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
->>>>>>> Stashed changes
 </div>
 </html>

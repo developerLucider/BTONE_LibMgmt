@@ -2,6 +2,7 @@ package com.jincomp.jintest.web.jin.controller;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,45 +83,6 @@ public class HomeController {
 		return "/user/login";
 	}
 	
-
-//	
-//	//성인인증 페이지 진입
-//	@GetMapping("/adult")
-//	public String showAdult(HttpServletRequest request,
-//
-//	HttpServletResponse response, Model model) throws Exception {
-//		
-//		return "/test/adult";
-//	}
-//	
-//	
-//	//페이지에서 인증
-//	@PostMapping("/adult")
-//	public String adult(UserVO userVO,@RequestParam("userRegNo1") String userRegNo1, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-//		
-//		logger.debug("{}", "깐트롤러 진입");
-//		
-////		logger.debug("userRegNo1 : {}", userRegNo1);
-//		
-//		UserVO adultUser = homeService.adult(userVO, request, userRegNo1);
-//		if(adultUser != null) {
-//			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-////			out.println("<script>alert('인증 완료했습니다.'); location.href='/'; </script>");
-//			
-//			out.println("<script>alert('인증 완료했습니다.'); opener.document.location.reload(); self.close(); </script>");
-//			
-//			out.flush();
-//		} else if(adultUser == null) {
-//			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('정보를 확인해주세요.'); history.go(-1); </script>");
-//			out.flush();
-//			
-//		}
-//		return "/test/adult";
-//	}
-		
 	@GetMapping("/mypage/{userNo}")
 	public String showMypage(@PathVariable int userNo, HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {
@@ -136,10 +98,11 @@ public class HomeController {
 		
 		
 		//사용자 정보 조회
+
 		UserLogin user =  userService.userPage(userNo);
 		logger.debug("user : {}", user);
 		
-		model.addAttribute("user :{} ", user);
+		model.addAttribute("user", user);
 
 
 		return "/user/mypage"; // mypage 폴더의 mypage화면으로 이동.
