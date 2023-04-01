@@ -1,10 +1,21 @@
 package com.jincomp.jintest.web.jin.vo;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-public class fileVO {
-	 private String uploadFileName; //내가 업로드한 파일명
-	 private String storeFileName; //서버 내부에서 관리하는 파일명
-    
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class FileVO {
+
+	private int fileId; // 파일번호
+	private String goodsId; // 도서ID
+	private String fileName; // 저장할 때 파일 이름
+	private String oriName; // 오리지널 파일 이름(즉, 받아 올 때 파일 이름)
+	private String fileUrl; // 저장 및 불러올 경로
+
 }
