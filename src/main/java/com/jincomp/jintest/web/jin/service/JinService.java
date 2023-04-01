@@ -24,9 +24,8 @@ import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.JinTestVO;
 import com.jincomp.jintest.web.jin.mapper.AdminMapper;
 import com.jincomp.jintest.web.jin.mapper.BookMapper;
-import com.jincomp.jintest.web.jin.mapper.UserMapper;
 import com.jincomp.jintest.web.jin.vo.BookVO;
-import com.jincomp.jintest.web.jin.vo.fileVO;
+import com.jincomp.jintest.web.jin.vo.FileVO;
 
 import lombok.RequiredArgsConstructor;
 
